@@ -1,0 +1,8 @@
+region: eu
+tunnels:
+  webhook:
+    proto: http
+    addr: 80
+    bind_tls: true
+    host_header: kubedev.k3d.localhost
+

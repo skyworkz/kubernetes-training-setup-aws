@@ -1,0 +1,4 @@
+**/secret.yaml
+**/.terraform
+terraform/kubeconfig_**
+cluster-k8s-manifests/hack/**

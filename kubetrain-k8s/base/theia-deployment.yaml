@@ -1,0 +1,242 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kubedev
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubetrain
+  namespace: kubedev
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubedev-cluster-admin-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: kubetrain
+  namespace: kubedev
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kubetrain-project
+spec:
+  accessModes: [ "ReadWriteOnce" ]
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubetrain-git-config
+data:
+  .gitconfig: |
+    [user]
+    name = "Test"
+    email = "test@foo.com"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ssh-config
+stringData:
+  ssh_config: |
+    Host github.com
+    User git
+    Port 22
+    IdentitiesOnly yes
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
+
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubetrain-prepare-ssh-dir
+data:
+  prepare-ssh-dir: |
+    set -eu
+    MY_SSH_DIR="/home/theia/.ssh"
+    mkdir -p ${MY_SSH_DIR}
+    cp /secret/git-ssh-config/config ${MY_SSH_DIR}/config
+    cp /secret/git-ssh-key/id_rsa ${MY_SSH_DIR}/id_rsa
+    chown -R 1001 ${MY_SSH_DIR}
+    ls -lR ${MY_SSH_DIR}
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubetrain-git-clone-script
+data:
+  git-clone: |
+    set -eu
+    echo "Remote repo: ${GIT_URL}"
+    GIT_WORKDIR="/home/project/code"
+    GIT_SSH_KEY="/home/theia/.ssh/id_rsa"
+    eval $(ssh-agent -s)
+    chmod 400 ${GIT_SSH_KEY}
+    ssh-add ${GIT_SSH_KEY}
+    if [[ -d "${GIT_WORKDIR}/.git" ]]; then
+      EXISTING_REMOTE_URL="$(git --git-dir ${GIT_WORKDIR}/.git remote get-url origin)"
+      if [[ "${EXISTING_REMOTE_URL}" == "${GIT_URL}" ]]; then
+        echo "Nothing to do"
+        exit 0
+      else
+        echo "Remote not matching. Existing data will be deleted"
+      fi
+    fi
+    ls -la
+    rm -rf ${GIT_WORKDIR}
+    git clone ${GIT_URL} ${GIT_WORKDIR} &&
+    cd ${GIT_WORKDIR} &&
+    ls -l &&
+    git status
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kubetrain
+  labels:
+    app: kubetrain
+spec:
+  serviceName: kubetrain
+  selector:
+    matchLabels:
+      app: kubetrain
+  template:
+    metadata:
+      labels:
+        app: kubetrain
+    spec:
+      initContainers:
+      - name: prepare-ssh-dir
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - /prepare-ssh-dir
+        volumeMounts:
+        - name: prepare-ssh-dir
+          mountPath: /prepare-ssh-dir
+          subPath: prepare-ssh-dir
+        - name: home-ssh
+          mountPath: /home/theia/.ssh
+        - name: git-ssh-key
+          mountPath: /secret/git-ssh-key
+        - name: git-ssh-config
+          mountPath: /secret/git-ssh-config
+      - name: git-clone
+        image: bennycornelissen/theia-clone-init
+        env:
+        - name: GIT_URL
+          valueFrom:
+            secretKeyRef:
+              name: kubetrain-workspace
+              key: git_url
+        command:
+        - /bin/bash
+        - -c
+        - /git-clone
+        workingDir: /home/project
+        volumeMounts:
+        - name: home-ssh
+          mountPath: /home/theia/.ssh
+        - name: project-volume
+          mountPath: /home/project
+        - name: git-clone
+          mountPath: /git-clone
+          subPath: git-clone
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1001
+          capabilities:
+            drop:
+            - ALL
+      containers:
+      - name: ide
+        image: bennycornelissen/theia-k8s:v3
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: git-config
+          mountPath: /home/theia/.gitconfig
+          subPath: .gitconfig
+        - name: project-volume
+          mountPath: /home/project
+        - name: home-ssh
+          mountPath: /home/theia/.ssh
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "100m"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1001
+          capabilities:
+            drop:
+            - ALL
+      nodeSelector:
+        kubernetes.io/os: linux
+      serviceAccountName: kubetrain
+      securityContext:
+        fsGroup: 1001
+      volumes:
+      - name: home-ssh
+        emptyDir: {}
+      - name: project-volume
+        persistentVolumeClaim:
+          claimName: kubetrain-project
+      - name: git-config
+        configMap:
+          name: kubetrain-git-config
+      - name: prepare-ssh-dir
+        configMap:
+          name: kubetrain-prepare-ssh-dir
+          defaultMode: 0777
+      - name: git-clone
+        configMap:
+          name: kubetrain-git-clone-script
+          defaultMode: 0777
+      - name: git-ssh-key
+        secret:
+          secretName: kubetrain-workspace
+          defaultMode: 0400
+          items:
+            - key: git_ssh_key
+              path: id_rsa
+      - name: git-ssh-config
+        secret:
+          secretName: ssh-config
+          defaultMode: 0444
+          items:
+            - key: ssh_config
+              path: config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubetrain
+spec:
+  selector:
+    app: kubetrain
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+    name: kubetrain
+
