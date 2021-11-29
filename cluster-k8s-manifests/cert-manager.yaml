@@ -17347,8 +17347,7 @@ spec:
     # Enable the HTTP-01 challenge provider
     solvers:
     - http01:
-        ingress:
-          class: nginx
+        ingress: {}
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -17366,7 +17365,6 @@ spec:
     # Enable the HTTP-01 challenge provider
     solvers:
     - http01:
-        ingress:
-          class: nginx
+        ingress: {}
 
 

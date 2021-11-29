@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: 3600
     nginx.ingress.kubernetes.io/proxy-write-timeout: 3600
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-    nginx.ingress.kubernetes.io/whitelist-source-range: "178.85.97.131/32, 87.209.83.20/32"
+      # nginx.ingress.kubernetes.io/whitelist-source-range: "178.85.97.131/32, 87.209.83.20/32"
 spec:
   rules:
   - host: johndoe.k8s-training.aws-tests.skyworkz.nl

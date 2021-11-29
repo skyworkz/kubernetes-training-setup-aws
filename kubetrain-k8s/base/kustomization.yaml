@@ -6,4 +6,5 @@ namespace: kubetrain
 resources:
 - theia-deployment.yaml
 - secret.yaml
+- imagepullsecret.yaml
 

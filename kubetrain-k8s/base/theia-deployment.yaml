@@ -135,6 +135,8 @@ spec:
       labels:
         app: kubetrain
     spec:
+      imagePullSecrets:
+        - name: regcred
       initContainers:
       - name: prepare-ssh-dir
         image: busybox
@@ -153,7 +155,7 @@ spec:
         - name: git-ssh-config
           mountPath: /secret/git-ssh-config
       - name: git-clone
-        image: bennycornelissen/theia-clone-init
+        image: ghcr.io/bennycornelissen/theia-clone-init
         env:
         - name: GIT_URL
           valueFrom:
@@ -185,8 +187,8 @@ spec:
             - ALL
       containers:
       - name: ide
-        image: bennycornelissen/theia-k8s:v3
-        imagePullPolicy: Always
+        image: ghcr.io/bennycornelissen/theia-k8s:v3
+        imagePullPolicy: IfNotPresent
         volumeMounts:
         - name: git-config
           mountPath: /home/theia/.gitconfig
