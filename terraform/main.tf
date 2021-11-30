@@ -45,7 +45,7 @@ module "eks" {
       max_capacity     = 10
       min_capacity     = 0
 
-      instance_types = ["t3.medium"]
+      instance_types = ["m5.large"]
       capacity_type  = "SPOT"
       k8s_labels = {
         GithubRepo = "kubernetes-training-setup-aws"
@@ -61,9 +61,9 @@ module "eks" {
     od1 = {
       desired_capacity = 1
       max_capacity     = 10
-      min_capacity     = 1
+      min_capacity     = 0
 
-      instance_types = ["t3.medium"]
+      instance_types = ["m5.large"]
       k8s_labels = {
         GithubRepo = "kubernetes-training-setup-aws"
         GithubOrg  = "skyworkz"
@@ -75,6 +75,32 @@ module "eks" {
         max_unavailable_percentage = 50 # or set `max_unavailable`
       }
     }
+    pe = {
+      desired_capacity = 2
+      max_capacity     = 4
+      min_capacity     = 1
+
+      instance_types = ["m5.large"]
+      k8s_labels = {
+        GithubRepo = "kubernetes-training-setup-aws"
+        GithubOrg  = "skyworkz"
+        tenant     = "kubetrain"
+      }
+      additional_tags = {
+        NodeType = "ondemand"
+      }
+      taints = [
+        {
+          key    = "tenant"
+          value  = "kubetrain"
+          effect = "NO_SCHEDULE"
+        }
+      ]
+      update_config = {
+        max_unavailable_percentage = 50 # or set `max_unavailable`
+      }
+    }
+
   }
 
   map_roles    = var.map_roles

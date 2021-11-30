@@ -5,6 +5,18 @@ metadata:
   name: kubedev
 ---
 apiVersion: v1
+kind: LimitRange
+metadata:
+  name: mem-limit-range
+spec:
+  limits:
+  - default:
+      memory: 512Mi
+    defaultRequest:
+      memory: 256Mi
+    type: Container
+---
+apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kubetrain
@@ -211,6 +223,13 @@ spec:
             - ALL
       nodeSelector:
         kubernetes.io/os: linux
+        eks.amazonaws.com/capacityType: ON_DEMAND
+        tenant: kubetrain
+      tolerations:
+      - key: "tenant"
+        operator: "Equal"
+        value: "kubetrain"
+        effect: "NoSchedule"
       serviceAccountName: kubetrain
       securityContext:
         fsGroup: 1001
