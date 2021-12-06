@@ -437,6 +437,19 @@ resource "kubernetes_manifest" "deployment_kube_system_cluster_autoscaler" {
             "runAsUser"    = 65534
           }
           "serviceAccountName" = "cluster-autoscaler"
+          "nodeSelector" = {
+            "eks.amazonaws.com/capacityType" = "ON_DEMAND"
+            "kubernetes.io/os"               = "linux"
+            "tenant"                         = "kubetrain"
+          }
+          "tolerations" = [
+            {
+              "effect"   = "NoSchedule"
+              "key"      = "tenant"
+              "operator" = "Equal"
+              "value"    = "kubetrain"
+            },
+          ]
           "volumes" = [
             {
               "hostPath" = {

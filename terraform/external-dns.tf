@@ -195,6 +195,19 @@ resource "kubernetes_manifest" "deployment_external_dns" {
             "fsGroup" = 65534
           }
           "serviceAccountName" = "external-dns-sa"
+          "nodeSelector" = {
+            "eks.amazonaws.com/capacityType" = "ON_DEMAND"
+            "kubernetes.io/os"               = "linux"
+            "tenant"                         = "kubetrain"
+          }
+          "tolerations" = [
+            {
+              "effect"   = "NoSchedule"
+              "key"      = "tenant"
+              "operator" = "Equal"
+              "value"    = "kubetrain"
+            },
+          ]
         }
       }
     }

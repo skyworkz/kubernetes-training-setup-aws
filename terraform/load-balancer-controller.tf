@@ -1193,6 +1193,18 @@ resource "kubernetes_manifest" "deployment_kube_system_aws_load_balancer_control
           }
           "serviceAccountName"            = "aws-load-balancer-controller"
           "terminationGracePeriodSeconds" = 10
+          "nodeSelector" = {
+            "eks.amazonaws.com/capacityType" = "ON_DEMAND"
+            "tenant"                         = "kubetrain"
+          }
+          "tolerations" = [
+            {
+              "effect"   = "NoSchedule"
+              "key"      = "tenant"
+              "operator" = "Equal"
+              "value"    = "kubetrain"
+            },
+          ]
           "volumes" = [
             {
               "name" = "cert"

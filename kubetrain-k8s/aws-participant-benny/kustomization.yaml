@@ -7,6 +7,9 @@ namePrefix: benny-
 resources:
 - ../aws
 
+  # patchesStrategicMerge:
+  # - secret-day2.yaml
+
 patches:
 - target:
     kind: Ingress

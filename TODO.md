@@ -2,9 +2,9 @@
 
 - IRSA --> DONE
 - Nginx Ingress Controller --> DONE
-- Load balancer Controller --> not needed? Have to do some cleanup there
+- Load balancer Controller --> DONE
 - External DNS --> DONE
-- Kubetrain-k8s --> Kustomize --> IN PROGRESS
+- Kubetrain-k8s --> Kustomize --> DONE
 - SSL with wildcard so we don't overload Letsencrypt
 - Something for Secrets
 - Gitignore stuff
@@ -12,7 +12,7 @@
 - Metrics Server --> DONE
 - Cluster Autoscaler --> DONE
 - K8s Dashboard
-- K9s --> IN PROGRESS
+- K9s --> DONE
 
 
 

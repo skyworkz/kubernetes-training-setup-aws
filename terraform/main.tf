@@ -40,7 +40,7 @@ module "eks" {
   }
 
   node_groups = {
-    spot = {
+    spot1 = {
       desired_capacity = 1
       max_capacity     = 10
       min_capacity     = 0
@@ -50,6 +50,7 @@ module "eks" {
       k8s_labels = {
         GithubRepo = "kubernetes-training-setup-aws"
         GithubOrg  = "skyworkz"
+        NodeGroup  = "spot1"
       }
       additional_tags = {
         NodeType = "spot"
@@ -67,6 +68,7 @@ module "eks" {
       k8s_labels = {
         GithubRepo = "kubernetes-training-setup-aws"
         GithubOrg  = "skyworkz"
+        NodeGroup  = "od1"
       }
       additional_tags = {
         NodeType = "ondemand"
@@ -85,6 +87,7 @@ module "eks" {
         GithubRepo = "kubernetes-training-setup-aws"
         GithubOrg  = "skyworkz"
         tenant     = "kubetrain"
+        NodeGroup  = "pe"
       }
       additional_tags = {
         NodeType = "ondemand"

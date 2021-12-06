@@ -108,9 +108,9 @@ data:
         GIT_NEEDS_CLONING=0
       else
         echo "Remote not matching. Existing data will be deleted"
+        cp -R ${GIT_WORKDIR} ${GIT_WORKDIR}.old
       fi
     fi
-    ls -la
     if [[ "${GIT_NEEDS_CLONING}" -eq 1 ]]; then
       rm -rf ${GIT_WORKDIR}
       git clone ${GIT_URL} ${GIT_WORKDIR}
@@ -122,9 +122,10 @@ data:
     REQUIRED_GIT_BRANCH="participant/${MY_NAMESPACE}"
     if [[ "${CURRENT_GIT_BRANCH}" != "${REQUIRED_GIT_BRANCH}" ]]; then
       echo "Resetting Git so we can check out participant branch"
+      git clean -f -d
       git reset --hard origin/${CURRENT_GIT_BRANCH}
       echo "Checking out branch ${REQUIRED_GIT_BRANCH}.."
-      git checkout -B participant/${MY_NAMESPACE} &&
+      git checkout -B participant/${MY_NAMESPACE}
       git push -u origin participant/${MY_NAMESPACE}
     else
       echo "Already on branch ${REQUIRED_GIT_BRANCH}. Nothing to do."

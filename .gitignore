@@ -1,4 +1,5 @@
 **/secret.yaml
+**/secret-*.yaml
 **/.terraform
 terraform/kubeconfig_**
 kubetrain-k8s/base/imagepullsecret.yaml
