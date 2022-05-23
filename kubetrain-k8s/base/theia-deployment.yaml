@@ -203,6 +203,9 @@ spec:
         # image: ghcr.io/bennycornelissen/theia-k8s:v3
         image: ghcr.io/bennycornelissen/vscode-k8s:latest
         imagePullPolicy: Always
+        args:
+        - --default-folder
+        - /home/workspace/code
         volumeMounts:
         - name: git-config
           mountPath: /home/openvscode-server/.gitconfig
