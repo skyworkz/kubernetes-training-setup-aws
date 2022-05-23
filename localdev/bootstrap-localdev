@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+set -e
+set -o pipefail
+
+readonly OLD_PWD="$(pwd)"
+readonly TOPLEVEL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && git rev-parse --show-toplevel)/localdev"
+export TOPLEVEL_DIR
+
+_echo() {
+  echo "===> $*"
+}
+
+_cleanup_on_exit() {
+  _echo "Cleaning up temporary files"
+  if [[ -n "${k3d_config}" && -r "${k3d_config}" ]]; then
+    rm "${k3d_config}"
+  fi
+
+  _echo "Returning to ${OLD_PWD}"
+  cd ${OLD_PWD}
+}
+
+trap _cleanup_on_exit EXIT
+
+# We need to restore the Sealed Secrets Controller encryption key at bootstrap.
+# If we don't, it will create a new one, but it will not be able to decrypt any
+# of the SealedSecrets we deploy. We restore the key by bind-mounting it into
+# the K3S server of our cluster so that it gets automatically deployed.
+readonly sealed_secrets_encryption_key="${TOPLEVEL_DIR}/sealed-secrets/encryption-key/sealed-secrets-key-local.yaml"
+
+# Check if a sealed-secrets encryption key for local exists in the expected location:
+# ${TOPLEVEL_DIR}/sealed-secrets/encryption-key/sealed-secrets-key-local.yaml
+_echo "Checking if Sealed Secrets encryption key for local exists.."
+
+if [[ ! -f "${sealed_secrets_encryption_key}" ]]; then
+  _echo "Encryption key not found. Continuing without. A NEW KEY WILL BE CREATED AND YOUR EXISTING CERTS WILL NOT WORK!"
+  touch ${sealed_secrets_encryption_key}
+else
+  _echo "Encryption key found in ${sealed_secrets_encryption_key}. Moving on.."
+fi
+
+# Check if a Docker Hub Registry Config was supplied. We use this to authenticate
+# to Docker Hub so we don't run into the image pull rate limiting as fast
+# https://k3d.io/faq/faq/#c-authenticate-containerd-against-dockerhub
+readonly k3d_docker_registry="${LOCALDEV_DOCKER_REGISTRY_CONFIG:-${TOPLEVEL_DIR}/k3d/k3d-registries.yaml}"
+
+if [[ -n ${k3d_docker_registry} ]]; then
+  k3d_docker_registry_filepath="$(realpath ${k3d_docker_registry})"
+  if [[ -f "${k3d_docker_registry_filepath}" ]]; then
+    _echo "Setting registry config to use ${k3d_docker_registry_filepath}"
+    k3d_registry_args="--registry-config ${k3d_docker_registry_filepath}"
+  else
+    _echo "No registry config found at ${k3d_docker_registry_filepath}. Continuing without."
+    k3d_registry_args=""
+  fi
+else
+  _echo "No registry config supplied. Will run in unauthenticated mode. See https://k3d.io/faq/faq/#c-authenticate-containerd-against-dockerhub for more info"
+  k3d_registry_args=""
+fi
+
+# You can override parts of the localdev template by passing arguments to
+# the K3D command. Specify them as a string in the LOCALDEV_K3D_ARGS variable
+readonly k3d_args=${LOCALDEV_K3D_ARGS}
+
+# generate a tempfile for the rendered K3D config to be put
+readonly k3d_config="$(mktemp -t k3dconfig.XXXXXX)"
+
+# render the K3D config using the template. This will mainly resolve
+# relative paths into absolute ones, which is needed for volume mounts
+envsubst < ${TOPLEVEL_DIR}/k3d/k3d-kubetrain-localdev.yaml > ${k3d_config}
+
+# create the K3D cluster using our rendered config
+k3d cluster create ${k3d_args} ${k3d_registry_args} --config ${k3d_config}
+
+# store the kubeconfig in a convenient place
+_echo "Storing KUBECONFIG in kubeconfig/kubetrain-localdev"
+k3d kubeconfig get kubetrain-localdev > ${TOPLEVEL_DIR}/kubeconfig/kubetrain-localdev
+
+# Bonus Feature: if you are running inside tmux, we can automatically open new split
+# panes with K9s and Ngrok if you enable 'fancy tmux mode'. If you aren't inside tmux
+# this won't do anything even if you enable it. If you don't care, this won't affect
+# how you use the bootstrap
+readonly fancy_tmux_mode=${LOCALDEV_FANCY_TMUX_MODE:-0}
+
+if [[ ${fancy_tmux_mode} -eq 1 && -n ${TMUX} ]]; then
+  _echo "Fancy Tmux Mode enabled. Spawning K9s in split window.."
+  current_tmux_pane="${TMUX_PANE}"
+  tmux split-window -h -t ${current_tmux_pane} "export KUBECONFIG=${TOPLEVEL_DIR}/kubeconfig/kubetrain-localdev && k9s"
+fi
+
+## if we are not running in cluster only mode, we are going to stop here
+if [[ ${cluster_only} -ne 0 ]]; then
+  _echo "Cluster-only mode detected. That means we're done here."
+  exit 0
+fi
+
+export KUBECONFIG="${TOPLEVEL_DIR}/kubeconfig/kubetrain-localdev"
+
+_echo "Waiting for K3D cluster to become ready for further bootstrapping..."
+
+# We will use `kubectl wait` to ensure the Sealed Secrets Controller
+# are ready before we continue bootstrapping. For more info, see https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands#wait
+readonly cluster_install_timeout_seconds=${LOCALDEV_CLUSTER_INSTALL_TIMEOUT_SECONDS:-120}
+
+kubectl wait --for=condition=complete -n kube-system job/helm-install-sealed-secrets-controller --timeout=${cluster_install_timeout_seconds}s
+kubectl wait --for=condition=available -n kube-system deployment/sealed-secrets-controller --timeout=${cluster_install_timeout_seconds}s
+
+_echo "Cluster Ready"
+
+_echo "Localdev Bootstrap Done"
+

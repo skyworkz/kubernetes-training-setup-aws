@@ -1,0 +1,47 @@
+apiVersion: k3d.io/v1alpha2
+kind: Simple
+name: kubetrain-localdev
+servers: 1
+agents: 3
+kubeAPI:
+  hostPort: "6445"
+image: rancher/k3s:v1.20.9-k3s1
+volumes:
+  # This Helm chart is automatically applied by the K3D server node on launch and configures the Nginx Ingress Controller
+  - volume: ${TOPLEVEL_DIR}/cluster-init/namespaces.yaml:/var/lib/rancher/k3s/server/manifests/00-namespaces.yaml
+    nodeFilters:
+      - server[0]
+  - volume: ${TOPLEVEL_DIR}/sealed-secrets/encryption-key/sealed-secrets-key-local.yaml:/var/lib/rancher/k3s/server/manifests/01-sealed-secrets-key.yaml
+    nodeFilters:
+      - server[0]
+  - volume: ${TOPLEVEL_DIR}/k3d/helm-ingress-nginx.yaml:/var/lib/rancher/k3s/server/manifests/helm-ingress-nginx.yaml
+    nodeFilters:
+      - server[0]
+  - volume: ${TOPLEVEL_DIR}/sealed-secrets/local/helm-sealed-secrets-controller.yaml:/var/lib/rancher/k3s/server/manifests/helm-sealed-secrets-controller.yaml
+    nodeFilters:
+      - server[0]
+  - volume: ${TOPLEVEL_DIR}/sealed-secrets/local/helm-sealed-secrets-web.yaml:/var/lib/rancher/k3s/server/manifests/helm-sealed-secrets-web.yaml
+    nodeFilters:
+      - server[0]
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+options:
+  k3d:
+    wait: true
+    timeout: "120s"
+    disableLoadbalancer: false
+    disableImageVolume: false
+    disableRollback: false
+    disableHostIPInjection: false
+  k3s:
+    extraServerArgs:
+      - --no-deploy=traefik
+    extraAgentArgs: []
+  kubeconfig:
+    updateDefaultKubeconfig: false
+    switchCurrentContext: false

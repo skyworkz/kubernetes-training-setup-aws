@@ -1,0 +1,10 @@
+# This config file is used to authenticate K3s ContainerD to Docker Hub, which
+# helps with image pull rate limiting. Read more --> https://k3d.io/faq/faq/#c-authenticate-containerd-against-dockerhub
+#
+# Fill in the values and save the file as 'k3d-registries.yaml' in this directory.
+# It will not be added to git.
+configs:
+  "docker.io":
+    auth:
+      username: "<your Docker Hub username>"
+      password: "<your Docker Hub password>"

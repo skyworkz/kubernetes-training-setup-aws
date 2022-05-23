@@ -48,9 +48,7 @@ module "eks" {
       instance_types = ["m5.large"]
       capacity_type  = "SPOT"
       k8s_labels = {
-        GithubRepo = "kubernetes-training-setup-aws"
-        GithubOrg  = "skyworkz"
-        NodeGroup  = "spot1"
+        NodeGroup = "spot1"
       }
       additional_tags = {
         NodeType = "spot"
@@ -66,9 +64,7 @@ module "eks" {
 
       instance_types = ["m5.large"]
       k8s_labels = {
-        GithubRepo = "kubernetes-training-setup-aws"
-        GithubOrg  = "skyworkz"
-        NodeGroup  = "od1"
+        NodeGroup = "od1"
       }
       additional_tags = {
         NodeType = "ondemand"
@@ -84,10 +80,8 @@ module "eks" {
 
       instance_types = ["m5.large"]
       k8s_labels = {
-        GithubRepo = "kubernetes-training-setup-aws"
-        GithubOrg  = "skyworkz"
-        tenant     = "kubetrain"
-        NodeGroup  = "pe"
+        tenant    = "kubetrain"
+        NodeGroup = "pe"
       }
       additional_tags = {
         NodeType = "ondemand"
@@ -153,8 +147,8 @@ module "vpc" {
   name                 = local.name
   cidr                 = "10.0.0.0/16"
   azs                  = data.aws_availability_zones.available.names
-  private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
+  public_subnets       = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  private_subnets      = ["10.0.11.0/24", "10.0.12.0/24", "10.0.13.0/24"]
   enable_nat_gateway   = true
   single_nat_gateway   = true
   enable_dns_hostnames = true

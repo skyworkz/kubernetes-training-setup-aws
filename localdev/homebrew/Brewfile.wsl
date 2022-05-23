@@ -1,0 +1,68 @@
+# Standard components needed for Homebrew/LinuxBrew
+tap "homebrew/bundle"
+tap "homebrew/core"
+
+# Argo Workflows CLI
+brew "argo"
+
+# Library of common text manipulation utils (in particular: envsubst)
+brew "gettext"
+
+# AWS CLI
+brew "awscli"
+
+# Core utilities including development tools (compilers etc).
+brew "coreutils"
+
+# Fzf is a fuzzy search solution that is especially useful in combination with
+# other tools that support it (e.g. kubectx)
+brew "fzf"
+
+# Package manager/deployment tool for Kubernetes
+brew "helm"
+
+# K3d is used to set up local K3s clusters
+brew "k3d"
+
+# Text-based Kubernetes UI
+brew "k9s"
+
+# Show Kubernetes context in your shell prompt
+brew "kube-ps1"
+
+# Audit Kubernetes manifests or even a cluster against best-practices
+brew "kubeaudit"
+
+# Switch Kubernetes contexts or namespaces within a single Kube Config file
+brew "kubectx"
+
+# Deployment tool for Kubernetes
+brew "kustomize"
+
+# Lorem Ipsum CLI
+brew "lorem"
+
+# Inspect network connections (simpler than tcpdump)
+brew "ngrep"
+
+# Password generator
+brew "pwgen"
+
+# Static code analysis for Bash scripts
+brew "shellcheck"
+
+# Auto formatting for Bash scripts
+brew "shfmt"
+
+# Text-based UI for Git
+brew "tig"
+
+# Show directory/file trees in your terminal
+brew "tree"
+
+# Watch allows you to refresh certain commands on an interval
+# e.g. show me `kubectl get pods` every 5sec
+brew "watch"
+
+# YAML wrangling (basically the YAML cousin of jq)
+brew "yq"

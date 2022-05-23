@@ -5,6 +5,9 @@ resources:
 - ../base
 - ingress.yaml
 
+patchesStrategicMerge:
+- theia-deployment.yaml
+
 patches:
 - target:
     kind: StatefulSet

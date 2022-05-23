@@ -1,0 +1,18 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kubetrain
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+        eks.amazonaws.com/capacityType: ON_DEMAND
+        tenant: kubetrain
+      tolerations:
+      - key: "tenant"
+        operator: "Equal"
+        value: "kubetrain"
+        effect: "NoSchedule"
+

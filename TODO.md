@@ -14,5 +14,12 @@
 - K8s Dashboard
 - K9s --> DONE
 
+## v2
+
+- replace Theia with OpenVSCode Server (gitpod/openvscode-server image seems like a good start)
+- Helm Controller
+- SealedSecrets Controller (w/o automatic rotation)
+
+
 
 

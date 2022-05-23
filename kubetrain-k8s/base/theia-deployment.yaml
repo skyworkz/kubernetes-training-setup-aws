@@ -79,11 +79,11 @@ metadata:
 data:
   prepare-ssh-dir: |
     set -eu
-    MY_SSH_DIR="/home/theia/.ssh"
+    MY_SSH_DIR="/home/openvscode-server/.ssh"
     mkdir -p ${MY_SSH_DIR}
     cp /secret/git-ssh-config/config ${MY_SSH_DIR}/config
     cp /secret/git-ssh-key/id_rsa ${MY_SSH_DIR}/id_rsa
-    chown -R 1001 ${MY_SSH_DIR}
+    chown -R 1000 ${MY_SSH_DIR}
     ls -lR ${MY_SSH_DIR}
 
 ---
@@ -95,8 +95,8 @@ data:
   git-clone: |
     set -eu
     echo "Remote repo: ${GIT_URL}"
-    GIT_WORKDIR="/home/project/code"
-    GIT_SSH_KEY="/home/theia/.ssh/id_rsa"
+    GIT_WORKDIR="/home/workspace/code"
+    GIT_SSH_KEY="/home/openvscode-server/.ssh/id_rsa"
     eval $(ssh-agent -s)
     chmod 400 ${GIT_SSH_KEY}
     ssh-add ${GIT_SSH_KEY}
@@ -162,7 +162,7 @@ spec:
           mountPath: /prepare-ssh-dir
           subPath: prepare-ssh-dir
         - name: home-ssh
-          mountPath: /home/theia/.ssh
+          mountPath: /home/openvscode-server/.ssh
         - name: git-ssh-key
           mountPath: /secret/git-ssh-key
         - name: git-ssh-config
@@ -183,33 +183,34 @@ spec:
         - /bin/bash
         - -c
         - /git-clone
-        workingDir: /home/project
+        workingDir: /home/workspace
         volumeMounts:
         - name: home-ssh
-          mountPath: /home/theia/.ssh
+          mountPath: /home/openvscode-server/.ssh
         - name: project-volume
-          mountPath: /home/project
+          mountPath: /home/workspace
         - name: git-clone
           mountPath: /git-clone
           subPath: git-clone
         securityContext:
           runAsNonRoot: true
-          runAsUser: 1001
+          runAsUser: 1000
           capabilities:
             drop:
             - ALL
       containers:
       - name: ide
-        image: ghcr.io/bennycornelissen/theia-k8s:v3
-        imagePullPolicy: IfNotPresent
+        # image: ghcr.io/bennycornelissen/theia-k8s:v3
+        image: ghcr.io/bennycornelissen/vscode-k8s:latest
+        imagePullPolicy: Always
         volumeMounts:
         - name: git-config
-          mountPath: /home/theia/.gitconfig
+          mountPath: /home/openvscode-server/.gitconfig
           subPath: .gitconfig
         - name: project-volume
-          mountPath: /home/project
+          mountPath: /home/workspace
         - name: home-ssh
-          mountPath: /home/theia/.ssh
+          mountPath: /home/openvscode-server/.ssh
         ports:
         - containerPort: 3000
         resources:
@@ -218,22 +219,15 @@ spec:
             cpu: "100m"
         securityContext:
           runAsNonRoot: true
-          runAsUser: 1001
+          runAsUser: 1000
           capabilities:
             drop:
             - ALL
       nodeSelector:
         kubernetes.io/os: linux
-        eks.amazonaws.com/capacityType: ON_DEMAND
-        tenant: kubetrain
-      tolerations:
-      - key: "tenant"
-        operator: "Equal"
-        value: "kubetrain"
-        effect: "NoSchedule"
       serviceAccountName: kubetrain
       securityContext:
-        fsGroup: 1001
+        fsGroup: 1000
       volumes:
       - name: home-ssh
         emptyDir: {}
