@@ -37,5 +37,9 @@ RUN curl -sLO https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k
   mv k9s /usr/bin/k9s && \
   chmod +x /usr/bin/k9s
 
+ENV HOME=/home/openvscode-server
+
+COPY bash_aliases /home/openvscode-server/.bash_aliases
+RUN chown openvscode-server:openvscode-server /home/openvscode-server/.bash_aliases
 
 USER openvscode-server
