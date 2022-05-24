@@ -9,11 +9,52 @@ locals {
 }
 
 ################################################################################
+# Supporting Resources
+################################################################################
+
+data "aws_availability_zones" "available" {
+}
+
+resource "random_string" "suffix" {
+  length  = 8
+  special = false
+}
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "~> 3.0"
+
+  name                 = local.name
+  cidr                 = "10.0.0.0/16"
+  azs                  = data.aws_availability_zones.available.names
+  public_subnets       = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+  private_subnets      = ["10.0.11.0/24", "10.0.12.0/24", "10.0.13.0/24"]
+  enable_nat_gateway   = true
+  single_nat_gateway   = true
+  enable_dns_hostnames = true
+
+  public_subnet_tags = {
+    "kubernetes.io/cluster/${local.name}" = "shared"
+    "kubernetes.io/role/elb"              = "1"
+  }
+
+  private_subnet_tags = {
+    "kubernetes.io/cluster/${local.name}" = "shared"
+    "kubernetes.io/role/internal-elb"     = "1"
+  }
+
+  tags = {
+    GithubRepo = "kubernetes-training-setup-aws"
+    GithubOrg  = "skyworkz"
+  }
+}
+################################################################################
 # EKS Module
 ################################################################################
 
 module "eks" {
-  source = "terraform-aws-modules/eks/aws"
+  source  = "terraform-aws-modules/eks/aws"
+  version = ">= 17.22.0, < 18.0"
 
   cluster_name    = local.name
   cluster_version = local.cluster_version
@@ -128,43 +169,13 @@ provider "kubernetes" {
   token                  = data.aws_eks_cluster_auth.cluster.token
 }
 
-################################################################################
-# Supporting Resources
-################################################################################
+resource "local_sensitive_file" "k8s-svc_tfvars" {
+  filename = "../k8s-svc/terraform.tfvars"
+  content  = <<EOT
+  eks_cluster_id        = "${module.eks.cluster_id}"
+  eks_oidc_issuer_url   = "${module.eks.cluster_oidc_issuer_url}"
+  eks_oidc_provider_arn = "${module.eks.oidc_provider_arn}"
 
-data "aws_availability_zones" "available" {
-}
-
-resource "random_string" "suffix" {
-  length  = 8
-  special = false
-}
-
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0"
-
-  name                 = local.name
-  cidr                 = "10.0.0.0/16"
-  azs                  = data.aws_availability_zones.available.names
-  public_subnets       = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
-  private_subnets      = ["10.0.11.0/24", "10.0.12.0/24", "10.0.13.0/24"]
-  enable_nat_gateway   = true
-  single_nat_gateway   = true
-  enable_dns_hostnames = true
-
-  public_subnet_tags = {
-    "kubernetes.io/cluster/${local.name}" = "shared"
-    "kubernetes.io/role/elb"              = "1"
-  }
-
-  private_subnet_tags = {
-    "kubernetes.io/cluster/${local.name}" = "shared"
-    "kubernetes.io/role/internal-elb"     = "1"
-  }
-
-  tags = {
-    GithubRepo = "kubernetes-training-setup-aws"
-    GithubOrg  = "skyworkz"
-  }
+  external_dns_domain_name = "${var.domain_name}"
+EOT
 }

@@ -1,7 +1,8 @@
 **/secret.yaml
 **/secret-*.yaml
 **/.terraform
-terraform/kubeconfig_**
+**/terraform.tfvars
+terraform/**/kubeconfig_**
 kubetrain-k8s/base/imagepullsecret.yaml
 cluster-k8s-manifests/hack/**
 .envrc

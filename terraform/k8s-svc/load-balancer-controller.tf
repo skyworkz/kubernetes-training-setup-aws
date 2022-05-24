@@ -10,12 +10,12 @@ data "aws_iam_policy_document" "load_balancer_controller_assume_role_policy" {
 
     condition {
       test     = "StringEquals"
-      variable = "${replace(module.eks.cluster_oidc_issuer_url, "https://", "")}:sub"
+      variable = "${replace(var.eks_oidc_issuer_url, "https://", "")}:sub"
       values   = ["system:serviceaccount:kube-system:aws-load-balancer-controller"]
     }
 
     principals {
-      identifiers = [module.eks.oidc_provider_arn]
+      identifiers = [var.eks_oidc_provider_arn]
       type        = "Federated"
     }
   }
@@ -1140,7 +1140,7 @@ resource "kubernetes_manifest" "deployment_kube_system_aws_load_balancer_control
           "containers" = [
             {
               "args" = [
-                "--cluster-name=${module.eks.cluster_id}",
+                "--cluster-name=${var.eks_cluster_id}",
                 "--ingress-class=alb",
                 "--disable-restricted-sg-rules=true",
               ]

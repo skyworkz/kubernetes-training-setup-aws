@@ -10,12 +10,12 @@ data "aws_iam_policy_document" "external_dns_assume_role_policy" {
 
     condition {
       test     = "StringEquals"
-      variable = "${replace(module.eks.cluster_oidc_issuer_url, "https://", "")}:sub"
+      variable = "${replace(var.eks_oidc_issuer_url, "https://", "")}:sub"
       values   = ["system:serviceaccount:external-dns:external-dns-sa"]
     }
 
     principals {
-      identifiers = [module.eks.oidc_provider_arn]
+      identifiers = [var.eks_oidc_provider_arn]
       type        = "Federated"
     }
   }
@@ -180,7 +180,7 @@ resource "kubernetes_manifest" "deployment_external_dns" {
               "args" = [
                 "--source=service",
                 "--source=ingress",
-                "--domain-filter=${var.domain_name}",
+                "--domain-filter=${var.external_dns_domain_name}",
                 "--provider=aws",
                 "--policy=upsert-only",
                 "--aws-zone-type=public",

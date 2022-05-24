@@ -11,6 +11,24 @@ This repo contains the technical components for running a Kubernetes training on
 
 ## Notes
 
+### Building the setup
+
+Step 1: make sure you have the required access
+
+Step 2: generate the secrets you need
+
+Step 3: create the AWS environment with the following steps:
+
+1. Apply the `terraform/base-eks` plan. It will create the VPC and EKS cluster, and will write a `terraform.tfvars` file for the `k8s-svc` plan you will apply later.
+2. Set your `KUBECONFIG` to the generated KubeConfig, or create a new one with AWSCLI (there are some issues around K8s 1.24.0 that cause the generated config to break)
+3. Apply the `cert-manager.yaml` and `nginx-ingress.yaml` files from `cluster-k8s-manifests` directly. You may need to do this twice due to CRD ordering (this still needs fixing)
+4. Apply the `terraform/k8s-svc` plan
+
+### Localdev setup
+If you're not ready for AWS yet, you can use K3D on Docker Desktop. Make sure you have both installed (Homebrew is your friend). Then navigate to the `localdev` directory and execute the `./bootstrap-localdev` script. It makes assumptions on availability of tools, so it may not work for you. 
+
+
+
 ### Turning the setup off
 If you want to temporarily restrict all external access to running endpoints, run the following: 
 

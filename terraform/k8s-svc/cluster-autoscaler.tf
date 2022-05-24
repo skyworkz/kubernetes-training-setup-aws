@@ -10,12 +10,12 @@ data "aws_iam_policy_document" "cluster_autoscaler_assume_role_policy" {
 
     condition {
       test     = "StringEquals"
-      variable = "${replace(module.eks.cluster_oidc_issuer_url, "https://", "")}:sub"
+      variable = "${replace(var.eks_oidc_issuer_url, "https://", "")}:sub"
       values   = ["system:serviceaccount:kube-system:cluster-autoscaler"]
     }
 
     principals {
-      identifiers = [module.eks.oidc_provider_arn]
+      identifiers = [var.eks_oidc_provider_arn]
       type        = "Federated"
     }
   }
@@ -406,7 +406,7 @@ resource "kubernetes_manifest" "deployment_kube_system_cluster_autoscaler" {
                 "--skip-nodes-with-system-pods",
                 "--balance-similar-node-groups",
                 "--expander=least-waste",
-                "--node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/${module.eks.cluster_id}",
+                "--node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/${var.eks_cluster_id}",
               ]
               "image"           = "k8s.gcr.io/autoscaling/cluster-autoscaler:v1.21.0"
               "imagePullPolicy" = "Always"
