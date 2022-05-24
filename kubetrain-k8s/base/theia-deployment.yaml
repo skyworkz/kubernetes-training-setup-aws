@@ -23,13 +23,37 @@ metadata:
   namespace: kubedev
 ---
 apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: kubetrain-admin
+  namespace: kubedev
+rules:
+- apiGroups: ['*']
+  resources: ['*']
+  verbs: ['*']
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: kubedev-namespace-admin-role-binding
+  namespace: kubedev
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: kubetrain-admin
+subjects:
+- kind: ServiceAccount
+  name: kubetrain
+  namespace: kubedev
+---
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: kubedev-cluster-admin-role-binding
+  name: kubedev-cluster-reader-role-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cluster-admin
+  name: view
 subjects:
 - kind: ServiceAccount
   name: kubetrain
@@ -200,7 +224,6 @@ spec:
             - ALL
       containers:
       - name: ide
-        # image: ghcr.io/bennycornelissen/theia-k8s:v3
         image: ghcr.io/bennycornelissen/vscode-k8s:latest
         imagePullPolicy: Always
         args:
