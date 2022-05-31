@@ -9,7 +9,7 @@ data:
   url: https://argocd.k3d.localhost
 
   # local users
-  accounts.johndoe: apiKey, login
+  accounts.johndoe: login
 
   dex.config: |
     connectors:
