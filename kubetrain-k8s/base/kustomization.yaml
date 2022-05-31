@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: kubetrain
 
 resources:
-- theia-deployment.yaml
+- vscode-deployment.yaml
 - secret.yaml
 - imagepullsecret.yaml
 

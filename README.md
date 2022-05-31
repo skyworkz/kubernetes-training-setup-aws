@@ -4,7 +4,7 @@ Setup used for Kubernetes trainings on AWS
 ## What is all this?
 This repo contains the technical components for running a Kubernetes training on AWS. It includes: 
 
-1. Docker images for relevant components (e.g. Theia IDE)
+1. Docker images for relevant components (e.g. VSCode Server and helper images)
 2. Terraform setup to run an EKS environment
 3. Cluster K8s Manifests to install basic services on EKS (nginx ingress, cert-manager)
 4. Kubetrain K8s setup

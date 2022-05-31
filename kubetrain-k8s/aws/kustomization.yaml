@@ -6,7 +6,7 @@ resources:
 - ingress.yaml
 
 patchesStrategicMerge:
-- theia-deployment.yaml
+- vscode-deployment.yaml
 
 patches:
 - target:
