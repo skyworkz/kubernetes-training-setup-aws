@@ -23,6 +23,12 @@ volumes:
   - volume: ${TOPLEVEL_DIR}/sealed-secrets/local/helm-sealed-secrets-web.yaml:/var/lib/rancher/k3s/server/manifests/helm-sealed-secrets-web.yaml
     nodeFilters:
       - server[0]
+  - volume: ${TOPLEVEL_DIR}/oauth2-proxy/oauth2-proxy.yaml:/var/lib/rancher/k3s/server/manifests/oauth2-proxy.yaml
+    nodeFilters:
+      - server[0]
+  - volume: ${TOPLEVEL_DIR}/oauth2-proxy/secret-oauth2-proxy.yaml:/var/lib/rancher/k3s/server/manifests/secret-oauth2-proxy.yaml
+    nodeFilters:
+      - server[0]
 ports:
   - port: 80:80
     nodeFilters:

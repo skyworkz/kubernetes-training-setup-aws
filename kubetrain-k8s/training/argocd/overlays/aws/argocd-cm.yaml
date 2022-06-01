@@ -12,6 +12,9 @@ data:
   accounts.johndoe: login
 
   dex.config: |
+    frontend:
+      issuer: Skyworkz Training Platform
+      theme: dark
     connectors:
     - type: bitbucket-cloud
       # Required field for connector id.
@@ -21,8 +24,8 @@ data:
       config:
         # Get field 'clientID' from K8s Secret 'argocd-dex-sso-secret'
         # See https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/#sensitive-data-and-sso-client-secrets
-        clientID: $argocd-dex-sso-secret:clientID
-        clientSecret: $argocd-dex-sso-secret:clientSecret
+        clientID: $argocd-dex-sso-secret-bitbucket:clientID
+        clientSecret: $argocd-dex-sso-secret-bitbucket:clientSecret
         redirectURI: http://127.0.0.1:5556/dex/callback
         # Optional teams whitelist, communicated through the "groups" scope.
         # If `teams` is omitted, all of the user's Bitbucket teams are returned when the groups scope is present.
@@ -34,9 +37,39 @@ data:
         # If enabled, the groups claim of dex id_token will looks like this:
         # ["my_team", "my_team/administrators", "my_team/members"]
         #includeTeamGroups: true
+    - type: github
+      id: github
+      name: Github
+      config:
+        clientID: $argocd-dex-sso-secret-github:clientID
+        clientSecret: $argocd-dex-sso-secret-github:clientSecret
+        redirectURI: http://127.0.0.1:5556/dex/callback
+        orgs:
+        - name: skyworkz
+        # Include all teams as claims.
+        # - name: my-organization-with-teams
+        #   # A white list of teams. Only include group claims for these teams.
+        #   teams:
+        #   - red-team
+        #   - blue-team
+        # Flag which indicates that all user groups and teams should be loaded.
+        loadAllGroups: false
+
+        # Optional choice between 'name' (default), 'slug', or 'both'.
+        #
+        # As an example, group claims for member of 'Site Reliability Engineers' in
+        # Acme organization would yield:
+        #   - ['acme:Site Reliability Engineers'] for 'name'
+        #   - ['acme:site-reliability-engineers'] for 'slug'
+        #   - ['acme:Site Reliability Engineers', 'acme:site-reliability-engineers'] for 'both'
+        teamNameField: slug
+        # flag which will switch from using the internal GitHub id to the users handle (@mention) as the user id.
+        # It is possible for a user to change their own user name but it is very rare for them to do so
+        useLoginAsID: false
     staticClients:
     - id: oauth2-proxy
       name: 'oauth2-proxy'
       secret: proxy
       redirectURIs:
       - 'https://benny.k8s-training.aws-tests.skyworkz.nl/oauth2/callback'
+      - 'https://oauth2.k8s-training.aws-tests.skyworkz.nl/oauth2/callback'

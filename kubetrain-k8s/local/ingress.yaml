@@ -13,8 +13,8 @@ kind: Ingress
 metadata:
   name: kubetrain
   annotations:
-    nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
-    nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
+    # nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+    # nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
 spec:
   rules:
   - host: kubedev.k3d.localhost

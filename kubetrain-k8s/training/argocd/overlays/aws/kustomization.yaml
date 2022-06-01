@@ -6,7 +6,8 @@ namespace: argocd
 resources:
 - ../../base
 - ingress.yaml
-- secret-sso.yaml
+- secret-sso-bitbucket.yaml
+- secret-sso-github.yaml
 
 patchesStrategicMerge:
 - argocd-cm.yaml

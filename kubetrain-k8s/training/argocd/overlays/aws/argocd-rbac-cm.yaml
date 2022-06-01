@@ -11,5 +11,6 @@ data:
   policy.csv: |
     g, johndoe, role:admin
     g, bennycornelissen-skyworkz, role:admin
+    g, skyworkz:engineers, role:admin
     g, planonsoftware, role:readonly
 
