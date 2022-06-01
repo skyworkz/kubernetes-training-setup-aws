@@ -21,3 +21,13 @@ patches:
     - op: replace
       path: /spec/tls/0/hosts/0
       value: benny.k8s-training.aws-tests.skyworkz.nl
+- target:
+    kind: Ingress
+    name: kubetrain-oauth2-proxy
+  patch: |-
+    - op: replace
+      path: /spec/rules/0/host
+      value: benny.k8s-training.aws-tests.skyworkz.nl
+    - op: replace
+      path: /spec/tls/0/hosts/0
+      value: benny.k8s-training.aws-tests.skyworkz.nl

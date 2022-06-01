@@ -1,8 +1,20 @@
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: oauth2-proxy
+spec:
+  type: ExternalName
+  externalName: oauth2-proxy.oauth2-proxy.svc.cluster.local
+
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: kubetrain
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
 spec:
   rules:
   - host: kubedev.k3d.localhost
@@ -14,4 +26,22 @@ spec:
           service:
             name: kubetrain
             port:
-              number: 3000
+              number: 80
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubetrain-oauth2-proxy
+spec:
+  rules:
+  - host: kubedev.k3d.localhost
+    http:
+      paths:
+      - path: /oauth2
+        pathType: Prefix
+        backend:
+          service:
+            name: oauth2-proxy
+            port:
+              number: 80

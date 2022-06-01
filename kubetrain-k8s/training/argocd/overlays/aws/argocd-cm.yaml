@@ -34,4 +34,9 @@ data:
         # If enabled, the groups claim of dex id_token will looks like this:
         # ["my_team", "my_team/administrators", "my_team/members"]
         #includeTeamGroups: true
-
+    staticClients:
+    - id: oauth2-proxy
+      name: 'oauth2-proxy'
+      secret: proxy
+      redirectURIs:
+      - 'https://benny.k8s-training.aws-tests.skyworkz.nl/oauth2/callback'
