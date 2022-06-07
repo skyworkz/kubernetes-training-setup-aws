@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: argo-workflows
+
+# Unfortuntately the upstream installation manifests, while versioned, just point
+# to the :latest image tags for the workflow-controller and argocli images, which
+# breaks things that are to be deprecated in v3.4 (which are not updated in the
+# manifest...)
+images:
+- name: quay.io/argoproj/workflow-controller
+  newTag: v3.3.6
+- name: quay.io/argoproj/argocli
+  newTag: v3.3.6
+
+
+resources:
+# Create namespace
+- namespace.yaml
+# Consume Argo Workflows upstream quickstart manifest
+- https://raw.githubusercontent.com/argoproj/argo-workflows/v3.3.6/manifests/quick-start-postgres.yaml
+# Consume Argo Events upstream manifest for namespace install
+- https://raw.githubusercontent.com/argoproj/argo-events/v1.7.0/manifests/namespace-install.yaml
+# Add webhook router
+- webhook-router-deployment.yaml
+- webhook-router-nginx-config.yaml
+- webhook-router-poddisruptionbudget.yaml
+- webhook-router-service.yaml
+
+

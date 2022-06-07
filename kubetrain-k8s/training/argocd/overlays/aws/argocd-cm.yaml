@@ -8,7 +8,9 @@ metadata:
 data:
   url: https://argocd.k8s-training.aws-tests.skyworkz.nl
 
-  # local users
+  # local users. Caveat: these users are local to ArgoCD. For local users that can be
+  # used anywhere in your landscape, scroll down to the staticPasswords section of
+  # the Dex config
   accounts.johndoe: login
 
   dex.config: |
@@ -71,5 +73,16 @@ data:
       name: 'oauth2-proxy'
       secret: proxy
       redirectURIs:
-      - 'https://benny.k8s-training.aws-tests.skyworkz.nl/oauth2/callback'
       - 'https://oauth2.k8s-training.aws-tests.skyworkz.nl/oauth2/callback'
+    # Add support for local users. Caveat is that local users do NOT have
+    # any group claims, so any filtering on groups will fail for these users
+    #
+    # To create a user, you need to create a UUID and a password hash
+    # UUID: python -c 'import uuid; print uuid.uuid4()'
+    # Password: htpasswd -nBC 14 "" | tr -d ':'
+    enablePasswordDB: true
+    staticPasswords:
+    - email: "benny@skyworkz.cloud"
+      username: "benny-cloud"
+      userID: "ed1a6555-ecfc-47bf-b4c6-5fd5ccd3bb3b"
+      hash: "$2y$14$xIupl8Hw1yPav4oIXXnO6OLZXRdxPoON12ps9HxBlR8PUC4.K3iO."

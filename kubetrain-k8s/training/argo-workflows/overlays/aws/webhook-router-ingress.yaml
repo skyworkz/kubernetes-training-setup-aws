@@ -1,0 +1,27 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webhook-router-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+      # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      # cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  rules:
+  - host: '*.events.k8s-training.aws-tests.skyworkz.nl'
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: webhook-router
+            port:
+              name: webhook-router
+                # tls:
+                # - hosts:
+                #   - events.k8s-training.aws-tests.skyworkz.nl
+                #   - '*.events.k8s-training.aws-tests.skyworkz.nl'
+                #   secretName: argocd-ingress
+

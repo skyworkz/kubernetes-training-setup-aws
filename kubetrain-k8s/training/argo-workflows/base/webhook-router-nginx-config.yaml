@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webhook-router-config
+data:
+  default.conf: |
+      # Default Vhost. Used primarily for health check
+      server {
+        listen 8080;
+
+        server_name _;
+
+        # Health check enpoint to be used by K8s Readiness Probe
+        # We're returning a static HTTP 200 response. We also
+        # disable all logging to prevent endless log spam
+        location /healthz {
+          default_type application/json;
+          return 200 '{"hostname": "$hostname", "datetime": "$time_local"}';
+          access_log off;
+          log_not_found off;
+        }
+      }
+      # Vhost for webhooks
+      server {
+        listen 8080;
+
+        # server_name ~^(?<subdomain>wh-.*?)\.events\.*;
+        server_name ~^(?<subdomain>wh-.*?)\.events\.*;
+        resolver kube-dns.kube-system.svc.cluster.local valid=5s;
+
+        location /healthz {
+          return 200;
+        }
+
+        location / {
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "Upgrade";
+          proxy_pass http://$subdomain.argo-workflows.svc.cluster.local:12000;
+          proxy_set_header Host $host;
+          proxy_http_version 1.1;
+        }
+      }
+
+
