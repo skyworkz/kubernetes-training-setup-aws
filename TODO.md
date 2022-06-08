@@ -1,18 +1,9 @@
 # TODO
 
-- IRSA --> DONE
-- Nginx Ingress Controller --> DONE
-- Load balancer Controller --> DONE
-- External DNS --> DONE
-- Kubetrain-k8s --> Kustomize --> DONE
-- SSL with wildcard so we don't overload Letsencrypt
-- Something for Secrets
-- Gitignore stuff
-- Git configs per participant --> IN PROGRESS
-- Metrics Server --> DONE
-- Cluster Autoscaler --> DONE
-- K8s Dashboard
-- K9s --> DONE
+## Bugs
+- Oauth2 Proxy needs proper node selectors (it should not run on spot instances) --> IN PROGRESS
+  - fixed for oauth2-proxy deployment, but not for redis dependency (necessary options are not exposed through the Helm chart?)
+
 
 ## v2
 

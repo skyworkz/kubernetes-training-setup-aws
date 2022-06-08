@@ -16,6 +16,10 @@ spec:
   valuesContent: |-
     configuration:
       existingSecret: oauth2-proxy-secret
+    nodeSelector:
+      kubernetes.io/os: linux
+      eks.amazonaws.com/capacityType: ON_DEMAND
+    replicaCount: 2
     extraArgs:
       - --provider=oidc
       - --upstream=file:///dev/null
@@ -23,6 +27,7 @@ spec:
       - --cookie-domain=.k8s-training.aws-tests.skyworkz.nl
       - --oidc-issuer-url=https://argocd.k8s-training.aws-tests.skyworkz.nl/api/dex
       - --scope=openid profile email groups
+
 
     # Extra components to deploy next to the OAuth2 Proxy
     # We run an extra Nginx-based deployment that is built to perform arbitrary redirects
@@ -63,7 +68,7 @@ spec:
           name: oauth2-proxy-redirector
           namespace: oauth2-proxy
         spec:
-          replicas: 1
+          replicas: 2
           selector:
             matchLabels:
               k8s-app: oauth2-proxy-redirector
@@ -72,6 +77,9 @@ spec:
               labels:
                 k8s-app: oauth2-proxy-redirector
             spec:
+              nodeSelector:
+                kubernetes.io/os: linux
+                eks.amazonaws.com/capacityType: ON_DEMAND
               volumes:
                 - name: nginx
                   configMap:
