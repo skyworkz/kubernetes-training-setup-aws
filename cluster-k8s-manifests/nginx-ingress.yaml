@@ -337,12 +337,6 @@ spec:
     spec:
       nodeSelector:
         eks.amazonaws.com/capacityType: ON_DEMAND
-        tenant: kubetrain
-      tolerations:
-      - key: "tenant"
-        operator: "Equal"
-        value: "kubetrain"
-        effect: "NoSchedule"
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
