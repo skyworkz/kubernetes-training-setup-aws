@@ -16264,6 +16264,8 @@ metadata:
     app.kubernetes.io/instance: cert-manager
     app.kubernetes.io/component: "controller"
     app.kubernetes.io/version: "v1.6.0"
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::740877495907:role/cert-manager-role"
 ---
 # Source: cert-manager/templates/webhook-serviceaccount.yaml
 apiVersion: v1
@@ -17129,6 +17131,7 @@ spec:
       serviceAccountName: cert-manager
       securityContext:
         runAsNonRoot: true
+        fsGroup: 1001
       containers:
         - name: cert-manager
           image: "quay.io/jetstack/cert-manager-controller:v1.6.0"
@@ -17354,6 +17357,12 @@ spec:
     solvers:
     - http01:
         ingress: {}
+    - dns01:
+        route53:
+          region: eu-west-1
+      selector:
+        matchLabels:
+          "use-dns-solver": "true"
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -17372,5 +17381,26 @@ spec:
     solvers:
     - http01:
         ingress: {}
-
-
+    - dns01:
+        route53:
+          region: eu-west-1
+      selector:
+        matchLabels:
+          "use-dns-solver": "true"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nginx-default-cert
+  namespace: cert-manager
+  labels:
+    use-dns-solver: "true"
+spec:
+  dnsNames:
+  - k8s-training.aws-tests.skyworkz.nl
+  - '*.k8s-training.aws-tests.skyworkz.nl'
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  secretName: nginx-default-cert

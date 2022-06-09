@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s-training.aws-tests.skyworkz.nl/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.k8s-training.aws-tests.skyworkz.nl/oauth2/start?rd=/redirect/$http_host$escaped_request_uri"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+      # cert-manager.io/cluster-issuer: "letsencrypt-prod"
       # nginx.ingress.kubernetes.io/whitelist-source-range: "178.85.97.131/32, 87.209.83.20/32"
 spec:
   rules:
@@ -28,7 +28,7 @@ spec:
   tls:
   - hosts:
     - johndoe.k8s-training.aws-tests.skyworkz.nl
-    secretName: kubetrain-ingress
+      # secretName: kubetrain-ingress
 
 ## Uncomment section below if you want to run Oauth2 proxy on the same $host
 # as your ingress. The downside to doing this is that you have to add redirectURIs

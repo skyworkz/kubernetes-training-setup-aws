@@ -1,8 +1,8 @@
 # TODO
 
 ## Bugs
-- Oauth2 Proxy needs proper node selectors (it should not run on spot instances) --> IN PROGRESS
-  - fixed for oauth2-proxy deployment, but not for redis dependency (necessary options are not exposed through the Helm chart?)
+- Oauth2 Proxy needs proper node selectors (it should not run on spot instances) --> DONE
+  - fixed for oauth2-proxy deployment, but not for redis dependency (necessary options are not exposed through the Helm chart?) --> Redis seems to use PodAffinity, not entirely sure yet
 
 
 ## v2
@@ -13,19 +13,32 @@
 - ArgoCD --> DONE
 - Dex connectors --> Github + Bitbucket DONE
 - SSO option for Ingresses --> DONE (does not work on localdev)
-- SSL with wildcard so we don't overload Letsencrypt
-- Cert-manager support for DNS01 challenges (needed for wildcard certs)
+- SSL with wildcard so we don't overload Letsencrypt --> DONE
+  - Create default wildcard cert on cert-manager deployment
+  - Added default wildcard cert to Nginx config so ingresses without `tls.*.secretName` will use the default cert
+  - Moved Kubetrain Kustomize setup to use the default wildcard cert
+- Cert-manager support for DNS01 challenges (needed for wildcard certs) --> DONE
+  - use `matchLabels` selector on `dns01` solver so we solve via `http01` by default, and only use DNS when we really need to
 - Gitignore stuff
 - Refactor Terraform --> MOSTLY DONE
 - Improve modularity 
 - Automation for Docker images
+- Move to Helm charts:
+  - Nginx Ingress Controller
+  - Cert Manager
+- Move to Terraform:
+  - Nginx Ingress
+  - Cert Manager
+  - Helm Controller
+  - Oauth2 Proxy
+
 
 ## Argo Workflows training setup
 - Basic setup with namespaced quickstart (use upstream) --> DONE
 - ClusterRole granting proper permissions (look at Aggregation for ClusterRoles to decouple the RoleBinding from the ClusterRole itself -- https://kubernetes.io/docs/reference/access-authn-authz/rbac/#aggregated-clusterroles)
-- Ingress
-- Webhook Router --> IN PROGRESS
-- SSO
+- Ingress --> DONE
+- Webhook Router --> DONE
+- SSO --> DONE
 - Add Argo CLI to Kubetrain image (separate image?)
 
 ## ArgoCD training setup
