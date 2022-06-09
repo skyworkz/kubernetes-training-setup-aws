@@ -6,3 +6,10 @@ namespace: argo-workflows
 resources:
 - ../../base
 - webhook-router-ingress.yaml
+- argo-server-ingress.yaml
+- secret-argo-workflows-sso.yaml
+
+patchesStrategicMerge:
+- argo-server.yaml
+- workflow-controller-configmap.yaml
+

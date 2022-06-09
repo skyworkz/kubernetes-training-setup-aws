@@ -1,29 +1,25 @@
----
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: webhook-router-ingress
+  name: argo-server
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  labels:
-    use-dns-solver: "true"
 spec:
   rules:
-  - host: '*.events.k8s-training.aws-tests.skyworkz.nl'
+  - host: argo.k8s-training.aws-tests.skyworkz.nl
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: webhook-router
+            name: argo-server
             port:
-              name: webhook-router
+              number: 2746
   tls:
   - hosts:
-    - events.k8s-training.aws-tests.skyworkz.nl
-    - '*.events.k8s-training.aws-tests.skyworkz.nl'
-    secretName: webhook-router-ingress
-
+    - argo.k8s-training.aws-tests.skyworkz.nl
+    secretName: argo-server-ingress

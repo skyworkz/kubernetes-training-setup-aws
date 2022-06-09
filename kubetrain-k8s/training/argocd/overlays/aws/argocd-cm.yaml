@@ -74,6 +74,11 @@ data:
       secret: proxy
       redirectURIs:
       - 'https://oauth2.k8s-training.aws-tests.skyworkz.nl/oauth2/callback'
+    - id: argo-workflows
+      name: 'Argo Workflows'
+      secret: $argocd-dex-sso-argo-workflows:clientSecret
+      redirectURIs:
+      - 'https://argo.k8s-training.aws-tests.skyworkz.nl/oauth2/callback'
     # Add support for local users. Caveat is that local users do NOT have
     # any group claims, so any filtering on groups will fail for these users
     #
