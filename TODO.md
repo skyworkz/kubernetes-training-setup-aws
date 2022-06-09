@@ -3,6 +3,7 @@
 ## Bugs
 - Oauth2 Proxy needs proper node selectors (it should not run on spot instances) --> DONE
   - fixed for oauth2-proxy deployment, but not for redis dependency (necessary options are not exposed through the Helm chart?) --> Redis seems to use PodAffinity, not entirely sure yet
+- Nginx Ingress Controller is running single-instanced and has no anti-affinity set so scaling up might cause all instances to run on the same node --> DONE
 
 
 ## v2
@@ -40,6 +41,7 @@
 - Webhook Router --> DONE
 - SSO --> DONE
 - Add Argo CLI to Kubetrain image (separate image?)
+- RBAC for Kubetrain ServiceAccount
 
 ## ArgoCD training setup
 - RBAC examples
@@ -47,6 +49,7 @@
 - figure out how to use CLI with SSO --> DONE
   - Will not work from kubetrain environments as VSCode cannot launch a browser. However, from my laptop I can run `argocd login --sso <endpoint>` which will launch a browser where I can perform my SSO login
 - Add ArgoCD CLI to Kubetrain image
+- RBAC for Kubetrain ServiceAccount
 
 
 
