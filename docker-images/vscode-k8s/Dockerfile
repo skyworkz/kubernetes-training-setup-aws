@@ -9,6 +9,7 @@ RUN apt-get update && \
       dnsutils \
       curl \
       jq \
+      openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
 ARG YQ_VERSION=v4.11.2

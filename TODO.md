@@ -5,6 +5,7 @@
   - fixed for oauth2-proxy deployment, but not for redis dependency (necessary options are not exposed through the Helm chart?) --> Redis seems to use PodAffinity, not entirely sure yet
 - Nginx Ingress Controller is running single-instanced and has no anti-affinity set so scaling up might cause all instances to run on the same node --> DONE
 - Aggregated permissions for kubetrain-participant are cluster-level unless we find out how to make decoupled assignment of permissions easier
+- Docker image for vscode-k8s does not have ssh, so pushing does not work --> DONE
 
 
 ## v2
