@@ -21,6 +21,8 @@ resources:
 - https://raw.githubusercontent.com/argoproj/argo-workflows/v3.3.6/manifests/quick-start-postgres.yaml
 # Consume Argo Events upstream manifest for namespace install
 - https://raw.githubusercontent.com/argoproj/argo-events/v1.7.0/manifests/namespace-install.yaml
+# Participant RBAC - update participant clusterrole with necessary permissions
+- participant-rbac.yaml
 # Add webhook router
 - webhook-router-deployment.yaml
 - webhook-router-nginx-config.yaml

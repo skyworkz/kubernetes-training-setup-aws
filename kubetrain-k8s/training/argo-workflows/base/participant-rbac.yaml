@@ -1,0 +1,23 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: argo-workflows-user
+  labels:
+    rbac.authorization.k8s.io/aggregate-to-kubetrain-participant: "true"
+rules:
+- apiGroups:
+  - argoproj.io
+  resources:
+  - cronworkflows
+  - eventbus
+  - eventsources
+  - sensors
+  - workfloweventbindings
+  - workflows
+  - workflowtaskresults
+  - workflowtasksets
+  - workflowtemplates
+  verbs:
+  - '*'
+
+

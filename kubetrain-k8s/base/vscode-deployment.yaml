@@ -58,7 +58,19 @@ subjects:
 - kind: ServiceAccount
   name: kubetrain
   namespace: kubedev
-
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubedev-participant-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: kubetrain-participant
+subjects:
+- kind: ServiceAccount
+  name: kubetrain
+  namespace: kubedev
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

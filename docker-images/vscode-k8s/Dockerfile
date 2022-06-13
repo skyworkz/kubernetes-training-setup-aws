@@ -56,6 +56,15 @@ RUN curl -sL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/${K
     rm -rf k9s && \
     rm -f k9s.tar.gz
 
+ARG ARGO_CLI_VERSION=v3.3.6
+
+# Install Argo CLI
+RUN curl -sL -o argocli.gz https://github.com/argoproj/argo-workflows/releases/download/${ARGO_CLI_VERSION}/argo-linux-amd64.gz && \
+    gunzip argocli.gz && \
+    mv argocli /usr/bin/argo && \
+    chmod +x /usr/bin/argo
+
+
 # Fixes issue where HOME is set to /home/workspace in the parent image. This is
 # probably done to make the VSCode file explorer open there by default but it
 # breaks proper shell configuration in the process. They should've used VSCode's

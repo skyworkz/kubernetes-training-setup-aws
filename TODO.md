@@ -4,6 +4,7 @@
 - Oauth2 Proxy needs proper node selectors (it should not run on spot instances) --> DONE
   - fixed for oauth2-proxy deployment, but not for redis dependency (necessary options are not exposed through the Helm chart?) --> Redis seems to use PodAffinity, not entirely sure yet
 - Nginx Ingress Controller is running single-instanced and has no anti-affinity set so scaling up might cause all instances to run on the same node --> DONE
+- Aggregated permissions for kubetrain-participant are cluster-level unless we find out how to make decoupled assignment of permissions easier
 
 
 ## v2
@@ -40,8 +41,13 @@
 - Ingress --> DONE
 - Webhook Router --> DONE
 - SSO --> DONE
-- Add Argo CLI to Kubetrain image (separate image?)
-- RBAC for Kubetrain ServiceAccount
+- Add Argo CLI to Kubetrain image (separate image?) --> 
+  - Added to existing image
+- RBAC for Kubetrain ServiceAccount --> DONE
+  - added kubetrain-participant clusterrole in Terraform k8s-svc level with an AggregationRule so other ClusterRoles can add permissions to this ClusterRole
+  - add ClusterRole with Argo Workflows/Events permissions to argo-workflows Kustomization - add label for aggregation to kubetrain-participant
+  - add ClusterRoleBinding to kubetrain ServiceAccount which binds kubetrain-participant ClusterRole
+  - Caveat: this grants all permissions on cluster level which is a lot wider than we actually want
 
 ## ArgoCD training setup
 - RBAC examples
