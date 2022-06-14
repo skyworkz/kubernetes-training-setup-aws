@@ -99,7 +99,7 @@ module "eks" {
       }
     }
     od1 = {
-      desired_capacity = 2
+      desired_capacity = 1
       max_capacity     = 10
       min_capacity     = 1
 

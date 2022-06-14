@@ -17128,6 +17128,13 @@ spec:
         prometheus.io/scrape: 'true'
         prometheus.io/port: '9402'
     spec:
+      nodeSelector:
+        eks.amazonaws.com/capacityType: ON_DEMAND
+      tolerations:
+      - key: "tenant"
+        operator: "Equal"
+        value: "kubetrain"
+        effect: "NoSchedule"
       serviceAccountName: cert-manager
       securityContext:
         runAsNonRoot: true
@@ -17181,7 +17188,6 @@ spec:
     spec:
       nodeSelector:
         eks.amazonaws.com/capacityType: ON_DEMAND
-        tenant: kubetrain
       tolerations:
       - key: "tenant"
         operator: "Equal"

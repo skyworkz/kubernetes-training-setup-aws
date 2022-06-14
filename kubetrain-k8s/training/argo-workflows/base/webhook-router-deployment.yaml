@@ -8,12 +8,19 @@ spec:
   selector:
     matchLabels:
       app: webhook-router
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
         app: webhook-router
     spec:
+      nodeSelector:
+        eks.amazonaws.com/capacityType: ON_DEMAND
+      tolerations:
+      - key: "tenant"
+        operator: "Equal"
+        value: "kubetrain"
+        effect: "NoSchedule"
       # Keep Webhook Router Pods on separate nodes
       # Docs: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
       affinity:
@@ -60,8 +67,6 @@ spec:
             capabilities:
               drop:
               - ALL
-      nodeSelector:
-        kubernetes.io/os: linux
       securityContext:
         runAsNonRoot: true
       volumes:
