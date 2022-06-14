@@ -29,4 +29,7 @@ resources:
 - webhook-router-poddisruptionbudget.yaml
 - webhook-router-service.yaml
 
+patchesStrategicMerge:
+- minio.yaml
+
 

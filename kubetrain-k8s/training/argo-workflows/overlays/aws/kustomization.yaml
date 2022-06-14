@@ -8,6 +8,7 @@ resources:
 - webhook-router-ingress.yaml
 - argo-server-ingress.yaml
 - secret-argo-workflows-sso.yaml
+- minio-ingress.yaml
 
 patchesStrategicMerge:
 - argo-server.yaml
