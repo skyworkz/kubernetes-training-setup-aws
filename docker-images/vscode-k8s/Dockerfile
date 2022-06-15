@@ -52,7 +52,7 @@ RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx && \
 RUN curl -sL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_x86_64.tar.gz && \
     mkdir -p k9s && \
     tar xvzf k9s.tar.gz -C k9s && \
-    mv k9s /usr/bin/k9s && \
+    mv k9s/k9s /usr/bin/k9s && \
     chmod +x /usr/bin/k9s && \
     rm -rf k9s && \
     rm -f k9s.tar.gz
