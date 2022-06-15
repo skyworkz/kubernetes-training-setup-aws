@@ -30,6 +30,9 @@ resources:
 - webhook-router-service.yaml
 
 patchesStrategicMerge:
+# Alter the Deployment and Service for MinIO so the Web UI does not run on a random port,
+# as we want to expose it properly later on (port-forwarding will also not work properly
+# unless we fix this)
 - minio.yaml
 
 
