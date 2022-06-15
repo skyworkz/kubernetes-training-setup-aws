@@ -81,39 +81,39 @@ module "eks" {
   }
 
   node_groups = {
-    spot1 = {
-      desired_capacity = 1
-      max_capacity     = 10
-      min_capacity     = 0
+    # spot1 = {
+    #   desired_capacity = 1
+    #   max_capacity     = 10
+    #   min_capacity     = 0
 
-      instance_types = ["m5.large"]
-      capacity_type  = "SPOT"
-      k8s_labels = {
-        NodeGroup = "spot1"
-      }
-      additional_tags = {
-        NodeType = "spot"
-      }
-      update_config = {
-        max_unavailable_percentage = 50 # or set `max_unavailable`
-      }
-    }
-    od1 = {
-      desired_capacity = 1
-      max_capacity     = 10
-      min_capacity     = 1
+    #   instance_types = ["m5.large"]
+    #   capacity_type  = "SPOT"
+    #   k8s_labels = {
+    #     NodeGroup = "spot1"
+    #   }
+    #   additional_tags = {
+    #     NodeType = "spot"
+    #   }
+    #   update_config = {
+    #     max_unavailable_percentage = 50 # or set `max_unavailable`
+    #   }
+    # }
+    # od1 = {
+    #   desired_capacity = 1
+    #   max_capacity     = 10
+    #   min_capacity     = 0
 
-      instance_types = ["m5.large"]
-      k8s_labels = {
-        NodeGroup = "od1"
-      }
-      additional_tags = {
-        NodeType = "ondemand"
-      }
-      update_config = {
-        max_unavailable_percentage = 50 # or set `max_unavailable`
-      }
-    }
+    #   instance_types = ["m5.large"]
+    #   k8s_labels = {
+    #     NodeGroup = "od1"
+    #   }
+    #   additional_tags = {
+    #     NodeType = "ondemand"
+    #   }
+    #   update_config = {
+    #     max_unavailable_percentage = 50 # or set `max_unavailable`
+    #   }
+    # }
     pe = {
       desired_capacity = 2
       max_capacity     = 4
@@ -138,6 +138,24 @@ module "eks" {
         max_unavailable_percentage = 50 # or set `max_unavailable`
       }
     }
+    b1 = {
+      desired_capacity = 1
+      max_capacity     = 10
+      min_capacity     = 1
+
+      instance_types = ["t3.medium"]
+      k8s_labels = {
+        NodeGroup       = "b1"
+        NodePerformance = "burst"
+      }
+      additional_tags = {
+        NodeType = "ondemand"
+      }
+      update_config = {
+        max_unavailable_percentage = 50 # or set `max_unavailable`
+      }
+    }
+
 
   }
 
