@@ -23,6 +23,10 @@ resources:
 - https://raw.githubusercontent.com/argoproj/argo-events/v1.7.0/manifests/namespace-install.yaml
 # Participant RBAC - update participant clusterrole with necessary permissions
 - participant-rbac.yaml
+# Operate Workflow RBAC - necessary to allow Sensors to trigger Workflows
+- operate-workflow-rbac.yaml
+# EventBus, necessary to make Events work
+- eventbus.yaml
 # Add webhook router
 - webhook-router-deployment.yaml
 - webhook-router-nginx-config.yaml
