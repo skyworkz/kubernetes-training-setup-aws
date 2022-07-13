@@ -24,7 +24,6 @@ data:
       server {
         listen 8080;
 
-        # server_name ~^(?<subdomain>wh-.*?)\.events\.*;
         server_name ~^(?<subdomain>wh-.*?)\.events\.*;
         resolver kube-dns.kube-system.svc.cluster.local valid=5s;
 

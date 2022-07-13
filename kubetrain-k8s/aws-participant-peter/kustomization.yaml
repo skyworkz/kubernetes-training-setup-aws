@@ -1,14 +1,14 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: benny
-namePrefix: benny-
+namespace: peter
+namePrefix: peter-
 
 resources:
 - ../aws
 
-patchesStrategicMerge:
-- ingress-annotations.yaml
+  # patchesStrategicMerge:
+  # - secret-day2.yaml
 
 patches:
 - target:
@@ -17,17 +17,17 @@ patches:
   patch: |-
     - op: replace
       path: /spec/rules/0/host
-      value: benny.k8s-training.aws-tests.skyworkz.nl
+      value: peter.k8s-training.aws-tests.skyworkz.nl
     - op: replace
       path: /spec/tls/0/hosts/0
-      value: benny.k8s-training.aws-tests.skyworkz.nl
+      value: peter.k8s-training.aws-tests.skyworkz.nl
 - target:
     kind: Ingress
     name: kubetrain-oauth2-proxy
   patch: |-
     - op: replace
       path: /spec/rules/0/host
-      value: benny.k8s-training.aws-tests.skyworkz.nl
+      value: peter.k8s-training.aws-tests.skyworkz.nl
     - op: replace
       path: /spec/tls/0/hosts/0
-      value: benny.k8s-training.aws-tests.skyworkz.nl
+      value: peter.k8s-training.aws-tests.skyworkz.nl
