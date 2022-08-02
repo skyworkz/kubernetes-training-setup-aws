@@ -65,6 +65,12 @@ RUN curl -sL -o argocli.gz https://github.com/argoproj/argo-workflows/releases/d
     mv argocli /usr/bin/argo && \
     chmod +x /usr/bin/argo
 
+ARG ARGOCD_CLI_VERSION=v2.4.6
+
+# Install ArgoCD CLI
+RUN curl -sL -o /usr/bin/argocd https://github.com/argoproj/argo-cd/releases/download/${ARGOCD_CLI_VERSION}/argocd-linux-amd64 && \
+    chmod +x /usr/bin/argocd
+
 
 # Fixes issue where HOME is set to /home/workspace in the parent image. This is
 # probably done to make the VSCode file explorer open there by default but it
