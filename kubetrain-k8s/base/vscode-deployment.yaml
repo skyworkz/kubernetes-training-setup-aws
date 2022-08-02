@@ -255,6 +255,8 @@ spec:
           requests:
             memory: "500Mi"
             cpu: "100m"
+          limits:
+            memory: "1Gi"
         securityContext:
           runAsNonRoot: true
           runAsUser: 1000
