@@ -9,8 +9,8 @@ data:
   scopes: "[email,groups]"
   policy.default: role:none
   policy.csv: |
-    g, johndoe, role:admin
     g, bennycornelissen-skyworkz, role:admin
     g, skyworkz:engineers, role:admin
     g, planonsoftware, role:readonly
+    g, johndoe, role:readonly
 

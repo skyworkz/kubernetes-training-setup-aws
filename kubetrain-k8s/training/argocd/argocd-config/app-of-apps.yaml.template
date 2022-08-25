@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: training-app-of-apps-${PARTICIPANT}
+  namespace: argocd
+  labels:
+    participant: ${PARTICIPANT}
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:bennycornelissen/k8s-training-sandbox.git
+    targetRevision: participant/${PARTICIPANT}
+    path: argocd-apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+      allowEmpty: true
+    syncOptions:
+    - Validate=false
+    - CreateNamespace=true
