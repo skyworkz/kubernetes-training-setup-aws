@@ -11,7 +11,7 @@ metadata:
 spec:
   repo: https://charts.bitnami.com/bitnami
   chart: oauth2-proxy
-  version: 2.1.5
+  version: 2.1.6
   targetNamespace: oauth2-proxy
   valuesContent: |-
     configuration:
