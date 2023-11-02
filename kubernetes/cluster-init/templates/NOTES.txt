@@ -1,0 +1,16 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+To learn more about the release, try:
+
+  $ helm status {{ .Release.Name }}
+  $ helm get all {{ .Release.Name }}
+
+There is one more thing regarding the helm controller
+We are following:
+- deployment: https://github.com/k3s-io/helm-controller/blob/master/manifests/deploy-namespaced.yaml (commit: 4fd20264a4b3b7bf910c3c5db6a3c67d1837e58d)
+- namespace: https://github.com/k3s-io/helm-controller/blob/master/manifests/deploy-namespaced.yaml (commit: 4fd20264a4b3b7bf910c3c5db6a3c67d1837e58d)
+- crds: https://artifacthub.io/packages/helm/philippwaller/helm-controller (commit: ac67383a24e513de7917bd10f9b2d26347395434)
+
+> The k3s-io helm-controller repository proudly mentions that it's k3s sandboxed, whatever that means, but forgets to add the crds for at least a year... Shall we try to get sandboxed too?

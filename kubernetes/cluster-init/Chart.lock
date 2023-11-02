@@ -1,0 +1,27 @@
+dependencies:
+- name: argo-cd
+  repository: https://argoproj.github.io/argo-helm
+  version: 5.50.1
+- name: aws-load-balancer-controller
+  repository: https://aws.github.io/eks-charts
+  version: 1.6.2
+- name: cert-manager
+  repository: https://charts.jetstack.io
+  version: v1.13.2
+- name: cluster-autoscaler
+  repository: https://kubernetes.github.io/autoscaler
+  version: 9.29.4
+- name: external-dns
+  repository: https://charts.bitnami.com/bitnami
+  version: 6.28.0
+- name: metrics-server
+  repository: https://kubernetes-sigs.github.io/metrics-server/
+  version: 3.11.0
+- name: ingress-nginx
+  repository: https://kubernetes.github.io/ingress-nginx
+  version: 4.8.3
+- name: kubernetes-dashboard
+  repository: https://kubernetes.github.io/dashboard
+  version: 7.0.0-alpha1
+digest: sha256:f78599d10dc681c300b72524158f29debc0bd532d52cc5ea2c1b9c5f5c298bee
+generated: "2023-11-02T12:14:26.195826+01:00"
