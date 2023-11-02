@@ -1,16 +1,28 @@
 aws-load-balancer-controller:
+  fullnameOverride: aws-load-balancer-controller
+  namespace: kube-system
+
   clusterName: skyworkz-k8s-training-m0Mr1GVr
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/aws-load-balancer-controller-role
 
+
+
 cert-manager:
+  fullnameOverride: cert-manager
   namespace: cert-manager
+
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/cert-manager-role
 
+
+
 cluster-autoscaler:
+  fullnameOverride: cluster-autoscaler
+  namespace: kube-system
+
   autoDiscovery:
     clusterName: skyworkz-k8s-training-m0Mr1GVr
   awsRegion: eu-west-1
@@ -22,15 +34,37 @@ cluster-autoscaler:
       annotations:
         eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/cluster-autoscaler-role
 
+
+
 external-dns:
-  namespace: external-dns
+  fullnameOverride: external-dns
+  namespace: kube-system
+
   commonAnnotations:
-    iam.amazonaws.com/role: arn:aws:iam::267074127319:role/external-dns-role
+    eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/external-dns-role
   domainFilters:
     - k8s-training.aws-tests.skyworkz.nl
 
+
+
+ingress-nginx:
+  fullnameOverride: ingress-nginx
+  namespace: ingress-nginx
+
+  controller:
+    service:
+      annotations:
+        service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+        service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '60'
+        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
+        service.beta.kubernetes.io/aws-load-balancer-type: nlb
+
+
+
 kubernetes-dashboard:
+  fullnameOverride: kubernetes-dashboard
   namespace: kubernetes-dashboard
+
   # We are already installing the nginx-ingress controller, so we don't need the dashboard to install it's own.
   nginx:
     enabled:
@@ -39,13 +73,12 @@ kubernetes-dashboard:
   cert-manager:
     enabled:
       false
+  # We are already installing the metrics-server, so we don't need the dashboard to install it's own.
+  metrics-server:
+    enabled:
+      false
 
-ingress-nginx:
-  namespace: ingress-nginx
-  controller:
-    service:
-      annotations:
-        service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
-        service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '60'
-        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: 'true'
-        service.beta.kubernetes.io/aws-load-balancer-type: nlb
+
+metrics-server:
+  fullnameOverride: metrics-server
+  namespace: kube-system

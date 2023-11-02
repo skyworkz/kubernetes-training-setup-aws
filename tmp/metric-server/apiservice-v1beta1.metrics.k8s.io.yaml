@@ -1,0 +1,26 @@
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  creationTimestamp: "2023-11-01T15:59:19Z"
+  labels:
+    k8s-app: metrics-server
+  name: v1beta1.metrics.k8s.io
+  resourceVersion: "7353"
+  uid: 5207da65-84c9-4b80-b173-04dfbf4a2f10
+spec:
+  group: metrics.k8s.io
+  groupPriorityMinimum: 100
+  insecureSkipTLSVerify: true
+  service:
+    name: metrics-server
+    namespace: kube-system
+    port: 443
+  version: v1beta1
+  versionPriority: 100
+status:
+  conditions:
+  - lastTransitionTime: "2023-11-01T15:59:51Z"
+    message: all checks passed
+    reason: Passed
+    status: "True"
+    type: Available

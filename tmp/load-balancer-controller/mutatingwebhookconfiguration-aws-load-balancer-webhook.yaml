@@ -1,0 +1,75 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  annotations:
+    cert-manager.io/inject-ca-from: kube-system/aws-load-balancer-serving-cert
+  generation: 2
+  labels:
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-webhook
+webhooks:
+- admissionReviewVersions:
+  - v1beta1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURMekNDQWhlZ0F3SUJBZ0lRZE02MWhLS2ltMTRPeGRjNWpxRWw3akFOQmdrcWhraUc5dzBCQVFzRkFEQUEKTUI0WERUSXpNVEV3TVRFMU5Ua3lObG9YRFRJME1ERXpNREUxTlRreU5sb3dBRENDQVNJd0RRWUpLb1pJaHZjTgpBUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTC8yTHlpQnBqamt1QUtkOTNqTWhwSTRBZkpzd0dmeVhSMmdwakVqCnVzUVRFMEJqNmgwc0FiMktDS2VkaGZ1bENsd2Y0dW9pekJmN0NYdUhHRHk2clJOeUtYYlQ4VnVCTjBHdTdkZVEKNnU4ZUFCZ0RDcEwxY2pDY21QT25yZ2xuL1psN2NFTCtUVGRlNnhDRTVkRTVQVDFvSE9GZ2NiMXZSSStIZ21CTApzc2JrenlaZ0s5c0UwanlFa3BwdUY3b1lGMWNvTjF4WWhjeHhDSW5weXM2bkVoMTRpbFhJNnpYR3pGZHBacWdMCmhzMzNyb0FoNkh6cFpoRE1yYncvWHVEYXc3UE5vYjVoVlBVdko0TXZqcXZLczJCd011Qi9QMDBFSnk5Q2Rsd3gKQkplU0tsanFZRjFtRG00NmFwcTlMLzIyVWNtQnp2K2cwelJNaWdUa0RqSURxdGNDQXdFQUFhT0JwRENCb1RBTwpCZ05WSFE4QkFmOEVCQU1DQmFBd0RBWURWUjBUQVFIL0JBSXdBRENCZ0FZRFZSMFJBUUgvQkhZd2RJSXhZWGR6CkxXeHZZV1F0WW1Gc1lXNWpaWEl0ZDJWaWFHOXZheTF6WlhKMmFXTmxMbXQxWW1VdGMzbHpkR1Z0TG5OMlk0SS8KWVhkekxXeHZZV1F0WW1Gc1lXNWpaWEl0ZDJWaWFHOXZheTF6WlhKMmFXTmxMbXQxWW1VdGMzbHpkR1Z0TG5OMgpZeTVqYkhWemRHVnlMbXh2WTJGc01BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQTZyZ2dxL1BVOVIyTWI4ME4xCmxQTnlteW5lMW1LT1laVU50b2d0d3Zvc2gwL1JGbFN4TDdsc0toNGdURDBxalVnaGptV1Raa25wVzdOZTRhVWYKVDlQV2dKcUN0QTYyY1JYMVBtMHplTkN0SUpKN3JDNlNaSmJQb0h4eHdzVUd2b3QrQ09tUE45MU1IN1MyRzI2WgpPR1ZpSDUzb0t1YTBMM3NCdzU4M2VpRmdEOHEvQUlZWElJaXNBMkVvNlFBdjc2M01sN0xuRTJaaTkxU0xsNlAzCktKNmNrWTFRSi85dWl6OUg5ZzZnY2NId1ova2NWT3VaczZteVdocVY3MGlZSDZOd3hUbEF4ZTZudW5yeFdPR24KQ3ZYd0JNSThpNWVjVnZxemFBaTZxNExQSW1IUFlkbnkzdmhiUWZ4SlN0T3BmcnF1Z2ovcnBCKzdQV1R6b245SApEb1lzCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    service:
+      name: aws-load-balancer-webhook-service
+      namespace: kube-system
+      path: /mutate-v1-pod
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: mpod.elbv2.k8s.aws
+  namespaceSelector:
+    matchExpressions:
+    - key: elbv2.k8s.aws/pod-readiness-gate-inject
+      operator: In
+      values:
+      - enabled
+  objectSelector:
+    matchExpressions:
+    - key: app.kubernetes.io/name
+      operator: NotIn
+      values:
+      - aws-load-balancer-controller
+  reinvocationPolicy: Never
+  rules:
+  - apiGroups:
+    - ''
+    apiVersions:
+    - v1
+    operations:
+    - CREATE
+    resources:
+    - pods
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10
+- admissionReviewVersions:
+  - v1beta1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURMekNDQWhlZ0F3SUJBZ0lRZE02MWhLS2ltMTRPeGRjNWpxRWw3akFOQmdrcWhraUc5dzBCQVFzRkFEQUEKTUI0WERUSXpNVEV3TVRFMU5Ua3lObG9YRFRJME1ERXpNREUxTlRreU5sb3dBRENDQVNJd0RRWUpLb1pJaHZjTgpBUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTC8yTHlpQnBqamt1QUtkOTNqTWhwSTRBZkpzd0dmeVhSMmdwakVqCnVzUVRFMEJqNmgwc0FiMktDS2VkaGZ1bENsd2Y0dW9pekJmN0NYdUhHRHk2clJOeUtYYlQ4VnVCTjBHdTdkZVEKNnU4ZUFCZ0RDcEwxY2pDY21QT25yZ2xuL1psN2NFTCtUVGRlNnhDRTVkRTVQVDFvSE9GZ2NiMXZSSStIZ21CTApzc2JrenlaZ0s5c0UwanlFa3BwdUY3b1lGMWNvTjF4WWhjeHhDSW5weXM2bkVoMTRpbFhJNnpYR3pGZHBacWdMCmhzMzNyb0FoNkh6cFpoRE1yYncvWHVEYXc3UE5vYjVoVlBVdko0TXZqcXZLczJCd011Qi9QMDBFSnk5Q2Rsd3gKQkplU0tsanFZRjFtRG00NmFwcTlMLzIyVWNtQnp2K2cwelJNaWdUa0RqSURxdGNDQXdFQUFhT0JwRENCb1RBTwpCZ05WSFE4QkFmOEVCQU1DQmFBd0RBWURWUjBUQVFIL0JBSXdBRENCZ0FZRFZSMFJBUUgvQkhZd2RJSXhZWGR6CkxXeHZZV1F0WW1Gc1lXNWpaWEl0ZDJWaWFHOXZheTF6WlhKMmFXTmxMbXQxWW1VdGMzbHpkR1Z0TG5OMlk0SS8KWVhkekxXeHZZV1F0WW1Gc1lXNWpaWEl0ZDJWaWFHOXZheTF6WlhKMmFXTmxMbXQxWW1VdGMzbHpkR1Z0TG5OMgpZeTVqYkhWemRHVnlMbXh2WTJGc01BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQTZyZ2dxL1BVOVIyTWI4ME4xCmxQTnlteW5lMW1LT1laVU50b2d0d3Zvc2gwL1JGbFN4TDdsc0toNGdURDBxalVnaGptV1Raa25wVzdOZTRhVWYKVDlQV2dKcUN0QTYyY1JYMVBtMHplTkN0SUpKN3JDNlNaSmJQb0h4eHdzVUd2b3QrQ09tUE45MU1IN1MyRzI2WgpPR1ZpSDUzb0t1YTBMM3NCdzU4M2VpRmdEOHEvQUlZWElJaXNBMkVvNlFBdjc2M01sN0xuRTJaaTkxU0xsNlAzCktKNmNrWTFRSi85dWl6OUg5ZzZnY2NId1ova2NWT3VaczZteVdocVY3MGlZSDZOd3hUbEF4ZTZudW5yeFdPR24KQ3ZYd0JNSThpNWVjVnZxemFBaTZxNExQSW1IUFlkbnkzdmhiUWZ4SlN0T3BmcnF1Z2ovcnBCKzdQV1R6b245SApEb1lzCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    service:
+      name: aws-load-balancer-webhook-service
+      namespace: kube-system
+      path: /mutate-elbv2-k8s-aws-v1beta1-targetgroupbinding
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: mtargetgroupbinding.elbv2.k8s.aws
+  namespaceSelector: {}
+  objectSelector: {}
+  reinvocationPolicy: Never
+  rules:
+  - apiGroups:
+    - elbv2.k8s.aws
+    apiVersions:
+    - v1beta1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - targetgroupbindings
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10

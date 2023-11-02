@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRole","metadata":{"annotations":{},"name":"eks:certificate-controller-signer"},"rules":[{"apiGroups":["certificates.k8s.io"],"resourceNames":["beta.eks.amazonaws.com/app-serving"],"resources":["signers"],"verbs":["sign"]}]}
+
+      '
+  name: eks:certificate-controller-signer
+rules:
+- apiGroups:
+  - certificates.k8s.io
+  resourceNames:
+  - beta.eks.amazonaws.com/app-serving
+  resources:
+  - signers
+  verbs:
+  - sign

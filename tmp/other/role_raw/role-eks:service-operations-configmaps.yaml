@@ -1,0 +1,33 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"Role","metadata":{"annotations":{},"name":"eks:service-operations-configmaps","namespace":"kube-system"},"rules":[{"apiGroups":[""],"resourceNames":["coredns","cp-vpc-resource-controller","kube-proxy","kube-proxy-config"],"resources":["configmaps"],"verbs":["get"]},{"apiGroups":[""],"resourceNames":["aws-auth"],"resources":["configmaps"],"verbs":["get","create","delete","patch","update"]}]}
+
+      '
+  name: eks:service-operations-configmaps
+  namespace: kube-system
+rules:
+- apiGroups:
+  - ''
+  resourceNames:
+  - coredns
+  - cp-vpc-resource-controller
+  - kube-proxy
+  - kube-proxy-config
+  resources:
+  - configmaps
+  verbs:
+  - get
+- apiGroups:
+  - ''
+  resourceNames:
+  - aws-auth
+  resources:
+  - configmaps
+  verbs:
+  - get
+  - create
+  - delete
+  - patch
+  - update

@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"RoleBinding","metadata":{"annotations":{},"name":"eks:service-operations","namespace":"kube-system"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"Role","name":"eks:service-operations-configmaps"},"subjects":[{"apiGroup":"rbac.authorization.k8s.io","kind":"Group","name":"eks:service-operations"}]}
+
+      '
+  name: eks:service-operations
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: eks:service-operations-configmaps
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: eks:service-operations

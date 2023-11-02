@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRoleBinding","metadata":{"annotations":{},"name":"eks:nodewatcher"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"ClusterRole","name":"eks:nodewatcher"},"subjects":[{"apiGroup":"rbac.authorization.k8s.io","kind":"User","name":"eks:nodewatcher"}]}
+
+      '
+  name: eks:nodewatcher
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: eks:nodewatcher
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: eks:nodewatcher

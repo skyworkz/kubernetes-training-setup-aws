@@ -1,0 +1,26 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRole","metadata":{"annotations":{},"name":"eks:cloud-provider-extraction-migration"},"rules":[{"apiGroups":["coordination.k8s.io"],"resources":["leases"],"verbs":["create"]},{"apiGroups":["coordination.k8s.io"],"resourceNames":["cloud-provider-extraction-migration"],"resources":["leases"],"verbs":["create","list","get","update"]}]}
+
+      '
+  name: eks:cloud-provider-extraction-migration
+rules:
+- apiGroups:
+  - coordination.k8s.io
+  resources:
+  - leases
+  verbs:
+  - create
+- apiGroups:
+  - coordination.k8s.io
+  resourceNames:
+  - cloud-provider-extraction-migration
+  resources:
+  - leases
+  verbs:
+  - create
+  - list
+  - get
+  - update

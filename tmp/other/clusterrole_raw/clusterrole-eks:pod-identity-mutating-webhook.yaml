@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRole","metadata":{"annotations":{},"name":"eks:pod-identity-mutating-webhook"},"rules":[{"apiGroups":[""],"resources":["serviceaccounts"],"verbs":["get","watch","list"]}]}
+
+      '
+  name: eks:pod-identity-mutating-webhook
+rules:
+- apiGroups:
+  - ''
+  resources:
+  - serviceaccounts
+  verbs:
+  - get
+  - watch
+  - list

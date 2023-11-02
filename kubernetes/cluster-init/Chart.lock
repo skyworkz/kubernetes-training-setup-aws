@@ -1,7 +1,4 @@
 dependencies:
-- name: argo-cd
-  repository: https://argoproj.github.io/argo-helm
-  version: 5.50.1
 - name: aws-load-balancer-controller
   repository: https://aws.github.io/eks-charts
   version: 1.6.2
@@ -23,5 +20,5 @@ dependencies:
 - name: kubernetes-dashboard
   repository: https://kubernetes.github.io/dashboard
   version: 7.0.0-alpha1
-digest: sha256:f78599d10dc681c300b72524158f29debc0bd532d52cc5ea2c1b9c5f5c298bee
-generated: "2023-11-02T12:14:26.195826+01:00"
+digest: sha256:8767995392624d7fbf95aba748e790769b17861545110d8442257950c1be77cf
+generated: "2023-11-02T14:26:16.32476+01:00"

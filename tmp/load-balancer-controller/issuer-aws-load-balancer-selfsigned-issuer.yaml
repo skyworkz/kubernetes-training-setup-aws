@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  creationTimestamp: "2023-11-01T15:59:26Z"
+  generation: 1
+  labels:
+    app.kubernetes.io/name: aws-load-balancer-controller
+  name: aws-load-balancer-selfsigned-issuer
+  namespace: kube-system
+  resourceVersion: "7102"
+  uid: eb5bf5da-d96c-489e-814e-733ca18bd6ac
+spec:
+  selfSigned: {}
+status:
+  conditions:
+  - lastTransitionTime: "2023-11-01T15:59:26Z"
+    observedGeneration: 1
+    reason: IsReady
+    status: "True"
+    type: Ready

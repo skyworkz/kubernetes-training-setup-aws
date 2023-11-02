@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRoleBinding","metadata":{"annotations":{},"name":"eks:tagging-controller"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"ClusterRole","name":"eks:tagging-controller"},"subjects":[{"kind":"ServiceAccount","name":"tagging-controller","namespace":"kube-system"}]}
+
+      '
+  name: eks:tagging-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: eks:tagging-controller
+subjects:
+- kind: ServiceAccount
+  name: tagging-controller
+  namespace: kube-system

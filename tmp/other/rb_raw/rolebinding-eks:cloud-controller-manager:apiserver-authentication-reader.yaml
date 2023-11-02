@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"RoleBinding","metadata":{"annotations":{},"name":"eks:cloud-controller-manager:apiserver-authentication-reader","namespace":"kube-system"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"Role","name":"extension-apiserver-authentication-reader"},"subjects":[{"apiGroup":"rbac.authorization.k8s.io","kind":"User","name":"eks:cloud-controller-manager"}]}
+
+      '
+  name: eks:cloud-controller-manager:apiserver-authentication-reader
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: extension-apiserver-authentication-reader
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: eks:cloud-controller-manager

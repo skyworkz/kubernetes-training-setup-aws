@@ -1,0 +1,16 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: '{"apiVersion":"rbac.authorization.k8s.io/v1","kind":"ClusterRoleBinding","metadata":{"annotations":{},"name":"eks:az-poller"},"roleRef":{"apiGroup":"rbac.authorization.k8s.io","kind":"ClusterRole","name":"eks:az-poller"},"subjects":[{"apiGroup":"rbac.authorization.k8s.io","kind":"User","name":"eks:az-poller"}]}
+
+      '
+  name: eks:az-poller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: eks:az-poller
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: eks:az-poller
