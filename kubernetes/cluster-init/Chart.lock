@@ -9,8 +9,8 @@ dependencies:
   repository: https://kubernetes.github.io/autoscaler
   version: 9.29.4
 - name: external-dns
-  repository: https://charts.bitnami.com/bitnami
-  version: 6.28.0
+  repository: https://kubernetes-sigs.github.io/external-dns
+  version: 1.13.1
 - name: metrics-server
   repository: https://kubernetes-sigs.github.io/metrics-server/
   version: 3.11.0
@@ -20,5 +20,5 @@ dependencies:
 - name: kubernetes-dashboard
   repository: https://kubernetes.github.io/dashboard
   version: 7.0.0-alpha1
-digest: sha256:8767995392624d7fbf95aba748e790769b17861545110d8442257950c1be77cf
-generated: "2023-11-02T14:26:16.32476+01:00"
+digest: sha256:8655077bc88a431d15b93db8d65f5587b6b59909d94882cee666acd20d320905
+generated: "2023-11-06T16:51:03.923978+01:00"

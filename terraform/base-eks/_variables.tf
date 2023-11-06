@@ -21,7 +21,7 @@ variable "map_roles" {
       groups   = ["system:masters"]
     },
     {
-      rolearn  = "arn:aws:iam::267074127319:role/aws-reserved/sso.amazonaws.com/eu-west-1/AWSReservedSSO_SkyworkzConsultant_9c231eacbb927f1e"
+      rolearn  = "arn:aws:iam::267074127319:role/AWSReservedSSO_SkyworkzConsultant_9c231eacbb927f1e"
       username = "skyworkz-admin"
       groups   = ["system:masters"]
     }
