@@ -19,25 +19,35 @@ variable "map_roles" {
       rolearn  = "arn:aws:iam::740877495907:role/AWSReservedSSO_AdministratorAccess_f8a30ed3ca508212"
       username = "sso-admin"
       groups   = ["system:masters"]
+    },
+    {
+      rolearn  = "arn:aws:iam::267074127319:role/aws-reserved/sso.amazonaws.com/eu-west-1/AWSReservedSSO_SkyworkzConsultant_9c231eacbb927f1e"
+      username = "skyworkz-admin"
+      groups   = ["system:masters"]
     }
+
   ]
 }
 
 variable "map_users" {
-  description = "Additional IAM users to add to the aws-auth configmap."
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = [
+  description = <<EOT
+  Additional IAM users to add to the aws-auth configmap.
+  For example:
+  [
     {
       userarn  = "arn:aws:iam::740877495907:user/benny"
       username = "benny"
       groups   = ["system:masters"]
     },
   ]
+  EOT
+  type = list(object({
+    userarn  = string
+    username = string
+    groups   = list(string)
+  }))
+
+  default = []
 }
 
 variable "domain_name" {

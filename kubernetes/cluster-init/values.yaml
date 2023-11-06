@@ -43,7 +43,7 @@ external-dns:
   commonAnnotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/external-dns-role
   domainFilters:
-    - aws-tests.skyworkz.nl
+    - k8s.aws-tests.skyworkz.nl
 
 
 ingress-nginx:
