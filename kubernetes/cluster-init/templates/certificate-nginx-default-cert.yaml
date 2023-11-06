@@ -7,8 +7,10 @@ metadata:
     use-dns-solver: "true"
 spec:
   dnsNames:
-  - k8s-training.aws-tests.skyworkz.nl
-  - '*.k8s-training.aws-tests.skyworkz.nl'
+  - aws-tests.skyworkz.nl
+  - '*.aws-tests.skyworkz.nl'
+  - k8s.aws-tests.skyworkz.nl
+  - '*.k8s.aws-tests.skyworkz.nl'
   issuerRef:
     group: cert-manager.io
     kind: ClusterIssuer
