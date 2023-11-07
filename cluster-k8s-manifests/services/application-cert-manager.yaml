@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: kube-system
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/skyworkz/kubernetes-training-setup-aws.git
+    targetRevision: main
+    path: kubernetes/cluster-services/cert-manager
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+      - CreateNamespace=true
