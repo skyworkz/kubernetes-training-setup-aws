@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: demo
-  namespace: demo
+  namespace: participant
 spec:
   selector:
     app.kubernetes.io/name: demo

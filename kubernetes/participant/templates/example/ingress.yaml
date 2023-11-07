@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: demo
-  namespace: demo
+  namespace: participant
   annotations:
     # AWS Load Balancer Controller
     kubernetes.io/ingress.class: alb
