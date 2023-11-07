@@ -1,0 +1,14 @@
+cluster-autoscaler:
+  fullnameOverride: cluster-autoscaler
+  namespace: kube-system
+
+  autoDiscovery:
+    clusterName: skyworkz-k8s-training-m0Mr1GVr
+  awsRegion: eu-west-1
+  deployment:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/cluster-autoscaler-role
+  rbac:
+    serviceAccount:
+      annotations:
+        eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/cluster-autoscaler-role

@@ -1,0 +1,8 @@
+aws-load-balancer-controller:
+  fullnameOverride: aws-load-balancer-controller
+  namespace: kube-system
+
+  clusterName: skyworkz-k8s-training-m0Mr1GVr
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/aws-load-balancer-controller-role

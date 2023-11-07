@@ -1,0 +1,11 @@
+external-dns:
+  fullnameOverride: external-dns
+  namespace: kube-system
+
+  serviceAccount:
+    create: true
+    name: external-dns
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/external-dns-role
+  domainFilters:
+    - k8s.aws-tests.skyworkz.nl

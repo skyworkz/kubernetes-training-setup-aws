@@ -1,0 +1,8 @@
+cert-manager:
+  fullnameOverride: cert-manager
+  namespace: cert-manager
+
+  serviceAccount:
+    name: cert-manager
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/cert-manager-role
