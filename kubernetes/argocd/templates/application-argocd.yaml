@@ -11,7 +11,7 @@ spec:
     path: kubernetes/argocd
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: participant
+    namespace: kube-system
   syncPolicy:
     automated:
       selfHeal: true
