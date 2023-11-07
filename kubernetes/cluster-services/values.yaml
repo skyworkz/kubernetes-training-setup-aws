@@ -74,26 +74,6 @@ ingress-nginx:
       default-ssl-certificate: cert-manager/nginx-default-cert
 
 
-
-
-kubernetes-dashboard:
-  fullnameOverride: kubernetes-dashboard
-  namespace: kubernetes-dashboard
-
-  # We are already installing the nginx-ingress controller, so we don't need the dashboard to install it's own.
-  nginx:
-    enabled:
-      false
-  # We are already installing cert-manager, so we don't need the dashboard to install it's own.
-  cert-manager:
-    enabled:
-      false
-  # We are already installing the metrics-server, so we don't need the dashboard to install it's own.
-  metrics-server:
-    enabled:
-      false
-
-
 metrics-server:
   fullnameOverride: metrics-server
   namespace: kube-system
