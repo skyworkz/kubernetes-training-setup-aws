@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-services
+  namespace: kube-system
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/skyworkz/kubernetes-training-setup-aws.git
+    targetRevision: main
+    path: kubernetes/cluster-services
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system
