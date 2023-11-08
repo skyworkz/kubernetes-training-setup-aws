@@ -1,16 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: demo
+  name: demo2
   namespace: demo
-  annotations:
-    # AWS Load Balancer Controller
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
 spec:
-  ingressClassName: alb
+  ingressClassName: nginx
   rules:
-  - host: demo.k8s.aws-tests.skyworkz.nl
+  - host: demo2.k8s.aws-tests.skyworkz.nl
     http:
       paths:
       - path: /
@@ -22,4 +18,4 @@ spec:
               number: 8080
   tls:
   - hosts:
-    - demo.k8s.aws-tests.skyworkz.nl
+    - demo2.k8s.aws-tests.skyworkz.nl
