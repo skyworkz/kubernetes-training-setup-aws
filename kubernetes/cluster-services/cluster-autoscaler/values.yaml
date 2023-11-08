@@ -3,7 +3,7 @@ cluster-autoscaler:
   namespace: kube-system
 
   autoDiscovery:
-    clusterName: skyworkz-k8s-training-m0Mr1GVr
+    clusterName: skyworkz-k8s-training-9lLoxykW
   awsRegion: eu-west-1
   deployment:
     annotations:

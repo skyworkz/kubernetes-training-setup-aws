@@ -12,6 +12,9 @@ argo-cd:
         kubernetes.io/ingress.class: nginx
         # Avoid ERR_TOO_MANY_REDIRECTS
         nginx.ingress.kubernetes.io/rewrite-target: /
+
+        # external-dns specific configuration for creating route53 record-set
+        external-dns.alpha.kubernetes.io/hostname: argocd.k8s.aws-tests.skyworkz.nl
       ingressClassName: nginx
       hosts:
         - argocd.k8s.aws-tests.skyworkz.nl
