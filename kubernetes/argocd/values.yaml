@@ -8,8 +8,7 @@ argo-cd:
         # AWS Load Balancer Controller
         kubernetes.io/ingress.class: alb
         alb.ingress.kubernetes.io/scheme: internet-facing
-        # Ingress
-        kubernetes.io/ingress.class: nginx
+
         # Avoid ERR_TOO_MANY_REDIRECTS
         nginx.ingress.kubernetes.io/rewrite-target: /
 

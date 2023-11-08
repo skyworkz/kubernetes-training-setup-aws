@@ -7,9 +7,6 @@ metadata:
     # AWS Load Balancer Controller
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
-
-    # Cert Manager
-    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: alb
   rules:
