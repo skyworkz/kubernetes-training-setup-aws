@@ -7,13 +7,33 @@ argo-cd:
       annotations:
         # Avoid ERR_TOO_MANY_REDIRECTS
         nginx.ingress.kubernetes.io/rewrite-target: /
+        # add an annotation indicating the issuer to use.
+        cert-manager.io/cluster-issuer: letsencrypt-prod
       ingressClassName: nginx
       hosts:
         - argocd.k8s.aws-tests.skyworkz.nl
       tls:
         - hosts:
             - argocd.k8s.aws-tests.skyworkz.nl
+          secretName: argocd-tls
 
   configs:
+    cm:
+      dex.config: |
+        connectors:
+        - type: github
+          id: github
+          name: GitHub
+          config:
+            clientID: Iv1.02232c940b8f7e13
+            clientSecret: $dex.github.clientSecret
+            orgs:
+            - name: skyworkz
+
+      url: https://argocd.k8s.aws-tests.skyworkz.nl
     params:
       server.insecure: true
+
+
+
+
