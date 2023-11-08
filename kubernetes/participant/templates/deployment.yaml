@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: demo3
-  namespace: demo
+  name: participant
+  namespace: participant
   labels:
-    app.kubernetes.io/name: demo3
+    app.kubernetes.io/name: participant
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: demo3
+      app.kubernetes.io/name: participant
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: demo3
+        app.kubernetes.io/name: participant
     spec:
       containers:
-      - name: demo
+      - name: participant
         image: gcr.io/google-samples/hello-app:1.0
         ports:
         - containerPort: 8080
