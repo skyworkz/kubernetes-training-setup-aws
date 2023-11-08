@@ -4,6 +4,8 @@ aws-load-balancer-controller:
 
   clusterName: skyworkz-k8s-training-m0Mr1GVr
   serviceAccount:
+    create: true
+    name: aws-load-balancer-controller
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/aws-load-balancer-controller-role
 

@@ -14,6 +14,12 @@ data "aws_iam_policy_document" "load_balancer_controller_assume_role_policy" {
       values   = ["system:serviceaccount:kube-system:aws-load-balancer-controller"]
     }
 
+    condition {
+      test    = "StringEquals"
+      variable = "${replace(module.eks.cluster_oidc_issuer_url, "https://", "")}:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
     principals {
       identifiers = [module.eks.oidc_provider_arn]
       type        = "Federated"
@@ -21,13 +27,14 @@ data "aws_iam_policy_document" "load_balancer_controller_assume_role_policy" {
   }
 }
 
+
 resource "aws_iam_role" "load_balancer_controller_role" {
-  name               = "load-balancer-controller-role"
+  name               = "aws-load-balancer-controller-role"
   assume_role_policy = data.aws_iam_policy_document.load_balancer_controller_assume_role_policy.json
 
   inline_policy {
-    name   = "load-balancer-controller-policy"
-    policy = file("${path.module}/iam-policies/load-balancer-controller-policy.json")
+    name   = "aws-load-balancer-controller-policy"
+    policy = file("${path.module}/iam-policies/aws-load-balancer-controller-policy.json")
   }
 }
 
