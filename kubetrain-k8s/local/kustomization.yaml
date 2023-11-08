@@ -6,5 +6,5 @@ namespace: kubetrain
 resources:
 - ../base
   # - secret.yaml
-- ingress.yaml
+# - ingress.yaml
 
