@@ -57,4 +57,3 @@ variable "domain_name" {
   default = "k8s-training.aws-tests.skyworkz.nl"
 }
 
-
