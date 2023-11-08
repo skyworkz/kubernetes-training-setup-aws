@@ -26,11 +26,33 @@ argo-cd:
           name: GitHub
           config:
             clientID: Iv1.02232c940b8f7e13
-            clientSecret: $dex.github.clientSecret
+            clientSecret: $github-client-secret:dex.github.clientSecret
             orgs:
             - name: skyworkz
 
       url: https://argocd.k8s.aws-tests.skyworkz.nl
+    rbac:
+      # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
+      # If omitted or empty, users may be still be able to login, but will see no apps, projects, etc...
+      # Default: policy.default: ""
+      policy.default: ''
+
+      # Policy rules are in the form:
+      #  p, subject, resource, action, object, effect
+      # Role definitions and bindings are in the form:
+      #  g, subject, inherited-subject
+      # Default: policy.csv: ""
+      policy.csv: |
+        p, role:skyworkz-engineers-role, applications, create, */*, allow
+        p, role:skyworkz-engineers-role, applications, delete, */*, allow
+        p, role:skyworkz-engineers-role, applications, get, */*, allow
+        p, role:skyworkz-engineers-role, applications, override, */*, allow
+        p, role:skyworkz-engineers-role, applications, sync, */*, allow
+        p, role:skyworkz-engineers-role, applications, update, */*, allow
+        p, role:skyworkz-engineers-role, repositories, create, *, allow
+        p, role:skyworkz-engineers-role, repositories, update, *, allow
+        p, role:skyworkz-engineers-role, repositories, delete, *, allow
+        g, skyworkz:Engineers, role:skyworkz-engineers-role
     params:
       server.insecure: true
 

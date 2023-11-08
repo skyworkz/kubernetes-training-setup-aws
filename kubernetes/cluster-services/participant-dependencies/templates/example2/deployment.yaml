@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dem2
+  name: demo3
   namespace: demo
   labels:
-    app.kubernetes.io/name: demo2
+    app.kubernetes.io/name: demo3
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: demo2
+      app.kubernetes.io/name: demo3
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: demo2
+        app.kubernetes.io/name: demo3
     spec:
       containers:
       - name: demo
