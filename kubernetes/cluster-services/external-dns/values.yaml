@@ -1,6 +1,6 @@
 external-dns:
   fullnameOverride: external-dns
-  namespace: kube-system
+  namespaced: false
 
   serviceAccount:
     create: true
