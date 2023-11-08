@@ -1,0 +1,61 @@
+apiVersion: v2
+name: cluster-init
+description: A Helm chart for Kubernetes
+
+# A chart can be either an 'application' or a 'library' chart.
+#
+# Application charts are a collection of templates that can be packaged into versioned archives
+# to be deployed.
+#
+# Library charts provide useful utilities or functions for the chart developer. They're included as
+# a dependency of application charts to inject those utilities and functions into the rendering
+# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+# Versions are expected to follow Semantic Versioning (https://semver.org/)
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you make changes to the application. Versions are not expected to
+# follow Semantic Versioning. They should reflect the version the application is using.
+# It is recommended to use it with quotes.
+appVersion: "1.16.0"
+
+
+dependencies:
+# https://artifacthub.io/packages/helm/aws/aws-load-balancer-controller
+- name: aws-load-balancer-controller
+  version: 1.6.2
+  repository: https://aws.github.io/eks-charts
+
+# https://artifacthub.io/packages/helm/cert-manager/cert-manager
+- name: cert-manager
+  version: 1.13.2
+  repository: https://charts.jetstack.io
+
+# https://artifacthub.io/packages/helm/cluster-autoscaler/cluster-autoscaler
+- name: cluster-autoscaler
+  version: 9.29.4
+  repository: https://kubernetes.github.io/autoscaler
+
+# https://artifacthub.io/packages/helm/external-dns/external-dns
+- name: external-dns
+  version: 1.13.1
+  repository: https://kubernetes-sigs.github.io/external-dns
+
+# https://artifacthub.io/packages/helm/metrics-server/metrics-server
+- name: metrics-server
+  version: 3.11.0
+  repository: https://kubernetes-sigs.github.io/metrics-server/
+
+# https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
+- name: ingress-nginx
+  version: 4.8.3
+  repository: https://kubernetes.github.io/ingress-nginx
+
+# https://artifacthub.io/packages/helm/k8s-dashboard/kubernetes-dashboard
+- name: kubernetes-dashboard
+  version: 7.0.0-alpha1
+  repository: https://kubernetes.github.io/dashboard
