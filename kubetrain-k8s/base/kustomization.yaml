@@ -6,5 +6,5 @@ namespace: kubetrain
 resources:
 - vscode-deployment.yaml
 - secret.yaml
-- imagepullsecret.yaml
+# - imagepullsecret.yaml #<your Docker Hub passworde
 

@@ -6,3 +6,4 @@ terraform/**/kubeconfig_**
 kubetrain-k8s/base/imagepullsecret.yaml
 cluster-k8s-manifests/hack/**
 .envrc
+.DS_Store
