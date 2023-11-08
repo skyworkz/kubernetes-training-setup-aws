@@ -15,7 +15,7 @@ argo-cd:
 
         # external-dns specific configuration for creating route53 record-set
         external-dns.alpha.kubernetes.io/hostname: argocd.k8s.aws-tests.skyworkz.nl
-      ingressClassName: nginx
+      ingressClassName: alb
       hosts:
         - argocd.k8s.aws-tests.skyworkz.nl
       tls:

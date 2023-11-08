@@ -8,13 +8,10 @@ metadata:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
 
-    # Ingress
-    kubernetes.io/ingress.class: nginx
-
     # Cert Manager
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
-  ingressClassName: nginx
+  ingressClassName: alb
   rules:
   - host: demo.k8s.aws-tests.skyworkz.nl
     http:
