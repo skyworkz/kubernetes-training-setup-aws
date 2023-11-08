@@ -1,5 +1,5 @@
 apiVersion: v2
-name: external-dns
+name: KeyCloak
 description: A Helm chart for Kubernetes
 type: application
 version: 0.1.0
@@ -7,6 +7,6 @@ appVersion: "1.16.0"
 
 dependencies:
 # https://artifacthub.io/packages/helm/external-dns/external-dns
-- name: external-dns
-  version: 1.13.1
-  repository: https://kubernetes-sigs.github.io/external-dns
+- name: keycloak
+  version: 17.3.0
+  repository: https://charts.bitnami.com/bitnami

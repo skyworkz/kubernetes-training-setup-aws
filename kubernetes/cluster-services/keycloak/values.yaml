@@ -1,0 +1,34 @@
+keycloak:
+  fullnameOverride: keycloak
+  namespace: kube-system
+
+  ingress:
+    enabled: true
+    annotations:
+      # AWS Load Balancer Controller
+      kubernetes.io/ingress.class: alb
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      # Ingress
+      kubernetes.io/ingress.class: nginx
+      # Avoid ERR_TOO_MANY_REDIRECTS
+      nginx.ingress.kubernetes.io/rewrite-target: /
+    ingressClassName: nginx
+    hosts:
+      - keycloak.k8s.aws-tests.skyworkz.nl
+    tls:
+      - hosts:
+          - keycloak.k8s.aws-tests.skyworkz.nl
+
+  extraEnv: |
+    - name: KEYCLOAK_USER
+      value: admin
+    - name: KEYCLOAK_PASSWORD
+      value: admin
+
+  serviceAccount:
+    create: true
+    name: external-dns
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/external-dns-role
+  domainFilters:
+    - k8s.aws-tests.skyworkz.nl
