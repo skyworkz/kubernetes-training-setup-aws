@@ -77,6 +77,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: kubetrain-project
 spec:
+  storageClassName: gp2
   accessModes: [ "ReadWriteOnce" ]
   resources:
     requests:
@@ -204,7 +205,7 @@ spec:
         - name: git-ssh-config
           mountPath: /secret/git-ssh-config
       - name: git-clone
-        image: ghcr.io/bennycornelissen/theia-clone-init
+        image: public.ecr.aws/d1g7p6o9/ide-clone:latest
         env:
         - name: GIT_URL
           valueFrom:
@@ -236,7 +237,7 @@ spec:
             - ALL
       containers:
       - name: ide
-        image: ghcr.io/bennycornelissen/vscode-k8s:latest
+        image: public.ecr.aws/d1g7p6o9/vscode-k8s:latest
         imagePullPolicy: Always
         args:
         - --default-folder
