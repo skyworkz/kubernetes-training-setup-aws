@@ -10,6 +10,9 @@ metadata:
 
     # Ingress
     kubernetes.io/ingress.class: nginx
+
+    # Cert Manager
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   ingressClassName: nginx
   rules:
