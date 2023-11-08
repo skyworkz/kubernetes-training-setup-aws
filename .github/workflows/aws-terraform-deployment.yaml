@@ -13,7 +13,7 @@ permissions:
     issues: write
 
 jobs:
-  deploy:
+  aws-terraform-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Git Repository
