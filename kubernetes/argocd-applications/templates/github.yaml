@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: github-repository
+  namespace: {{ .Release.Namespace | quote }}
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  type: git
+  url: https://github.com/skyworkz/kubernetes-training-setup-aws
+  githubAppID: "421565"
+  githubAppInstallationID: "43750936"
+  githubAppPrivateKey: |
+    -----BEGIN RSA PRIVATE KEY-----
+    MIIEowIBAAKCAQEAm/uSgsQz2o+NgETnXIs03Qwj4Y0u861Rb15m9Nl5Fz6njcpx
+    hFzhq1q6KZ7sec01SL83s54CvDFkVEjy+OAROfXKl1yl7d8u4wtix2E67xvB55KL
+    BjAeGv7RBKf94oU6rmi8MiBFfhZQy15Kh/fIBDERo5BeQnej3HBe91Ns0vUDcUW6
+    vLDKqePvsY9SessEd2l+EuMNkgYXjVt/cQ2Ab4PciBPUL0J0LXcRQw00WSshGSHc
+    YXQUrnIkyqlXxdE4kg2suumzCo8y3DyAFg7CEW9xQVl8xOHhdkH9Eg299MGdvBhp
+    lWNMwQZmcgIx1AWUOAOGv3n+COJrXhcTlI3L9QIDAQABAoIBAGRIxvZp3Ii9WJVK
+    N5GJMnCXuI3v7mreWIgIoprzIuYt8x23NWqLKM+5Yg0WTyU0KPjfb5l8kneaLc3+
+    pLAbpxejjh/oggnAPu3cSSK0wWYva2hOEDHnR8PFZm7e7tzvGT4+uhhkJSmegU1v
+    Du4CAUeooJWPYPrM3r4ARR4wNbwep5B7vXfIPiqNIPXQ4xQ/+P+Yd+DkQCYtbcnO
+    RhX1lyBEzS5A1kp4V4qE5f+1GCjPAbac9OgO0JzMowkjp68wxPyl5sr3DQuyCBwu
+    Ec9Lg4WOoQg9zkNFRR6Y5+SiEXiRy5s59i4Li8ovILEwh0dtMLVxzDOLsXOSCFSW
+    E5DWDmECgYEAzSqoPw1DkkyUQS3FdrlmVwQDM+DkG2dPZAmhYZ6cyoYrYzapU0O/
+    hbvZ6Cgl4cA83M3BGTi/blnviKqWMDqypDgBNkkFUfnSE20P6ndK5ewnBb0BImv9
+    SPNWrWTmmwMvAfQyO9JwA7q4SjUlM9PMcHANZWFRRzbEVh/ObzJZTtkCgYEAwqFE
+    22k0khFIu+sLzgeSzxONa6uWmG0QH6xDhn++6qZGuuesnbw1TVEcvcF7EpJ4o0vq
+    JjFm1YQz94YG7/IQQgqlWu9VB2CXYbTyTmquoF9UTO0zYREGtu1djk6+H5FYD9nf
+    q1DmFv4oeNd+qfld8IQ4ZOjNIQEcNMjctMttLH0CgYAi9w8fV8JZT4XAqe1KM4SW
+    dc+Z6szVQsEL+nwvZ9muxjjkuq8Wyqf8Qax8XUM/ewSkWMh85OfzBY7GCtR3ubky
+    NX03ZDBs7Rd5Sg/5VIVGM/3eg3yLAj5zTU1LVbPbXSqIubZJ7a47ZHn945rIf2ML
+    En2l9nTknxfM2bTTzI/d2QKBgCXWfnF9iYfgLljCQGBEnqj9byAAkt19ToYp0lLi
+    oPYzb0rE4Y0k2uP2IfVOGSQqL6PnjVTxg8F82zGC7/RUBg8gzLbaEpjFkYigSf8u
+    xFZPUi9Gahez3K9RhD+3VUUD16/1NoOyzZiovquHkYtv/HBW9DPCAqco9RfZ+PZ5
+    GfdtAoGBAJ2GuG+GmPmrztUD1CyXTICTw9Jyl/KSidYrMaU5HBZ6iBQ23hrmrgbd
+    bfUkQH7i84Gql2xmrcprtukc+MXOhB6uSm/GGHW6Xu8VMQk/tJfHZO9xNAQHVk7b
+    coi4aKOycAV2mTx/3qorqdPlop8P2ic93I702TbqKx0AMb/rIjhc
+    -----END RSA PRIVATE KEY-----

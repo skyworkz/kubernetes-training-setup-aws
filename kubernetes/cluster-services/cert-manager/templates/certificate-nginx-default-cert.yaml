@@ -1,0 +1,16 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nginx-default-cert
+  namespace: cert-manager
+  labels:
+    use-dns-solver: "true"
+spec:
+  dnsNames:
+  - k8s.aws-tests.skyworkz.nl
+  - '*.k8s.aws-tests.skyworkz.nl'
+  issuerRef:
+    group: cert-manager.io
+    kind: ClusterIssuer
+    name: letsencrypt-prod
+  secretName: nginx-default-cert

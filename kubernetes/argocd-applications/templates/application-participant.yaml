@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kubernetes-participant
+  namespace: kube-system
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/skyworkz/kubernetes-training-setup-aws.git
+    targetRevision: main
+    path: kubernetes/participant
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: participant
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    syncOptions:
+    - CreateNamespace=true
