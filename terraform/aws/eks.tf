@@ -16,8 +16,7 @@ module "eks" {
 
   cluster_addons = {
     aws-ebs-csi-driver = {
-      # most_recent = true
-      service_account_role_arn = aws_iam_role.ebs_csi_driver_role.arn // Replace with the actual role ARN
+      most_recent = true
     }
     coredns    = {}
     kube-proxy = {}
@@ -42,6 +41,10 @@ module "eks" {
 
   eks_managed_node_group_defaults = {
     instance_types = ["t3.medium", "t3.large"]
+     # Needed by the aws-ebs-csi-driver
+    iam_role_additional_policies = {
+      AmazonEBSCSIDriverPolicy = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+    }
   }
 
   eks_managed_node_groups = {
