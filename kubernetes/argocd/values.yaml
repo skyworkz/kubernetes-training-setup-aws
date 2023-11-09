@@ -25,7 +25,7 @@ argo-cd:
           id: github
           name: GitHub
           config:
-            clientID: Iv1.02232c940b8f7e13
+            clientID: $github-client-secret:dex.github.clientId
             clientSecret: $github-client-secret:dex.github.clientSecret
             orgs:
             - name: skyworkz

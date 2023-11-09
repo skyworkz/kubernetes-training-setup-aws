@@ -10,8 +10,6 @@ spec:
   version: 2.1.6
   targetNamespace: oauth2-proxy
   valuesContent: |-
-    configuration:
-      existingSecret: oauth2-proxy-secret
     nodeSelector:
       kubernetes.io/os: linux
       eks.amazonaws.com/capacityType: ON_DEMAND
