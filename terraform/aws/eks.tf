@@ -3,33 +3,41 @@
 ################################################################################
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = ">= 17.22.0, < 18.0"
+  version = "19.19.0"
 
   cluster_name    = local.name
   cluster_version = local.cluster_version
 
   vpc_id  = module.vpc.vpc_id
-  subnets = module.vpc.private_subnets
+  subnet_ids = module.vpc.private_subnets
 
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
 
+  cluster_addons = {
+    aws-ebs-csi-driver = {}
+    coredns    = {}
+    kube-proxy = {}
+  }
+
   enable_irsa = true
 
   cluster_enabled_log_types = [
-    "api",
-    "audit",
-    "authenticator",
-    "controllerManager",
+    # "api",
+    # "audit",
+    # "authenticator",
+    # "controllerManager",
     "scheduler"
   ]
 
-  node_groups_defaults = {
-    ami_type  = "AL2_x86_64"
-    disk_size = 50
+  cloudwatch_log_group_retention_in_days = 5
+  iam_role_name   = local.name
+
+  eks_managed_node_group_defaults = {
+    instance_types = ["t3.medium", "t3.large"]
   }
 
-  node_groups = {
+  eks_managed_node_groups = {
     # spot1 = {
     #   desired_capacity = 1
     #   max_capacity     = 10
@@ -106,9 +114,10 @@ module "eks" {
     }
   }
 
-  map_roles    = var.map_roles
-  map_users    = var.map_users
-  map_accounts = var.map_accounts
+  # aws-auth configmap
+  manage_aws_auth_configmap = true
+  aws_auth_roles    = var.aws_auth_roles
+  aws_auth_users    = var.aws_auth_users
 
   tags = {
     GithubRepo = "kubernetes-training-setup-aws"
