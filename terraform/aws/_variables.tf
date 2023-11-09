@@ -1,4 +1,4 @@
-variable "map_accounts" {
+variable "aws_auth_accounts" {
   description = "Additional AWS account numbers to add to the aws-auth configmap."
   type        = list(string)
 
@@ -6,7 +6,7 @@ variable "map_accounts" {
   ]
 }
 
-variable "map_roles" {
+variable "aws_auth_roles" {
   description = "Additional IAM roles to add to the aws-auth configmap."
   type = list(object({
     rolearn  = string
@@ -29,7 +29,7 @@ variable "map_roles" {
   ]
 }
 
-variable "map_users" {
+variable "aws_auth_users" {
   description = <<EOT
   Additional IAM users to add to the aws-auth configmap.
   For example:

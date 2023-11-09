@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: oauth2-proxy
+  namespace: oauth2-proxy
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-write-timeout: "3600"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+     # add an annotation indicating the issuer to use.
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: oauth2.k8s.aws-tests.skyworkz.nl
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: oauth2-proxy
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - oauth2.k8s.aws-tests.skyworkz.nl
+    secretName: oauth2-proxy-ingress

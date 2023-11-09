@@ -8,7 +8,7 @@ resource "random_string" "suffix" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0"
+  version = "~> 5.1.2"
 
   name                 = local.name
   cidr                 = "10.0.0.0/16"
