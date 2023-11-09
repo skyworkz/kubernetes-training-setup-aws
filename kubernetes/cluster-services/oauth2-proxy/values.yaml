@@ -1,6 +1,6 @@
 oauth2-proxy:
-  configuration:
-    existingSecret: oauth2-proxy-secret
+  #configuration:
+  #  existingSecret: oauth2-proxy-secret
   nodeSelector:
     kubernetes.io/os: linux
     eks.amazonaws.com/capacityType: ON_DEMAND
