@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/skyworkz/kubernetes-training-setup-aws.git
     targetRevision: main
-    path: kubernetes/oauth2-proxy
+    path: kubernetes/cluster-services/oauth2-proxy
   destination:
     server: "https://kubernetes.default.svc"
     namespace: oauth2-proxy
