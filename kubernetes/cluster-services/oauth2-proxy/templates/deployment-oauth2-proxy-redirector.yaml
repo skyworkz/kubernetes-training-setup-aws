@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: oauth2-proxy-redirector
+  namespace: kube-system
   labels:
     k8s-app: oauth2-proxy-redirector
-  name: oauth2-proxy-redirector
-  namespace: oauth2-proxy
 spec:
   replicas: 2
   selector:

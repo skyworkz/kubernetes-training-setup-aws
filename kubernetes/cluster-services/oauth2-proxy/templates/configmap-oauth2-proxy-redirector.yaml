@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: oauth2-proxy-nginx
-  namespace: oauth2-proxy
+  namespace: kube-system
 data:
   nginx.conf: |
     worker_processes 5;

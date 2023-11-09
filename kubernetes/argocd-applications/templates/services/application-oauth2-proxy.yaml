@@ -11,10 +11,8 @@ spec:
     path: kubernetes/cluster-services/oauth2-proxy
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: oauth2-proxy
+    namespace: kube-system
   syncPolicy:
     automated:
       selfHeal: true
       prune: true
-    syncOptions:
-      - CreateNamespace=true
