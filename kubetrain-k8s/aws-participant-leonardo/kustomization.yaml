@@ -18,6 +18,9 @@ patches:
     - op: replace
       path: /spec/tls/0/hosts/0
       value:  leonardo.k8s.aws-tests.skyworkz.nl
+    - op: replace
+      path: /spec/tls/0/secretName
+      value:  leonardo-tls
 - target:
     kind: Ingress
     name: kubetrain-oauth2-proxy
