@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: oauth2-proxy-nginx
+  name: oauth2-proxy-redirector
   namespace: kube-system
 data:
   nginx.conf: |
