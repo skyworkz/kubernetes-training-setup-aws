@@ -20,6 +20,10 @@ module "eks" {
     kube-proxy = {}
   }
 
+  kms_key_administrators = [
+    "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+  ]
+
   enable_irsa = true
 
   cluster_enabled_log_types = [
