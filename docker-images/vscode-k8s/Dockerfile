@@ -1,5 +1,6 @@
 #FROM gitpod/openvscode-server:1.67.2
-FROM gitpod/openvscode-server:1.84.0
+# FROM gitpod/openvscode-server:1.84.0
+FROM gitpod/openvscode-server:1.73.1
 
 USER root
 
