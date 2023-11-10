@@ -96,7 +96,7 @@ spec:
             - ALL
       nodeSelector:
         kubernetes.io/os: linux
-      serviceAccountName: participant-{{ .Values.participant.name }}
+      serviceAccountName: {{ .Values.participant.name }}
       securityContext:
         fsGroup: 1000
       volumes:
