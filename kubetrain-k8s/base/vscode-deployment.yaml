@@ -205,7 +205,8 @@ spec:
         - name: git-ssh-config
           mountPath: /secret/git-ssh-config
       - name: git-clone
-        image: public.ecr.aws/d1g7p6o9/ide-clone:latest
+        #image: public.ecr.aws/d1g7p6o9/ide-clone:latest
+        image: 267074127319.dkr.ecr.eu-west-1.amazonaws.com/ide-clone
         env:
         - name: GIT_URL
           valueFrom:
@@ -237,7 +238,8 @@ spec:
             - ALL
       containers:
       - name: ide
-        image: public.ecr.aws/d1g7p6o9/vscode-k8s:latest
+        # image: public.ecr.aws/d1g7p6o9/vscode-k8s:latest
+        image: 267074127319.dkr.ecr.eu-west-1.amazonaws.com/vscode-k8s
         imagePullPolicy: Always
         args:
         - --default-folder
