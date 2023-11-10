@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.participant.name }}-project
-  namespace: {{ .Release.namespace }}
+  namespace: {{ .values.namespace }}
 spec:
   storageClassName: gp2
   accessModes: [ "ReadWriteOnce" ]

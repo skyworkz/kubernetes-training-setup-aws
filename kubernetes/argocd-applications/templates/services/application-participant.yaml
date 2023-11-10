@@ -11,13 +11,12 @@ spec:
     path: kubernetes/participant
     helm:
       values: |
+        namespace: john-doe
         participant.name: john-doe
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: participant-john-doe
+    namespace: kube-system
   syncPolicy:
     automated:
       selfHeal: true
       prune: true
-    syncOptions:
-      - CreateNamespace=true

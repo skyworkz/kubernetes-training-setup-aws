@@ -1,2 +1,4 @@
+namespace: "johndoe"
+
 participant:
   name: "johndoe"
