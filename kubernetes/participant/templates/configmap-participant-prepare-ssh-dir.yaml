@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: participant-prepare-ssh-dir
-  namespace: {{ .values.namespace }}
+  namespace: {{ .Values.namespace }}
 data:
   prepare-ssh-dir: |
     set -eu

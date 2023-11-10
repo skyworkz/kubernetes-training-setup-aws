@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: participant-git-clone-script
-  namespace: {{ .values.namespace }}
+  namespace: {{ .Values.namespace }}
 data:
   git-clone: |
     set -eu

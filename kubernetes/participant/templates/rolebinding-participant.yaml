@@ -2,7 +2,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: participant-{{ .Values.participant.name }}-role-binding
-  namespace: {{ .values.namespace }}
+  namespace: {{ .Values.namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -10,4 +10,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ .Values.participant.name }}
-  namespace: {{ .values.namespace }}
+  namespace: {{ .Values.namespace }}

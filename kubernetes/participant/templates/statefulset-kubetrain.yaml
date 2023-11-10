@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: {{ .Values.participant.name }}
-  namespace: {{ .values.namespace }}
+  namespace: {{ .Values.namespace }}
   labels:
     app: {{ .Values.participant.name }}
 spec:
