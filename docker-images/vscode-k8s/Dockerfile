@@ -1,4 +1,5 @@
-FROM gitpod/openvscode-server:1.67.2
+#FROM gitpod/openvscode-server:1.67.2
+FROM gitpod/openvscode-server:1.84.0
 
 USER root
 
@@ -13,10 +14,10 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 ARG YQ_VERSION=v4.11.2
-ARG KUBECTL_VERSION=1.21.2
-ARG KUSTOMIZE_VERSION=v4.1.3
-ARG HELM_VERSION=v3.9.0
-ARG K9S_VERSION=v0.24.15
+ARG KUBECTL_VERSION=1.28.3
+ARG KUSTOMIZE_VERSION=v5.2.1
+ARG HELM_VERSION=v3.13.2
+ARG K9S_VERSION=v0.28.0
 
 # Install YQ
 RUN curl -sL -o /usr/bin/yq https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 &&\
@@ -49,7 +50,7 @@ RUN git clone https://github.com/ahmetb/kubectx /opt/kubectx && \
     ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 # Install K9s
-RUN curl -sL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_x86_64.tar.gz && \
+RUN curl -sL -o k9s.tar.gz https://github.com/derailed/k9s/releases/download/${K9S_VERSION}/k9s_Linux_amd64.tar.gz && \
     mkdir -p k9s && \
     tar xvzf k9s.tar.gz -C k9s && \
     mv k9s/k9s /usr/bin/k9s && \
