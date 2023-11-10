@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: participant-prepare-ssh-dir
+  namespace: {{ .Release.namespace }}
+data:
+  prepare-ssh-dir: |
+    set -eu
+    MY_SSH_DIR="/home/openvscode-server/.ssh"
+    mkdir -p ${MY_SSH_DIR}
+    cp /secret/git-ssh-config/config ${MY_SSH_DIR}/config
+    cp /secret/git-ssh-key/id_rsa ${MY_SSH_DIR}/id_rsa
+    chown -R 1000 ${MY_SSH_DIR}
+    ls -lR ${MY_SSH_DIR}

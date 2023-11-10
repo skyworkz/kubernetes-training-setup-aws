@@ -1,25 +1,25 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: participant
-  namespace: participant
+  name: {{ .Values.participant.name }}
+  namespace: {{ .Release.namespace }}
   annotations:
     # add an annotation indicating the issuer to use.
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
   rules:
-  - host: participant.k8s.aws-tests.skyworkz.nl
+  - host: {{ .Values.participant.name }}.k8s.aws-tests.skyworkz.nl
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: participant
+            name: {{ .Values.participant.name }}
             port:
-              number: 8080
+              number: 3000
   tls:
   - hosts:
-    - participant.k8s.aws-tests.skyworkz.nl
-    secretName: participant-tls
+    - {{ .Values.participant.name }}.k8s.aws-tests.skyworkz.nl
+    secretName: {{ .Values.participant.name }}-tls

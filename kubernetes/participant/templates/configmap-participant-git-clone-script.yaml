@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: participant-git-clone-script
+  namespace: {{ .Release.namespace }}
+data:
+  git-clone: |
+    set -eu
+    echo "Remote repo: ${GIT_URL}"
+    GIT_WORKDIR="/home/workspace/code"
+    GIT_SSH_KEY="/home/openvscode-server/.ssh/id_rsa"
+    eval $(ssh-agent -s)
+    chmod 400 ${GIT_SSH_KEY}
+    ssh-add ${GIT_SSH_KEY}
+    GIT_NEEDS_CLONING=1
+    if [[ -d "${GIT_WORKDIR}/.git" ]]; then
+      EXISTING_REMOTE_URL="$(git --git-dir ${GIT_WORKDIR}/.git remote get-url origin)"
+      if [[ "${EXISTING_REMOTE_URL}" == "${GIT_URL}" ]]; then
+        echo "Nothing to do"
+        GIT_NEEDS_CLONING=0
+      else
+        echo "Remote not matching. Existing data will be deleted"
+        cp -R ${GIT_WORKDIR} ${GIT_WORKDIR}.old
+      fi
+    fi
+    if [[ "${GIT_NEEDS_CLONING}" -eq 1 ]]; then
+      rm -rf ${GIT_WORKDIR}
+      git clone ${GIT_URL} ${GIT_WORKDIR}
+    fi
+    cd ${GIT_WORKDIR} &&
+    ls -l
+    git status
+    CURRENT_GIT_BRANCH="$(git symbolic-ref --short HEAD)"
+    REQUIRED_GIT_BRANCH="participant/${MY_NAMESPACE}"
+    if [[ "${CURRENT_GIT_BRANCH}" != "${REQUIRED_GIT_BRANCH}" ]]; then
+      echo "Resetting Git so we can check out participant branch"
+      git clean -f -d
+      git reset --hard origin/${CURRENT_GIT_BRANCH}
+      echo "Checking out branch ${REQUIRED_GIT_BRANCH}.."
+      git checkout -B participant/${MY_NAMESPACE}
+      git push -u origin participant/${MY_NAMESPACE}
+    else
+      echo "Already on branch ${REQUIRED_GIT_BRANCH}. Nothing to do."
+    fi

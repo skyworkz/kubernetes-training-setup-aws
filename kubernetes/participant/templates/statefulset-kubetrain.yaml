@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.participant.name }}
+  namespace: {{ .Release.namespace }}
+  labels:
+    app: {{ .Values.participant.name }}
+spec:
+  serviceName: {{ .Values.participant.name }}
+  selector:
+    matchLabels:
+      app: {{ .Values.participant.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.participant.name }}
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      initContainers:
+      - name: prepare-ssh-dir
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        - /prepare-ssh-dir
+        volumeMounts:
+        - name: prepare-ssh-dir
+          mountPath: /prepare-ssh-dir
+          subPath: prepare-ssh-dir
+        - name: home-ssh
+          mountPath: /home/openvscode-server/.ssh
+        - name: git-ssh-key
+          mountPath: /secret/git-ssh-key
+        - name: git-ssh-config
+          mountPath: /secret/git-ssh-config
+      - name: git-clone
+        image: public.ecr.aws/d1g7p6o9/ide-clone:latest
+        env:
+        - name: GIT_URL
+          valueFrom:
+            secretKeyRef:
+              name: participant-workspace
+              key: git_url
+        - name: MY_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        command:
+        - /bin/bash
+        - -c
+        - /git-clone
+        workingDir: /home/workspace
+        volumeMounts:
+        - name: home-ssh
+          mountPath: /home/openvscode-server/.ssh
+        - name: project-volume
+          mountPath: /home/workspace
+        - name: git-clone
+          mountPath: /git-clone
+          subPath: git-clone
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          capabilities:
+            drop:
+            - ALL
+      containers:
+      - name: ide
+        image: public.ecr.aws/d1g7p6o9/vscode-k8s:latest
+        imagePullPolicy: Always
+        args:
+        - --default-folder
+        - /home/workspace/code
+        volumeMounts:
+        - name: git-config
+          mountPath: /home/openvscode-server/.gitconfig
+          subPath: .gitconfig
+        - name: project-volume
+          mountPath: /home/workspace
+        - name: home-ssh
+          mountPath: /home/openvscode-server/.ssh
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "100m"
+          limits:
+            memory: "1Gi"
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          capabilities:
+            drop:
+            - ALL
+      nodeSelector:
+        kubernetes.io/os: linux
+      serviceAccountName: participant-{{ .Values.participant.name }}
+      securityContext:
+        fsGroup: 1000
+      volumes:
+      - name: home-ssh
+        emptyDir: {}
+      - name: project-volume
+        persistentVolumeClaim:
+          claimName: {{ .Values.participant.name }}-project
+      - name: git-config
+        configMap:
+          name: participant-git-config
+      - name: prepare-ssh-dir
+        configMap:
+          name: participant-prepare-ssh-dir
+          defaultMode: 0777
+      - name: git-clone
+        configMap:
+          name: participant-git-clone-script
+          defaultMode: 0777
+      - name: git-ssh-key
+        secret:
+          secretName: participant-workspace
+          defaultMode: 0400
+          items:
+            - key: git_ssh_key
+              path: id_rsa
+      - name: git-ssh-config
+        secret:
+          secretName: ssh-config
+          defaultMode: 0444
+          items:
+            - key: ssh_config
+              path: config

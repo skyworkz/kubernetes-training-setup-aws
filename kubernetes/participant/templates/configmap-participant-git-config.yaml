@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: participant-git-config
+  namespace: {{ .Release.namespace }}
+data:
+  .gitconfig: |
+    [user]
+    name = "Test"
+    email = "test@foo.com"
