@@ -98,13 +98,13 @@ spec:
             - ALL
       nodeSelector:
         kubernetes.io/os: linux
-      #   eks.amazonaws.com/capacityType: ON_DEMAND
-      #   tenant: {{ .Values.participant.name }}
-      # tolerations:
-      # - key: "tenant"
-      #   operator: "Equal"
-      #   value: {{ .Values.participant.name }}
-      #   effect: "NoSchedule"
+        eks.amazonaws.com/capacityType: ON_DEMAND
+        tenant: kubetrain
+      tolerations:
+      - key: "tenant"
+        operator: "Equal"
+        value: kubetrain
+        effect: "NoSchedule"
       serviceAccountName: {{ .Values.participant.name }}
       securityContext:
         fsGroup: 1000
