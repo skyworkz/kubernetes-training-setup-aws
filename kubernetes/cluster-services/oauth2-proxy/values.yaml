@@ -1,6 +1,8 @@
 oauth2-proxy:
   configuration:
-    existingSecret: github-client-secret
+    clientID: Iv1.02232c940b8f7e13
+    clientSecret: 52238155df4fb957734482b6c21f7e99ad738fca
+    cookieSecret: ufzx70fEzeTYmDDlyPQAplOrUPrt7gKPc_vyGhiQyk0=
   nodeSelector:
     kubernetes.io/os: linux
     eks.amazonaws.com/capacityType: ON_DEMAND
