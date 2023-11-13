@@ -12,3 +12,7 @@ oauth2-proxy:
     - --cookie-domain=.k8s.aws-tests.skyworkz.nl
     - --oidc-issuer-url=https://argocd.k8s.aws-tests.skyworkz.nl/api/dex
     - --scope=openid profile email groups
+
+  redis:
+    auth:
+      existingSecret: redis-secret
