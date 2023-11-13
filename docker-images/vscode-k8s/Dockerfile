@@ -1,5 +1,5 @@
-#FROM gitpod/openvscode-server:1.67.2
-# FROM gitpod/openvscode-server:1.84.0
+# DO NOT UPGRADE gitpod/openvscode-server
+# https://stackoverflow.com/questions/74432316/blobnotfound-error-while-opening-webview-deployed-on-openvscode-server-in-chro
 FROM gitpod/openvscode-server:1.73.1
 
 USER root
