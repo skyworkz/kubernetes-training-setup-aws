@@ -1,4 +1,5 @@
 namespace: "johndoe"
+repository_url: "git@github.com:tomhuang12/awesome-k8s-resources.git"
 
 participant:
   name: "johndoe"
