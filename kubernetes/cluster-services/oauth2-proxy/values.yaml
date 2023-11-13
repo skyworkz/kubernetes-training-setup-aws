@@ -1,12 +1,9 @@
 oauth2-proxy:
   configuration:
-#    existingSecret: github-client-secret
+    existingSecret: github-client-secret
     content: |
       email_domains = [ "*" ]
       upstreams = [ "file:///dev/null" ]
-      pass_basic_auth = false
-      clientID: Iv1.02232c940b8f7e13
-      clientSecret: 52238155df4fb957734482b6c21f7e99ad738fca
   nodeSelector:
     kubernetes.io/os: linux
     eks.amazonaws.com/capacityType: ON_DEMAND

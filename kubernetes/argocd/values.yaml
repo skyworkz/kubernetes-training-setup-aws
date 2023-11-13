@@ -29,7 +29,12 @@ argo-cd:
             clientSecret: $github-client-secret:client-secret
             orgs:
             - name: skyworkz
-
+        staticClients:
+        - id: oauth2-proxy
+          redirectURIs:
+          - 'http://oauth2-proxy.kube-system.svc.cluster.local/oauth2/callback'
+          name: 'oauth2-proxy'
+          secret: proxy
       url: https://argocd.k8s.aws-tests.skyworkz.nl
     rbac:
       # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
