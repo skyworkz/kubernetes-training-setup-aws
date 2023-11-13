@@ -4,8 +4,8 @@ metadata:
   name: {{ .Values.participant.name }}
   namespace: {{ .Values.namespace }}
   annotations:
-    nginx.ingress.kubernetes.io/proxy-read-timeout: 3600
-    nginx.ingress.kubernetes.io/proxy-write-timeout: 3600
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-write-timeout: "3600"
 #    nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/auth?allowed_groups=bennycornelissen-skyworkz,planonsoftware,skyworkz:engineers"
     nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.k8s-training.aws-tests.skyworkz.nl/oauth2/start?rd=/redirect/$http_host$escaped_request_uri"
