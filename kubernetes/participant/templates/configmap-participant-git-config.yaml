@@ -6,5 +6,5 @@ metadata:
 data:
   .gitconfig: |
     [user]
-    name = "Test"
+    name = '{{ .Values.participant.name }}'
     email = "test@foo.com"
