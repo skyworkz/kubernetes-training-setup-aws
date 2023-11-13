@@ -18,8 +18,12 @@ module "eks" {
     aws-ebs-csi-driver = {
       most_recent = true
     }
-    coredns    = {}
-    kube-proxy = {}
+    coredns    = {
+      most_recent = true
+    }
+    kube-proxy = {
+      most_recent = true
+    }
   }
 
   kms_key_administrators = [
