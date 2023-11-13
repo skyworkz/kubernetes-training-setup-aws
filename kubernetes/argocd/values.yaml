@@ -37,7 +37,7 @@ argo-cd:
           redirectURIs:
           - 'https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/callback'
           name: 'oauth2-proxy'
-          secret: proxy
+          secret: eHnfU8jvesGiTUO4e4nZYGYGNXyXaDOsO2lcjDiT49M=
         enablePasswordDB: true
         staticPasswords:
         - email: "tom@skyworkz.cloud"

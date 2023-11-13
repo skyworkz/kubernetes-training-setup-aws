@@ -1,9 +1,6 @@
 oauth2-proxy:
   configuration:
-    existingSecret: github-client-secret
-    content: |
-      email_domains = [ "*" ]
-      upstreams = [ "file:///dev/null" ]
+    existingSecret: oauth2-proxy-secret
   nodeSelector:
     kubernetes.io/os: linux
     eks.amazonaws.com/capacityType: ON_DEMAND
