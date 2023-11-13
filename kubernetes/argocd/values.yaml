@@ -20,6 +20,9 @@ argo-cd:
   configs:
     cm:
       dex.config: |
+        frontend:
+          issuer: Skyworkz Training Platform
+          theme: dark
         connectors:
         - type: github
           id: github
@@ -32,9 +35,16 @@ argo-cd:
         staticClients:
         - id: oauth2-proxy
           redirectURIs:
-          - 'http://oauth2-proxy.kube-system.svc.cluster.local/oauth2/callback'
+          - 'https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/callback'
           name: 'oauth2-proxy'
           secret: proxy
+        enablePasswordDB: true
+        staticPasswords:
+        - email: "tom@skyworkz.cloud"
+          username: "tom-cloud"
+          hash: "$2a$10$2b2cU8CPhOTaGrs1HRQuAueS7JTT5ZHsHSzYiFPm1leZck7Mc8T4W"
+          userID: "08a8684b-db88-4b73-90a9-3cd1661f5466"
+
       url: https://argocd.k8s.aws-tests.skyworkz.nl
     rbac:
       # -- The name of the default role which Argo CD will falls back to, when authorizing API requests (optional).
