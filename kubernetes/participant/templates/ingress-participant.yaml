@@ -7,10 +7,19 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-write-timeout: "3600"
 #    nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/auth?allowed_groups=bennycornelissen-skyworkz,planonsoftware,skyworkz:engineers"
-#    nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/auth?allowed_emails=t.a.j.m.kennes@gmail.com"
-    nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/auth"
+    nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/auth?allowed_emails=t.a.j.m.kennes@gmail.com"
+#    nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/auth"
     nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/start?rd=/redirect/$http_host$escaped_request_uri"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      auth_request_set $name_upstream_1 $upstream_cookie_name_1;
+
+      access_by_lua_block {
+        if ngx.var.name_upstream_1 ~= "" then
+          ngx.header["Set-Cookie"] = "name_1=" .. ngx.var.name_upstream_1 .. ngx.var.auth_cookie:match("(; .*)")
+        end
+      }
     # add an annotation indicating the issuer to use.
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
