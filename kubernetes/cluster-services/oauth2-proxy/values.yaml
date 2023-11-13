@@ -1,8 +1,8 @@
 oauth2-proxy:
   configuration:
-    clientID: Iv1.02232c940b8f7e13
-    clientSecret: 52238155df4fb957734482b6c21f7e99ad738fca
-    cookieSecret: ufzx70fEzeTYmDDlyPQAplOrUPrt7gKPc_vyGhiQyk0=
+    clientID: SXYxLjAyMjMyYzk0MGI4ZjdlMTM=
+    clientSecret: NTIyMzgxNTVkZjRmYjk1NzczNDQ4MmI2YzIxZjdlOTlhZDczOGZjYQ==
+    cookieSecret: dWZ6eDcwZkV6ZVRZbUREbHlQUUFwbE9yVVBydDdnS1BjX3Z5R2hpUXlrMD0=
   nodeSelector:
     kubernetes.io/os: linux
     eks.amazonaws.com/capacityType: ON_DEMAND
