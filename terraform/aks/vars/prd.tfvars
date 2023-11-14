@@ -1,0 +1,3 @@
+identifier = "some"
+
+location = "northeurope"
