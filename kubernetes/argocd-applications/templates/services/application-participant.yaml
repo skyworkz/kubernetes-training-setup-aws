@@ -1,22 +1,52 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: participant-john-doe
+  name: participants
   namespace: kube-system
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/skyworkz/kubernetes-training-setup-aws.git
-    targetRevision: main
-    path: kubernetes/participant
-    helm:
-      values: |
-        namespace: john-doe
-        participant.name: john-doe
-  destination:
-    server: "https://kubernetes.default.svc"
-    namespace: kube-system
-  syncPolicy:
-    automated:
-      selfHeal: true
-      prune: true
+  generators:
+  - matrix:
+    generators:
+    - list:
+      elements:
+      - namespace: tom
+        participant:
+          name: tom
+          email: tom@skyworkz.cloud
+      - namespace: leonardo
+        participant:
+          name: leonardo
+          email: leonardo@skyworkz.cloud
+      - namespace: robert
+        participant:
+          name: robert
+          email: robert@skyworkz.cloud
+    - list:
+      trainers:
+      - t.a.j.m.kennes@gmail.com
+  template:
+    metadata:
+      name: participant-{{ participant.name }}
+      namespace: kube-system
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/skyworkz/kubernetes-training-setup-aws.git
+        targetRevision: main
+        path: kubernetes/participant
+        helm:
+          values: |
+            namespace: {{ namespace }}
+            participant.name: {{ participant.name }}
+            participant.email: {{ participant.email }}
+            trainers: {{ trainers }}
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: kube-system
+      syncPolicy:
+        automated:
+          selfHeal: true
+          prune: true
+      syncOptions:
+      - CreateNamespace=true
+    ```
