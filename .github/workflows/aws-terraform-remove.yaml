@@ -1,0 +1,50 @@
+name: AWS Terraform Remove
+
+on:
+  # schedule:
+  #   - cron:  '0 20 * * *'
+
+  workflow_dispatch:
+
+permissions:
+    contents: read
+    issues: write
+
+jobs:
+  aws-terraform-remove:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: ./terraform/aws
+    steps:
+      - name: Checkout Git Repository
+        uses: actions/checkout@v4
+        # with:
+        #   path: 'terraform/aws'
+          # fetch-depth: 0
+
+      - name: 'Configure AWS Credentials'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        # with:
+        #     terraform_version: 1.5.7
+
+      # - uses: trstringer/manual-approval@v1
+      #   with:
+      #     secret: ${{ github.TOKEN }}
+      #     approvers: laysauchoa
+      #     minimum-approvals: 1
+      #     issue-title: "Deploying v1.0.0 to prod"
+      #     issue-body: "Review the terraform plan, then approve or deny the deployment of v1.0.0 to prod."
+      #     exclude-workflow-initiator-as-approver: false
+
+      - name: Terraform destroy
+        run: |
+          terraform destroy --auto-approve
