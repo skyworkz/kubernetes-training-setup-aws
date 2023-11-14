@@ -31,9 +31,9 @@ spec:
         path: kubernetes/participant
         helm:
           values: |
-            namespace: {{namespace}}
-            participant.name: {{participant.name}}
-            participant.email: {{participant.email}}
+            namespace: '{{namespace}}'
+            participant.name: '{{participant.name}}'
+            participant.email: '{{participant.email}}'
             trainers: {{ .Values.trainers }}
       destination:
         server: "https://kubernetes.default.svc"
