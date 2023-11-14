@@ -34,7 +34,10 @@ spec:
             namespace: {{"{{"}}namespace{{"}}"}}
             participant.name: {{"{{"}}participant.name{{"}}"}}
             participant.email: {{"{{"}}participant.email{{"}}"}}
-            trainers: {{ .Values.trainers }}
+            trainers:
+            {{- range .Values.trainers }}
+            - {{.}}
+            {{- end }}
       destination:
         server: "https://kubernetes.default.svc"
         namespace: kube-system
