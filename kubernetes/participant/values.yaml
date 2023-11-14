@@ -1,5 +1,6 @@
-namespace: "johndoe"
+namespace: "tomkennes"
 repository_url: "git@github.com:tomhuang12/awesome-k8s-resources.git"
 
 participant:
-  name: "johndoe"
+  name: "tomkennes"
+  email: "tom@skyworkz.cloud"
