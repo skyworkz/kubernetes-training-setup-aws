@@ -9,17 +9,19 @@ spec:
     elements:
     - namespace: tom
       participant:
-      participant_name: tom
-      participant_email: tom@skyworkz.cloud
+        name: tom
+        email: tom@skyworkz.cloud
     - namespace: leonardo
-      participant_name: leonardo
-      participant_email: leonardo@skyworkz.cloud
+      participant:
+        name: leonardo
+        email: leonardo@skyworkz.cloud
     - namespace: robert
-      participant_name: robert
-      participant_email: robert@skyworkz.cloud
+      participant:
+        name: robert
+        email: robert@skyworkz.cloud
   template:
     metadata:
-      name: 'participant-{{participant_name}}'
+      name: participant-{{"{{"}}participant.name{{"}}"}}
       namespace: kube-system
     spec:
       project: default
@@ -29,9 +31,9 @@ spec:
         path: kubernetes/participant
         helm:
           values: |
-            namespace: '{{namespace}}'
-            participant.name: '{{participant_name}}'
-            participant.email: '{{participant_email}}'
+            namespace: {{"{{"}}namespace{{"}}"}}
+            participant.name: {{"{{"}}participant.name{{"}}"}}
+            participant.email: {{"{{"}}participant.email{{"}}"}}
             trainers: {{ .Values.trainers }}
       destination:
         server: "https://kubernetes.default.svc"
