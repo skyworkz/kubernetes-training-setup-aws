@@ -21,7 +21,7 @@ spec:
         email: robert@skyworkz.cloud
   template:
     metadata:
-      name: participant-{{ participant.name }}
+      name: participant-{{participant.name}}
       namespace: kube-system
     spec:
       project: default
