@@ -5,25 +5,20 @@ metadata:
   namespace: kube-system
 spec:
   generators:
-  - matrix:
-    generators:
-    - list:
-      elements:
-      - namespace: tom
-        participant:
-          name: tom
-          email: tom@skyworkz.cloud
-      - namespace: leonardo
-        participant:
-          name: leonardo
-          email: leonardo@skyworkz.cloud
-      - namespace: robert
-        participant:
-          name: robert
-          email: robert@skyworkz.cloud
-    - list:
-      trainers:
-      - t.a.j.m.kennes@gmail.com
+  - list:
+    elements:
+    - namespace: tom
+      participant:
+        name: tom
+        email: tom@skyworkz.cloud
+    - namespace: leonardo
+      participant:
+        name: leonardo
+        email: leonardo@skyworkz.cloud
+    - namespace: robert
+      participant:
+        name: robert
+        email: robert@skyworkz.cloud
   template:
     metadata:
       name: participant-{{ participant.name }}
@@ -36,10 +31,10 @@ spec:
         path: kubernetes/participant
         helm:
           values: |
-            namespace: {{ namespace }}
-            participant.name: {{ participant.name }}
-            participant.email: {{ participant.email }}
-            trainers: {{ trainers }}
+            namespace: {{namespace}}
+            participant.name: {{participant.name}}
+            participant.email: {{participant.email}}
+            trainers: {{ .Values.trainers }}
       destination:
         server: "https://kubernetes.default.svc"
         namespace: kube-system
