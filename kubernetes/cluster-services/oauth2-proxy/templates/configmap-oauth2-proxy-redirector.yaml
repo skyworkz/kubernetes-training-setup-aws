@@ -11,6 +11,10 @@ data:
     http {
       server {
         listen 80 default_server;
+
+        error_log syslog:server=unix:/dev/log;
+        access_log syslog:server=unix:/dev/log;
+
         location = /healthcheck {
           add_header Content-Type text/plain;
           return 200 'ok';
