@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: participant-git-config
-  namespace: {{ .Values.namespace }}
+  namespace: participant-{{ .Values.participant.name }}
 data:
   .gitconfig: |
     [user]

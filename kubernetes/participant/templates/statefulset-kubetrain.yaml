@@ -1,8 +1,8 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Values.participant.name }}
-  namespace: {{ .Values.namespace }}
+  name: vscode-gui-{{ .Values.participant.name }}
+  namespace: participant-{{ .Values.participant.name }}
   labels:
     app: {{ .Values.participant.name }}
 spec:
