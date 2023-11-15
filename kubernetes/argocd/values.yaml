@@ -23,6 +23,7 @@ argo-cd:
       dex.config: |
         frontend:
           issuer: Skyworkz Training Platform
+          logoURL: theme/skyworkz.png
           theme: dark
         connectors:
         - type: github
