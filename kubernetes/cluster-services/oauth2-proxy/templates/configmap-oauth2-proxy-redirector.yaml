@@ -12,8 +12,8 @@ data:
       server {
         listen 80 default_server;
 
-        error_log syslog:server=unix:/dev/log;
-        access_log syslog:server=unix:/dev/log;
+        error_log stderr;
+        access_log stderr;
 
         location = /healthcheck {
           add_header Content-Type text/plain;
