@@ -11,14 +11,14 @@ spec:
           participant:
             name: tom
             email: tom@skyworkz.cloud
-        - namespace: leonardo
-          participant:
-            name: leonardo
-            email: leonardo@skyworkz.cloud
-        - namespace: robert
-          participant:
-            name: robert
-            email: robert@skyworkz.cloud
+        #- namespace: leonardo
+        #  participant:
+        #    name: leonardo
+        #    email: leonardo@skyworkz.cloud
+        #- namespace: robert
+        #  participant:
+        #    name: robert
+        #    email: robert@skyworkz.cloud
   template:
     metadata:
       name: participant-{{"{{"}}participant.name{{"}}"}}
