@@ -47,14 +47,14 @@ spec:
 
         # Mounting custom error page from configMap
         # volumeMounts:
-        - name: custom_error_pages
+        - name: custom-error-pages
           mountPath: /www
 
       # Mounting custom error page from configMap
       volumes:
-      - name: custom_error_pages
+      - name: custom-error-pages
         configMap:
-          name: custom_error_pages
+          name: custom-error-pages
           items:
           - key: "404"
             path: "404.html"
