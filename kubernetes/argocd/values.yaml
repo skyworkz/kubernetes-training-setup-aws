@@ -19,7 +19,7 @@ argo-cd:
 
   configs:
     cm:
-      admin.enabled: false
+      #admin.enabled: false
       dex.config: |
         frontend:
           issuer: Skyworkz Training Platform
