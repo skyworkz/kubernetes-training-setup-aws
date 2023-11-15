@@ -78,16 +78,3 @@ argo-cd:
         g, skyworkz:Engineers, role:skyworkz-engineers-role
     params:
       server.insecure: true
-
-  dex:
-    volumeMounts:
-      - mountPath: "/srv/dex/web/themes/dark/logo.png"
-        name: skyworkz-logo
-        subPath: logo.png
-    volumes:
-    - name: skyworkz-logo
-      configMap:
-        name: skyworkz-logo
-
-
-
