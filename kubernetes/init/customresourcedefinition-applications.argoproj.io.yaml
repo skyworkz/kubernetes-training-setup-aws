@@ -3,7 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    meta.helm.sh/release-name: argo
+    meta.helm.sh/release-name: argocd
     meta.helm.sh/release-namespace: kube-system
   labels:
     app.kubernetes.io/name: applications.argoproj.io
