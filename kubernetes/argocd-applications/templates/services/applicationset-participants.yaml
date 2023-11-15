@@ -10,8 +10,8 @@ spec:
       elements:
       - name: tom
         email: tom@skyworkz.cloud
-      - name: leonardo
-        email: leonardo@skyworkz.cloud
+      - name: leo
+        email: leo@skyworkz.cloud
       - name: robert
         email: robert@skyworkz.cloud
   template:
