@@ -8,9 +8,8 @@ spec:
   - list:
       elements:
       - namespace: tom
-        participant:
-          name: tom
-          email: tom@skyworkz.cloud
+        name: tom
+        email: tom@skyworkz.cloud
       #- namespace: leonardo
       #  participant:
       #    name: leonardo
@@ -21,7 +20,7 @@ spec:
       #    email: robert@skyworkz.cloud
   template:
     metadata:
-      name: participant-{{"{{"}}participant.name{{"}}"}}
+      name: participant-{{"{{"}}name{{"}}"}}
       namespace: kube-system
     spec:
       project: default
@@ -32,8 +31,8 @@ spec:
         helm:
           values: |
             namespace: {{"{{"}}namespace{{"}}"}}
-            participant.name: {{"{{"}}participant.name{{"}}"}}
-            participant.email: {{"{{"}}participant.email{{"}}"}}
+            participant.name: {{"{{"}}name{{"}}"}}
+            participant.email: {{"{{"}}email{{"}}"}}
             trainers:
             {{- range .Values.trainers }}
             - {{.}}
