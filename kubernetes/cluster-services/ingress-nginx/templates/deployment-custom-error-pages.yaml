@@ -46,7 +46,7 @@ spec:
           value: "true"
 
         # Mounting custom error page from configMap
-        # volumeMounts:
+        volumeMounts:
         - name: custom-error-pages
           mountPath: /www
 
@@ -56,8 +56,6 @@ spec:
         configMap:
           name: custom-error-pages
           items:
-          - key: "403"
-            path: "403.html"
           - key: "404"
             path: "404.html"
           - key: "503"
