@@ -1,0 +1,73 @@
+name: AWS Infra Deployment
+
+on:
+    # push:
+    #   branches:
+    #     - refactor/leonardo
+      # paths:
+      #   - 'terraform/aws/**'
+    workflow_dispatch:
+
+permissions:
+    contents: read
+    issues: write
+
+jobs:
+  aws-terraform-apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    # defaults:
+    #   run:
+    #     working-directory: ./terraform/aws
+    steps:
+      - name: Checkout Git Repository
+        uses: actions/checkout@v4
+
+      - name: 'Configure AWS Credentials'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform init and validate
+        working-directory: ./terraform/aws
+        run: |
+          terraform init
+
+      - name: Terraform plan
+        working-directory: ./terraform/aws
+        run: |
+          terraform plan
+
+      # - uses: trstringer/manual-approval@v1
+      #   with:
+      #     secret: ${{ github.TOKEN }}
+      #     approvers: skyworkz 
+      #     minimum-approvals: 1
+      #     issue-title: "Create Infrastructure"
+      #     issue-body: "Review the terraform plan, then approve or deny the infrastructure creation"
+      #     exclude-workflow-initiator-as-approver: false
+
+      - name: Terraform apply
+        working-directory: ./terraform/aws
+        run: |
+          terraform apply --auto-approve
+
+      - name: EKS update kubeconfig
+        run: |
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name skyworkz-k8s-training
+          kubectl config set-context --current --namespace=kube-system
+
+      - name: Install ArgoCD CRDs
+        working-directory: ./kubernetes/init
+        run: |
+          kubectl apply -f ./init/customresourcedefinition-applications.argoproj.io.yaml
+
+      - name: Helm Install
+        working-directory: ./kubernetes
+        run: |
+          helm install -f ./argocd/values.yaml argo ./argocd
