@@ -77,4 +77,4 @@ jobs:
       - name: Helm Install
         working-directory: ./kubernetes
         run: |
-          helm install -f ./argocd/values.yaml argo ./argocd
+          helm install -f ./argocd/values.yaml argocd ./argocd  --namespace kube-system
