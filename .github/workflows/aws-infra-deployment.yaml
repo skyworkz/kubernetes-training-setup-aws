@@ -9,7 +9,7 @@ on:
     workflow_dispatch:
       inputs:
         clusterName:
-          description: 'Inform the clusterName'
+          description: 'Cluster Name'
           required: true
           type: string
           default: 'skyworkz-k8s-training'
