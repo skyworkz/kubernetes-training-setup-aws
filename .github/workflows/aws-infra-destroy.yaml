@@ -5,6 +5,12 @@ on:
   #   - cron:  '0 20 * * *'
 
   workflow_dispatch:
+    inputs:
+      clusterName:
+        description: 'Cluster Name'
+        required: true
+        type: string
+        default: 'skyworkz-k8s-training'
 
 permissions:
     contents: read
