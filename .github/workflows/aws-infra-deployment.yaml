@@ -71,7 +71,7 @@ jobs:
       - name: Install ArgoCD CRDs
         working-directory: ./kubernetes/init
         run: |
-          kubectl apply -f ./init/customresourcedefinition-applications.argoproj.io.yaml
+          kubectl apply -f customresourcedefinition-applications.argoproj.io.yaml
 
       - name: Helm Install
         working-directory: ./kubernetes
