@@ -65,7 +65,8 @@ jobs:
 
       - name: EKS update kubeconfig
         run: |
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ inputs.clusterName }}
+          # aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ inputs.clusterName }}
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name skyworkz-k8s-training
           kubectl config set-context --current --namespace=kube-system
 
       - name: Install ArgoCD CRDs
