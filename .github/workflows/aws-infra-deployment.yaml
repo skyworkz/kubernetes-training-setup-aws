@@ -7,6 +7,12 @@ on:
       # paths:
       #   - 'terraform/aws/**'
     workflow_dispatch:
+      inputs:
+        clusterName:
+          description: 'Inform the clusterName'
+          required: true
+          type: string
+          default: 'skyworkz-k8s-training'
 
 permissions:
     contents: read
@@ -59,7 +65,7 @@ jobs:
 
       - name: EKS update kubeconfig
         run: |
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name skyworkz-k8s-training
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ inputs.clusterName }}
           kubectl config set-context --current --namespace=kube-system
 
       - name: Install ArgoCD CRDs
