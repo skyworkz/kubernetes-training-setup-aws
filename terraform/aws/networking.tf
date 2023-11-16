@@ -45,9 +45,9 @@ module "vpc" {
 #   }
 # }
 
-# resource "aws_route53_zone" "vscode_zone" {
-#   name = "vscode.aws-tests.skyworkz.nl"
-# }
+resource "aws_route53_zone" "vscode_zone" {
+  name = "vscode.aws-tests.skyworkz.nl"
+}
 
 # resource "aws_route53_record" "dev-ns" {
 #   zone_id = aws_route53_zone.main.zone_id
