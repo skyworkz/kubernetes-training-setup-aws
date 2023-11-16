@@ -1,8 +1,8 @@
 name: 🚨 AWS Infra Destroy 
 
 on:
-  # schedule:
-  #   - cron:  '0 20 * * *'
+  schedule:
+    - cron:  '0 22 * * *'
 
   workflow_dispatch:
 
