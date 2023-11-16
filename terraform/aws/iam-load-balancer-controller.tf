@@ -29,7 +29,7 @@ data "aws_iam_policy_document" "load_balancer_controller_assume_role_policy" {
 
 
 resource "aws_iam_role" "load_balancer_controller_role" {
-  name               = "aws-load-balancer-controller-role-${random_string.suffix.result}"
+  name               = "aws-load-balancer-controller-role"
   assume_role_policy = data.aws_iam_policy_document.load_balancer_controller_assume_role_policy.json
 
   inline_policy {

@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "cluster_autoscaler_assume_role_policy" {
 }
 
 resource "aws_iam_role" "cluster_autoscaler_role" {
-  name               = "cluster-autoscaler-role-${random_string.suffix.result}"
+  name               = "cluster-autoscaler-role"
   assume_role_policy = data.aws_iam_policy_document.cluster_autoscaler_assume_role_policy.json
 
   inline_policy {
