@@ -1,4 +1,4 @@
-name: AWS Infra Destroy 
+name: 🚨 AWS Infra Destroy 
 
 on:
   # schedule:
