@@ -6,6 +6,8 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-write-timeout: "3600"
+    # nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/auth
+    # https://oauth2-proxy.github.io/oauth2-proxy/docs/features/endpoints/
     nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/auth?allowed_emails={{ .Values.participant.email }}{{ include "trainers_comma_separated" $ }}"
     nginx.ingress.kubernetes.io/auth-signin: "https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/start?rd=/redirect/$http_host$escaped_request_uri"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
