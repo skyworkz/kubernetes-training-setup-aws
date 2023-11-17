@@ -6,6 +6,6 @@ variable "identifier" {
 
 variable "location" {
   type = string
-  default = "germanywestcentral"
+  default = "northeurope"
   description = "Azure location"
 }

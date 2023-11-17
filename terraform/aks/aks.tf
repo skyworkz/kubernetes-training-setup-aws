@@ -22,7 +22,7 @@ module "aks" {
   availability_zones   = ["1", "2", "3"]
   enable_auto_scaling  = true
   max_pods             = 100
-  orchestrator_version = "1.26.3"
+  orchestrator_version = "1.26.10"
   vnet_subnet_id       = module.subnet.id
   max_count            = 3
   min_count            = 1
@@ -33,7 +33,7 @@ module "aks" {
   network_plugin = "azure"
   network_policy = "calico"
 
-  kubernetes_version = "1.26.3"
+  kubernetes_version = "1.26.10"
 
   only_critical_addons_enabled = true
 
@@ -43,7 +43,7 @@ module "aks" {
       availability_zones   = ["1", "2", "3"]
       enable_auto_scaling  = true
       max_pods             = 100
-      orchestrator_version = "1.26.3"
+      orchestrator_version = "1.26.10"
       priority             = "Regular"
       max_count            = 2
       min_count            = 1
@@ -52,7 +52,7 @@ module "aks" {
     {
       name                 = "generic-spot"
       max_pods             = 100
-      orchestrator_version = "1.26.3"
+      orchestrator_version = "1.26.10"
       priority             = "Spot"
       eviction_policy      = "Delete"
       spot_max_price       = 0.5 # note: this is the "maximum" price
