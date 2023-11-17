@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   # UTC Timezone
   schedule:
-    - cron:  '22 21 * * *'
+    - cron:  '0 19 * * *'
 
 permissions:
     contents: read
