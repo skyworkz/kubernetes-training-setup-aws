@@ -24,6 +24,8 @@ argo-cd:
         frontend:
           issuer: Skyworkz Training Platform
           theme: dark
+        logger:
+          level: "debug"
         connectors:
         - type: github
           id: github
