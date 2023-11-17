@@ -13,7 +13,7 @@ oauth2-proxy:
     - --oidc-issuer-url=https://argocd.k8s.aws-tests.skyworkz.nl/api/dex
     - --scope=openid profile email groups
     - --whitelist-domain=.k8s.aws-tests.skyworkz.nl
-    - --redirect-url=https://oauth2.my-domain/oauth2/callback
+    - --redirect-url=https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/callback
     - --set-authorization-header=true
   redis:
     auth:
