@@ -17,6 +17,8 @@ oauth2-proxy:
     - --set-authorization-header=true
     - --https-address=:4180
     - --email-domain="*"
+    - --cookie-csrf-per-request=true
+    - --cookie-csrf-expire=5m
   redis:
     auth:
       existingSecret: redis-secret
