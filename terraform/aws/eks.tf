@@ -85,12 +85,15 @@ module "eks" {
     #     max_unavailable_percentage = 50 # or set `max_unavailable`
     #   }
     # }
+
     pe = {
-      desired_capacity = 2
-      max_capacity     = 4
-      min_capacity     = 1
+      
+      desired_size = 2
+      min_size     = 1
+      max_size     = 4
 
       instance_types = ["m5.large"]
+
       k8s_labels = {
         tenant    = "kubetrain"
         NodeGroup = "pe"
@@ -110,9 +113,10 @@ module "eks" {
       }
     }
     b1 = {
-      desired_capacity = 2
-      max_capacity     = 10
-      min_capacity     = 1
+
+      desired_size = 2
+      min_size     = 1
+      max_size     = 10
 
       instance_types = ["t3.medium"]
       k8s_labels = {
