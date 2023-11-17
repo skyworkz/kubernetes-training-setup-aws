@@ -15,8 +15,8 @@ spec:
       labels:
         app: {{ .Values.participant.name }}
     spec:
-      imagePullSecrets:
-        - name: regcred
+      # imagePullSecrets:
+      #   - name: regcred
       initContainers:
       - name: prepare-ssh-dir
         image: busybox
@@ -98,13 +98,13 @@ spec:
             - ALL
       nodeSelector:
         kubernetes.io/os: linux
-      #   eks.amazonaws.com/capacityType: ON_DEMAND
-      #   tenant: kubetrain
-      # tolerations:
-      # - key: "tenant"
-      #   operator: "Equal"
-      #   value: kubetrain
-      #   effect: "NoSchedule"
+        eks.amazonaws.com/capacityType: ON_DEMAND
+        tenant: kubetrain
+      tolerations:
+      - key: "tenant"
+        operator: "Equal"
+        value: kubetrain
+        effect: "NoSchedule"
       serviceAccountName: {{ .Values.participant.name }}
       securityContext:
         fsGroup: 1000

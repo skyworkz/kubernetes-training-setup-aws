@@ -185,8 +185,8 @@ spec:
       labels:
         app: kubetrain
     spec:
-      imagePullSecrets:
-        - name: regcred
+      # imagePullSecrets:
+      #   - name: regcred
       initContainers:
       - name: prepare-ssh-dir
         image: busybox
