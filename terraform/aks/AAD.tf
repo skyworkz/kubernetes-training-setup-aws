@@ -1,7 +1,7 @@
 data "azuread_client_config" "current" {}
 
 data "azuread_user" "aad" {
-  mail_nickname = "john.snow_some.ai#EXT#"
+  user_principal_name = "robert@skyworkz.nl"
 }
 
 resource "azuread_group" "k8sadmins" {

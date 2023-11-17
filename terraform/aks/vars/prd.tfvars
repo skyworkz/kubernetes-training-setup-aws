@@ -1,3 +1,2 @@
 identifier = "some"
-
 location = "northeurope"
