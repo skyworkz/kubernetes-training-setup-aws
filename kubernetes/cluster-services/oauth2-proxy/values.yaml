@@ -7,7 +7,7 @@ oauth2-proxy:
   replicaCount: 2
   extraArgs:
     - --provider=oidc
-    # - --upstream=file:///dev/null
+    - --upstream=file:///dev/null
     - --upstream=http://oauth2-proxy-redirector/redirect/
     - --cookie-domain=.k8s.aws-tests.skyworkz.nl
     - --oidc-issuer-url=https://argocd.k8s.aws-tests.skyworkz.nl/api/dex
@@ -17,10 +17,10 @@ oauth2-proxy:
     - --set-authorization-header=true
     - --https-address=:4180
     - --email-domain="*"
-    - --cookie-secure=false
-    - --cookie-secret=UlBzZkFQcjJZTQ==
-    # - --cookie-csrf-per-request=true
-    # - --cookie-csrf-expire=5m
+    # - --cookie-secure=false
+    # - --cookie-secret=UlBzZkFQcjJZTQ==
+    - --cookie-csrf-per-request=true
+    - --cookie-csrf-expire=5m
   redis:
     auth:
       existingSecret: redis-secret
