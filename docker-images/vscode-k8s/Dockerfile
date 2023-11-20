@@ -85,9 +85,9 @@ ENV HOME=/home/openvscode-server
 COPY bash_aliases /home/openvscode-server/.bash_aliases
 RUN chown openvscode-server:openvscode-server /home/openvscode-server/.bash_aliases
 
-ENV WORKSPACE="/home/workspace"
+ENV WORKSPACE="/home/workspace/code"
 
-RUN mkdir ${WORKSPACE}/.vscode
+RUN mkdir -p ${WORKSPACE}/.vscode
 COPY settings.json ${WORKSPACE}/.vscode/settings.json
 RUN chown -R openvscode-server:openvscode-server ${WORKSPACE}
 
