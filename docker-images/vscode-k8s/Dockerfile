@@ -14,6 +14,8 @@ RUN apt-get update && \
       openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get -y upgrade && apt-get install -y software-properties-common python-is-python3
+
 ARG YQ_VERSION=v4.11.2
 ARG KUBECTL_VERSION=1.28.3
 ARG KUSTOMIZE_VERSION=v5.2.1
@@ -83,4 +85,50 @@ ENV HOME=/home/openvscode-server
 COPY bash_aliases /home/openvscode-server/.bash_aliases
 RUN chown openvscode-server:openvscode-server /home/openvscode-server/.bash_aliases
 
+ENV WORKSPACE="/home/workspace"
+
+RUN mkdir ${WORKSPACE}/.vscode
+COPY settings.json ${WORKSPACE}/.vscode/settings.json
+RUN chown -R openvscode-server:openvscode-server ${WORKSPACE}
+
 USER openvscode-server
+
+ENV OPENVSCODE_SERVER_ROOT="/home/.openvscode-server"
+ENV OPENVSCODE="${OPENVSCODE_SERVER_ROOT}/bin/openvscode-server"
+
+
+SHELL ["/bin/bash", "-c"]
+RUN \
+    # Direct download links to external .vsix not available on https://open-vsx.org/
+    # The two links here are just used as example, they are actually available on https://open-vsx.org/
+    urls=(\
+        https://open-vsx.org/api/Equinusocio/vsc-material-theme/33.10.5/file/Equinusocio.vsc-material-theme-33.10.5.vsix \
+        https://open-vsx.org/api/Equinusocio/vsc-material-theme-icons/3.1.4/file/Equinusocio.vsc-material-theme-icons-3.1.4.vsix \
+        https://open-vsx.org/api/redhat/vscode-yaml/1.14.0/file/redhat.vscode-yaml-1.14.0.vsix \
+    )\
+    # Create a tmp dir for downloading
+    && tdir=/tmp/exts && mkdir -p "${tdir}" && cd "${tdir}" \
+    # Download via wget from $urls array.
+    && wget "${urls[@]}" && \
+    # List the extensions in this array
+    exts=(\
+        # From https://open-vsx.org/ registry directly
+        gitpod.gitpod-theme \
+        # From filesystem, .vsix that we downloaded (using bash wildcard '*')
+        "${tdir}"/* \
+    )\
+    # Install the $exts
+    && for ext in "${exts[@]}"; do ${OPENVSCODE} --install-extension "${ext}"; done
+
+
+
+
+# ENV HOME="/home/workspace"
+
+
+# RUN chown openvscode-server:openvscode-server /home/openvscode-server/.vscode/settings.json
+
+WORKDIR ${HOME}
+# COPY settings.json ${OPENVSCODE_USER_DATA}/settings.json
+# RUN chown openvscode-server:openvscode-server ${OPENVSCODE_USER_DATA}/settings.json
+

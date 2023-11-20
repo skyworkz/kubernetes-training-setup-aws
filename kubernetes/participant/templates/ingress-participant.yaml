@@ -13,6 +13,7 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     # add an annotation indicating the issuer to use.
     cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/rewrite-target: /?folder=/home/workspace
 spec:
   ingressClassName: nginx
   rules:
