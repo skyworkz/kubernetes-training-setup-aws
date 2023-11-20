@@ -27,14 +27,14 @@ argo-cd:
         logger:
           level: "debug"
         connectors:
-        - type: github
-          id: github
-          name: GitHub
-          config:
-            clientID: $github-client-secret:client-id
-            clientSecret: $github-client-secret:client-secret
-            orgs:
-            - name: skyworkz
+        # - type: github
+        #   id: github
+        #   name: GitHub
+        #   config:
+        #     clientID: $github-client-secret:client-id
+        #     clientSecret: $github-client-secret:client-secret
+        #     orgs:
+        #     - name: skyworkz
         staticClients:
         - id: oauth2-proxy
           redirectURIs:
