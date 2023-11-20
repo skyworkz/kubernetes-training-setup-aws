@@ -8,19 +8,20 @@ oauth2-proxy:
   extraArgs:
     - --provider=oidc
     - --upstream=file:///dev/null
-    - --upstream=http://oauth2-proxy-redirector/redirect/
+    # - --upstream=http://oauth2-proxy-redirector/redirect/
     - --cookie-domain=.k8s.aws-tests.skyworkz.nl
     - --oidc-issuer-url=https://argocd.k8s.aws-tests.skyworkz.nl/api/dex
     - --scope=openid profile email groups
     - --whitelist-domain=.k8s.aws-tests.skyworkz.nl
     - --redirect-url=https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/callback
     - --set-authorization-header=true
-    - --https-address=:4180
+    - --http-address=0.0.0.0:4180
+    - --cookie-secure=false
     - --email-domain="*"
     # - --cookie-secure=false
     # - --cookie-secret=UlBzZkFQcjJZTQ==
-    - --cookie-csrf-per-request=true
-    - --cookie-csrf-expire=5m
+    # - --cookie-csrf-per-request=true
+    # - --cookie-csrf-expire=5m
   redis:
     auth:
       existingSecret: redis-secret
