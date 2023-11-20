@@ -15,7 +15,6 @@ oauth2-proxy:
     - --whitelist-domain=.k8s.aws-tests.skyworkz.nl
     - --redirect-url=https://oauth2.k8s.aws-tests.skyworkz.nl/oauth2/callback
     - --set-authorization-header=true
-    - --http-address=0.0.0.0:4180
     - --email-domain="*"
     # - --cookie-secure=false
     # - --cookie-secure=false
