@@ -12,3 +12,4 @@ data:
     cp /secret/git-ssh-key/id_rsa ${MY_SSH_DIR}/id_rsa
     chown -R 1000 ${MY_SSH_DIR}
     ls -lR ${MY_SSH_DIR}
+    cp -r /home/openvscode-server/.vscode /home/workspace/code
