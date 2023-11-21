@@ -35,7 +35,6 @@ spec:
         - name: git-ssh-config
           mountPath: /secret/git-ssh-config
       - name: git-clone
-        # image: public.ecr.aws/d1g7p6o9/ide-clone:latest
         image: 267074127319.dkr.ecr.eu-west-1.amazonaws.com/ide-clone:latest
         env:
         - name: GIT_URL
@@ -68,16 +67,11 @@ spec:
             - ALL
       containers:
       - name: ide
-        # image: public.ecr.aws/d1g7p6o9/vscode-k8s:latest
         image: 267074127319.dkr.ecr.eu-west-1.amazonaws.com/vscode-k8s:latest
         imagePullPolicy: Always
         args:
         - --default-folder
         - /home/workspace/code
-        # command:
-        # - /bin/bash
-        # - -c
-        # - /vscode-settings
         volumeMounts:
         - name: git-config
           mountPath: /home/openvscode-server/.gitconfig
@@ -86,9 +80,6 @@ spec:
           mountPath: /home/workspace
         - name: home-ssh
           mountPath: /home/openvscode-server/.ssh
-        # - name: vscode-settings
-        #   mountPath: /vscode-settings
-        #   subPath: vscode-settings
         ports:
         - containerPort: 3000
         resources:
@@ -128,10 +119,6 @@ spec:
         configMap:
           name: participant-prepare-ssh-dir
           defaultMode: 0777
-      # - name: vscode-settings
-      #   configMap:
-      #     name: participant-vscode-settings
-      #     defaultMode: 0777
       - name: git-clone
         configMap:
           name: participant-git-clone-script
