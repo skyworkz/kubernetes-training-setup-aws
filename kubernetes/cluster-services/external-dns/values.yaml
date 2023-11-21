@@ -9,3 +9,6 @@ external-dns:
       eks.amazonaws.com/role-arn: arn:aws:iam::267074127319:role/external-dns-role
   domainFilters:
     - k8s.aws-tests.skyworkz.nl
+
+  policy: sync 
+  #policy: upsert-only
