@@ -74,10 +74,10 @@ spec:
         args:
         - --default-folder
         - /home/workspace/code
-        command:
-        - /bin/bash
-        - -c
-        - cp -r /home/openvscode-server/.vscode /home/workspace/code
+        # command:
+        # - /bin/bash
+        # - -c
+        # - cp -r /home/openvscode-server/.vscode /home/workspace/code
         volumeMounts:
         - name: git-config
           mountPath: /home/openvscode-server/.gitconfig
