@@ -14,6 +14,8 @@ spec:
         email: leo@skyworkz.cloud
       - name: robert
         email: robert@skyworkz.cloud
+      - name: leonardo
+        email: leonardo@skyworkz.cloud
   template:
     metadata:
       name: participant-{{"{{"}}name{{"}}"}}
