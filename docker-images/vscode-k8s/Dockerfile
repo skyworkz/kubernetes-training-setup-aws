@@ -85,11 +85,11 @@ ENV HOME=/home/openvscode-server
 COPY bash_aliases /home/openvscode-server/.bash_aliases
 RUN chown openvscode-server:openvscode-server /home/openvscode-server/.bash_aliases
 
-ENV WORKSPACE="/home/workspace/code"
+# ENV WORKSPACE="/home/workspace"
 
-RUN mkdir -p ${WORKSPACE}/.vscode
-COPY settings.json ${WORKSPACE}/.vscode/settings.json
-RUN chown -R openvscode-server:openvscode-server ${WORKSPACE}
+# RUN mkdir -p ${WORKSPACE}/.vscode
+# COPY settings.json ${WORKSPACE}/.vscode/settings.json
+# RUN chown -R openvscode-server:openvscode-server ${WORKSPACE}
 
 USER openvscode-server
 
@@ -120,15 +120,4 @@ RUN \
     # Install the $exts
     && for ext in "${exts[@]}"; do ${OPENVSCODE} --install-extension "${ext}"; done
 
-
-
-
-# ENV HOME="/home/workspace"
-
-
-# RUN chown openvscode-server:openvscode-server /home/openvscode-server/.vscode/settings.json
-
-WORKDIR ${HOME}
-# COPY settings.json ${OPENVSCODE_USER_DATA}/settings.json
-# RUN chown openvscode-server:openvscode-server ${OPENVSCODE_USER_DATA}/settings.json
 
