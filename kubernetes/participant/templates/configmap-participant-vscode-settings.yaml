@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: participant-vscode-settings
+  namespace: participant-{{ .Values.participant.name }}
+data:
+  vscode-settings: |
+    set -eu
+    cp -r /home/openvscode-server/.vscode /home/workspace/code

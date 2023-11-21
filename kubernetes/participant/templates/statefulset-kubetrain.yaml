@@ -74,10 +74,10 @@ spec:
         args:
         - --default-folder
         - /home/workspace/code
-        # command:
-        # - /bin/bash
-        # - -c
-        # - cp -r /home/openvscode-server/.vscode /home/workspace/code
+        command:
+        - /bin/sh
+        - -c
+        - /vscode-settings
         volumeMounts:
         - name: git-config
           mountPath: /home/openvscode-server/.gitconfig
@@ -86,6 +86,9 @@ spec:
           mountPath: /home/workspace
         - name: home-ssh
           mountPath: /home/openvscode-server/.ssh
+        - name: vscode-settings
+          mountPath: /vscode-settings
+          subPath: vscode-settings
         ports:
         - containerPort: 3000
         resources:
@@ -124,6 +127,10 @@ spec:
       - name: prepare-ssh-dir
         configMap:
           name: participant-prepare-ssh-dir
+          defaultMode: 0777
+      - name: vscode-settings
+        configMap:
+          name: participant-vscode-settings
           defaultMode: 0777
       - name: git-clone
         configMap:
