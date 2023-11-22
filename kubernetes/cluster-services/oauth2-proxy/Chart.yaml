@@ -8,5 +8,5 @@ appVersion: "1.16.0"
 dependencies:
 # https://artifacthub.io/packages/helm/bitnami/oauth2-proxy
 - name: oauth2-proxy
-  version: 4.3.1
+  version: 4.3.4
   repository: https://charts.bitnami.com/bitnami
