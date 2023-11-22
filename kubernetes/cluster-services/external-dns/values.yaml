@@ -10,5 +10,5 @@ external-dns:
   domainFilters:
     - k8s.aws-tests.skyworkz.nl
 
-  policy: sync 
-  #policy: upsert-only
+  # policy: sync 
+  policy: upsert-only
