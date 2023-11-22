@@ -35,8 +35,10 @@ jobs:
       - name: 'Configure AWS Credentials'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          # aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: arn:aws:iam::267074127319:role/github-actions-kubernetes-training
+          role-session-name: github-actions-kubernetes-training-session
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Setup Terraform
@@ -61,23 +63,23 @@ jobs:
       #     issue-body: "Review the terraform plan, then approve or deny the infrastructure creation"
       #     exclude-workflow-initiator-as-approver: false
 
-      - name: Terraform apply
-        working-directory: ./terraform/aws
-        run: |
-          terraform apply --auto-approve
+      # - name: Terraform apply
+      #   working-directory: ./terraform/aws
+      #   run: |
+      #     terraform apply --auto-approve
 
-      - name: EKS update kubeconfig
-        run: |
-          # aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ inputs.clusterName }}
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name skyworkz-k8s-training
-          kubectl config set-context --current --namespace=kube-system
+      # - name: EKS update kubeconfig
+      #   run: |
+      #     # aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ inputs.clusterName }}
+      #     aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name skyworkz-k8s-training
+      #     kubectl config set-context --current --namespace=kube-system
 
-      - name: Install ArgoCD CRDs
-        working-directory: ./kubernetes/init
-        run: |
-          kubectl apply -f customresourcedefinition-applications.argoproj.io.yaml
+      # - name: Install ArgoCD CRDs
+      #   working-directory: ./kubernetes/init
+      #   run: |
+      #     kubectl apply -f customresourcedefinition-applications.argoproj.io.yaml
 
-      - name: Helm Install
-        working-directory: ./kubernetes
-        run: |
-          helm install -f ./argocd/values.yaml argocd ./argocd  --namespace kube-system
+      # - name: Helm Install
+      #   working-directory: ./kubernetes
+      #   run: |
+      #     helm install -f ./argocd/values.yaml argocd ./argocd  --namespace kube-system
