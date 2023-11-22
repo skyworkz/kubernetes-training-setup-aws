@@ -31,16 +31,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: EKS update kubeconfig
-        run: |
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name skyworkz-k8s-training
-          kubectl config set-context --current --namespace=kube-system
-
-      - name: Helm Uninstall
-        working-directory: ./kubernetes
-        run: |
-          helm uninstall argocd --namespace kube-system
-
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         # with:
