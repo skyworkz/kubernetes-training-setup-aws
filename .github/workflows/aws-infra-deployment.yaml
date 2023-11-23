@@ -8,8 +8,8 @@ on:
       #   - 'terraform/aws/**'
     workflow_dispatch:
       # UTC Timezone
-    schedule:
-      - cron:  '0 6 * * 1-5'
+    # schedule:
+    #   - cron:  '0 6 * * 1-5'
       # inputs:
       #   clusterName:
       #     description: 'Cluster Name'
