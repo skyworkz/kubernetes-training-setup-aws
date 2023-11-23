@@ -3,8 +3,8 @@ name: 🚨 AWS Infra Destroy
 on:
   workflow_dispatch:
   # UTC Timezone
-  schedule:
-    - cron:  '0 19 * * *'
+  # schedule:
+  #   - cron:  '0 19 * * *'
 
 permissions:
     contents: read
