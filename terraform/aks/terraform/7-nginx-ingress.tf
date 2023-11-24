@@ -23,6 +23,15 @@ resource "helm_release" "external_nginx" {
   namespace        = "ingress"
   create_namespace = true
   version          = "4.8.0"
+}
 
-  # values = [file("${path.module}/values/ingress.yaml")]
+locals{
+  user_data = jsondecode(file("{path.module}/data/participants.json"))
+
+  all_users = [for user in user_data.participants: user.Name]
+}
+
+resource "azurerm_dns_zone" "public-dnszone" {
+  name                = "${local.all_users}.azure.skyworkz.nl"
+  resource_group_name = azurerm_resource_group.this.name
 }

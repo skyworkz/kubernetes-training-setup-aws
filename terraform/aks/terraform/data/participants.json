@@ -1,0 +1,13 @@
+{
+    "participants":[
+        {"Name": "Tom",
+         "Role": "Cloud Engineer",
+         "Email": "tom@skyworkz.nl"},
+         {"Name": "Robert",
+         "Role": "ML Engineer",
+         "Email": "robert@skyworkz.nl"},
+         {"Name": "Leo",
+         "Role": "Data Engineer",
+         "Email": "leo@skyworkz.nl"}
+    ]
+}

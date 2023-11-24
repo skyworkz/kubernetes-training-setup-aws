@@ -2,7 +2,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "spot" {
   name                  = "spot"
   kubernetes_cluster_id = azurerm_kubernetes_cluster.this.id
   vm_size               = "Standard_DS2_v2"
-  vnet_subnet_id        = azurerm_subnet.subnet1.id
+  vnet_subnet_id        = azurerm_subnet.subnet-private.id
   orchestrator_version  = local.aks_version
   priority              = "Spot"
   spot_max_price        = -1

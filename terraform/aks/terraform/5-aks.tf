@@ -42,7 +42,7 @@ resource "azurerm_kubernetes_cluster" "this" {
   default_node_pool {
     name                 = "general"
     vm_size              = "Standard_D2_v2"
-    vnet_subnet_id       = azurerm_subnet.subnet1.id
+    vnet_subnet_id       = azurerm_subnet.subnet-private.id
     orchestrator_version = local.aks_version
     type                 = "VirtualMachineScaleSets"
     enable_auto_scaling  = true
