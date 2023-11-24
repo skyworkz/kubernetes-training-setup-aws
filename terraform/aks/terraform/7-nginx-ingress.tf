@@ -1,5 +1,5 @@
 data "azurerm_kubernetes_cluster" "this" {
-  name                = "${local.env}-${local.aks_name}"
+  name                = "${local.aks_name}"
   resource_group_name = local.resource_group_name
 
   # Comment this out if you get: Error: Kubernetes cluster unreachable 
@@ -24,5 +24,5 @@ resource "helm_release" "external_nginx" {
   create_namespace = true
   version          = "4.8.0"
 
-  values = [file("${path.module}/values/ingress.yaml")]
+  # values = [file("${path.module}/values/ingress.yaml")]
 }
