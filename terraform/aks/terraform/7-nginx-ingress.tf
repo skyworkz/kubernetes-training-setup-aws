@@ -26,12 +26,13 @@ resource "helm_release" "external_nginx" {
 }
 
 locals{
-  user_data = jsondecode(file("{path.module}/data/participants.json"))
+  user_data = jsondecode(file("data/participants.json"))
 
-  all_users = [for user in user_data.participants: user.Name]
+  all_users = [for user in local.user_data.participants: user.Name]
 }
 
 resource "azurerm_dns_zone" "public-dnszone" {
-  name                = "${local.all_users}.azure.skyworkz.nl"
+  count               = length(local.all_users)
+  name                = "${local.all_users[count.index]}.azure.skyworkz.nl"
   resource_group_name = azurerm_resource_group.this.name
 }
