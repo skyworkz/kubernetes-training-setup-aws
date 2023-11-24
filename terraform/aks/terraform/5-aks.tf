@@ -11,7 +11,7 @@ resource "azurerm_role_assignment" "base" {
 }
 
 resource "azurerm_kubernetes_cluster" "this" {
-  name                = "${local.env}-${local.aks_name}"
+  name                = "${local.aks_name}"
   location            = azurerm_resource_group.this.location
   resource_group_name = azurerm_resource_group.this.name
   dns_prefix          = "devaks1"
