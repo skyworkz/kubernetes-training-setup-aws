@@ -33,10 +33,18 @@ resource "azurerm_kubernetes_cluster" "this" {
   oidc_issuer_enabled       = true
   workload_identity_enabled = true
 
-  network_profile {
-    network_plugin = "azure"
-    dns_service_ip = "10.0.64.10"
-    service_cidr   = "10.0.64.0/19"
+  # network_profile {
+  #   network_plugin = "azure"
+  #   dns_service_ip = "10.0.64.10"
+  #   service_cidr   = "10.0.64.0/19"
+  # }
+
+network_profile {
+    network_plugin     = "kubenet"
+    # pod_cidr           = "10.0.64.0/24"
+    service_cidr       = "10.0.64.0/19"
+    dns_service_ip     = "10.0.64.10"
+    # outbound_type      = "userDefinedRouting"
   }
 
   default_node_pool {
