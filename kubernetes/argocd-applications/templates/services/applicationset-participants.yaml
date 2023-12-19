@@ -8,12 +8,14 @@ spec:
   - list:
       # Looping here over the name and emails of the participants
       elements:
-      - name: tom
-        email: tom@skyworkz.cloud
-      - name: robert
-        email: robert@skyworkz.cloud
+      # - name: tom
+      #   email: tom@skyworkz.cloud
+      # - name: robert
+      #   email: robert@skyworkz.cloud
       - name: leonardo
         email: leonardo@skyworkz.cloud
+      - name: maarten
+        email: maarten@skyworkz.cloud
   template:
     metadata:
       name: participant-{{"{{"}}name{{"}}"}}
