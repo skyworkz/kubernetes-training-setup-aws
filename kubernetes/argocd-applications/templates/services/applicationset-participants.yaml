@@ -12,8 +12,8 @@ spec:
       #   email: tom@skyworkz.cloud
       # - name: robert
       #   email: robert@skyworkz.cloud
-      - name: leo
-        email: leo@skyworkz.cloud
+      - name: leonardo
+        email: leonardo@skyworkz.cloud
       - name: maarten
         email: maarten@skyworkz.cloud
   template:
