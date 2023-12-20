@@ -1,4 +1,4 @@
-# kubernetes-training-setup-aws
+# kubernetes-training-setup-awss
 Setup used for Kubernetes trainings on AWS
 
 ## What is all this?
