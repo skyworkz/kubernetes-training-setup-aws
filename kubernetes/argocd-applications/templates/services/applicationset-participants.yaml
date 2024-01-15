@@ -5,17 +5,32 @@ metadata:
   namespace: kube-system
 spec:
   generators:
-  - list:
-      # Looping here over the name and emails of the participants
-      elements:
-      # - name: tom
-      #   email: tom@skyworkz.cloud
-      # - name: robert
-      #   email: robert@skyworkz.cloud
-      - name: leonardo
-        email: leonardo@skyworkz.cloud
-      - name: maarten
-        email: maarten@skyworkz.cloud
+    - list:
+        # Looping here over the name and emails of the participants
+        elements:
+          - name: robert
+            email: robert@skyworkz.cloud
+          - name: leonardo
+            email: leonardo@skyworkz.cloud
+          - name: maarten
+            email: maarten@skyworkz.cloud
+          - name: aneta
+            email: Aneta.Barbos@planonsoftware.com
+          - name: kishore
+            email: KishoreKumar.Allaparthi@planonsoftware.com
+          - name: maarten
+            email: Maarten.vanHulsentop@planonsoftware.com
+          - name: marcin
+            email: Marcin.Kaszubski@planonsoftware.com
+          - name: maurice
+            email: Maurice.Quaedackers@planonsoftware.com
+          - name: prathamesh
+            email: Prathamesh.Roge@planonsoftware.com
+          - name: santhosh
+            email: Santhosh.Challa@planonsoftware.com
+          - name: seshu
+            email: Seshu.Rompicherla@planonsoftware.com
+
   template:
     metadata:
       name: participant-{{"{{"}}name{{"}}"}}
