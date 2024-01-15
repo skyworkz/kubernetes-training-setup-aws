@@ -1,0 +1,8 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kubetrain
+  labels:
+    app: kubetrain
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://oauth2.k8s-training.aws-tests.skyworkz.nl/oauth2/auth?allowed_emails=robert@skyworkz.nl"
