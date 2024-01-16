@@ -1,5 +1,5 @@
-# repository_url: "git@github.com:tomhuang12/awesome-k8s-resources.git"
-repository_url: "git@github.com:skyworkz/kubernetes-training-setup-aws.git"
+repository_url: "git@github.com:tomhuang12/awesome-k8s-resources.git"
+#repository_url: "git@github.com:skyworkz/kubernetes-training-setup-aws.git"
 
 participant:
   name: "johndoe"
